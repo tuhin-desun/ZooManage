@@ -1134,6 +1134,27 @@ class AddCompleteTasks extends React.Component {
                 </>
               )}
 
+              {!this.props.route.params.category_id ? (
+                <InputDropdown
+                  label={"Category"}
+                  value={this.state.selectedCategory_name}
+                  isOpen={this.state.isCategoryMenuOpen}
+                  items={this.state.category}
+                  openAction={this.toggleCategoryMenu}
+                  closeAction={this.toggleCategoryMenu}
+                  setValue={this.setCategoryData}
+                  placeholder=" "
+                  labelStyle={styles.labelName}
+                  textFieldStyle={styles.textfield}
+                  style={[
+                    styles.fieldBox,
+                    this.state.hasAssignValidationError
+                      ? styles.errorFieldBox
+                      : null,
+                  ]}
+                />
+              ) : null}
+
               {/* desc here */}
               <View style={[styles.fieldBox]}>
                 <Text style={styles.labelName}>Description:</Text>

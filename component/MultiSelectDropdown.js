@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import Colors from "../config/colors";
+import globalStyles from "../config/Styles";
 
 class ListItem extends React.Component {
   shouldComponentUpdate = (nextProps, nextState) => {

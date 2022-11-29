@@ -14,12 +14,7 @@ import {
 import moment from "moment";
 import { Container } from "native-base";
 import Colors from "../../config/colors";
-import {
-  Header,
-  Loader,
-  ListEmpty,
-  MultiSelectDropdown,
-} from "../../component";
+import { Header, Loader, ListEmpty, MultiSelectDropdown } from "../../component";
 import {
   getMedicalRecords,
   filterMedicalRecords,
@@ -28,7 +23,7 @@ import AppContext from "../../context/AppContext";
 import { Configs } from "../../config";
 import DownloadFile from "../../component/DownloadFile";
 import { AntDesign } from "@expo/vector-icons";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 import { userList } from "../../services/UserManagementServices";
 import { showDayAsClientWant, showDate } from "../../utils/Util";
 import { getReportsforMedical } from "../../services/ReportsServices";
@@ -88,26 +83,23 @@ export default class MedicalReport extends React.Component {
             name: `${v.full_name} - ${v.dept_name}`,
           })),
           isLoading: false,
-          page: 1,
+          page: 1
         });
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   setSelectedUsers = (item) => {
     if (item.length > 0) {
-      this.setState(
-        {
-          selectedUsers: item,
-        },
-        () => {
-          this.getMedicalbyUser(item);
-        }
-      );
+      this.setState({
+        selectedUsers: item
+      }, () => {
+        this.getMedicalbyUser(item);
+      })
     } else {
-      alert("Select atleast one user");
+      alert("Select atleast one user")
     }
   };
 
@@ -119,7 +111,7 @@ export default class MedicalReport extends React.Component {
     let obj = {
       cid: this.context.userDetails.cid,
       users: users,
-      page: this.state.page,
+      page: this.state.page
     };
     getReportsforMedical(obj)
       .then((data) => {
@@ -136,7 +128,7 @@ export default class MedicalReport extends React.Component {
         });
       })
       .catch((error) => console.log(error));
-  };
+  }
 
   renderFooter = () => {
     //it will show indicator at the bottom of the list when data is loading otherwise it returns null
@@ -167,7 +159,7 @@ export default class MedicalReport extends React.Component {
   renderItem = ({ item }) => {
     return (
       <TouchableOpacity
-        style={[styles.CardBox, styles.mh5]}
+        style={[globalStyles.CardBox, globalStyles.mh5]}
         onPress={this.gotoView.bind(this, item)}
       >
         <View
@@ -177,102 +169,103 @@ export default class MedicalReport extends React.Component {
             paddingRight: 5,
           }}
         >
-          <Text style={[styles.labelName, styles.pd0]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"Case ID: "}
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {"#" + item.id}{" "}
             </Text>
           </Text>
           <Text
             style={[
-              styles.labelName,
-              styles.pd0,
-              item.status === "P" ? styles.pendingStatus : styles.approveStatus,
+              globalStyles.labelName,
+              globalStyles.pd0,
+              item.status === "P" ? globalStyles.pendingStatus : globalStyles.approveStatus,
             ]}
           >
             {item.status === "P"
               ? "(Pending)"
               : item.status === "O"
-              ? "(Ongoing)"
-              : ""}
+                ? "(Ongoing)"
+                : ""}
           </Text>
         </View>
         <Text
           style={[
-            styles.labelName,
-            styles.pd0,
-            { width: "80%", marginVertical: 10 },
+            globalStyles.labelName,
+            globalStyles.pd0,
+            globalStyles.width80,
+            globalStyles.marginVertical10
           ]}
         >
           {/* {"Desc: "} */}
-          <Text style={[styles.textfield, styles.width60]}>
+          <Text style={[globalStyles.textfield, globalStyles.width60]}>
             {item?.description ?? "N/A"}
           </Text>
         </Text>
-        <Text style={[styles.labelName, styles.pd0]}>
+        <Text style={[globalStyles.labelName, globalStyles.pd0]}>
           {"Diagnosis: "}
-          <Text style={[styles.textfield, styles.width60]}>
+          <Text style={[globalStyles.textfield, globalStyles.width60]}>
             {item.diagnosis_name}
           </Text>
         </Text>
-        <Text style={[styles.labelName, styles.pd0]}>
+        <Text style={[globalStyles.labelName, globalStyles.pd0]}>
           {"Ref: "}
           {item.ref == "animal" ? (
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {item.english_name} ({item.ref_value} )
             </Text>
           ) : (
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {item.ref_value} ({item.ref} )
             </Text>
           )}
         </Text>
         {item.ref == "animal" ? (
           <>
-            {/* <Text style={[styles.labelName,styles.pd0]}>
+            {/* <Text style={[globalStyles.labelName,globalStyles.pd0]}>
   						{"Common Name: "}
-  						<Text style={[styles.textfield,styles.width60]}>{`${item.english_name}`}</Text>
+  						<Text style={[globalStyles.textfield,globalStyles.width60]}>{`${item.english_name}`}</Text>
   					</Text> */}
             {item.dna == null || item.dna == "" ? null : (
-              <Text style={[styles.labelName, styles.pd0]}>
+              <Text style={[globalStyles.labelName, globalStyles.pd0]}>
                 {"DNA No: "}
                 <Text
-                  style={[styles.textfield, styles.width60]}
+                  style={[globalStyles.textfield, globalStyles.width60]}
                 >{`${item.dna}`}</Text>
               </Text>
             )}
             {item.microchip == null || item.microchip == "" ? null : (
-              <Text style={[styles.labelName, styles.pd0]}>
+              <Text style={[globalStyles.labelName, globalStyles.pd0]}>
                 {"Microchip No: "}
                 <Text
-                  style={[styles.textfield, styles.width60]}
+                  style={[globalStyles.textfield, globalStyles.width60]}
                 >{`${item.microchip}`}</Text>
               </Text>
             )}
-            <Text style={[styles.labelName, styles.pd0]}>
+            <Text style={[globalStyles.labelName, globalStyles.pd0]}>
               {"Encl: "}
               <Text
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
               >{`${item.enclosure} (${item.section})`}</Text>
             </Text>
           </>
         ) : null}
-        <Text style={[styles.labelName, styles.pd0]}>
+        <Text style={[globalStyles.labelName, globalStyles.pd0]}>
           {"Rep By: "}
-          <Text style={[styles.textfield, styles.width60]}>
+          <Text style={[globalStyles.textfield, globalStyles.width60]}>
             {item?.reported_by_name ?? "N/A"}
           </Text>
         </Text>
         <View
-          style={[
-            globalStyles.flexDirectionRow,
-            globalStyles.justifyContentBetween,
-            globalStyles.pr5,
-          ]}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingRight: 5,
+          }}
         >
-          <Text style={[styles.labelName, styles.pd0]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"Date: "}
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {moment(item.date, "YYYY-MM-DD").format("DD/MM/YYYY")}
             </Text>
           </Text>
@@ -283,23 +276,25 @@ export default class MedicalReport extends React.Component {
 
   render = () => (
     <Container>
-      <Header title={"Medical Reports"} />
-      <View style={styles.listContainer}>
+      <Header
+        title={"Medical Reports"}
+      />
+      <View style={globalStyles.listContainer}>
         <MultiSelectDropdown
           label={"Select User"}
           items={this.state.users}
           selectedItems={this.state.selectedUsers}
           onSave={this.setSelectedUsers}
-          placeHolderContainer={styles.textfield}
-          placeholderStyle={styles.placeholderStyle}
-          labelStyle={styles.labelName}
-          textFieldStyle={styles.textfield}
+          placeHolderContainer={globalStyles.textfield}
+          placeholderStyle={globalStyles.placeholderStyle}
+          labelStyle={globalStyles.labelName}
+          textFieldStyle={globalStyles.textfield}
           selectedItemsContainer={[
-            styles.selectedItemsContainer,
-            styles.width60,
-            { height: 100 },
+            globalStyles.selectedItemsContainer,
+            globalStyles.width60,
+            { height: 100 }
           ]}
-          style={styles.fieldBox}
+          style={globalStyles.fieldBox}
           listView={true}
         />
         {this.state.isLoading && this.state.page === 1 ? (
@@ -310,21 +305,15 @@ export default class MedicalReport extends React.Component {
             keyExtractor={(item, index) => item.id.toString()}
             renderItem={this.renderItem}
             contentContainerStyle={
-              this.state.records.length === 0 ? styles.container : null
+              this.state.records.length === 0 ? globalStyles.container : null
             }
             ListEmptyComponent={() => <ListEmpty />}
             stickySectionHeadersEnabled
             renderSectionHeader={({ section: { title } }) => {
               return (
-                <View style={styles.sectionHeader}>
-                  <View style={styles.sectionHeaderRight}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        color: Colors.white,
-                      }}
-                    >
+                <View style={globalStyles.sectionHeader}>
+                  <View style={globalStyles.sectionHeaderRight}>
+                    <Text style={[globalStyles.fontSize16,globalStyles.fontWeightBold,{color: Colors.white }]}>
                       {title}
                     </Text>
                   </View>

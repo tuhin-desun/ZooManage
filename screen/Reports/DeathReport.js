@@ -1,373 +1,328 @@
 import React from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  Modal,
-  TextInput,
-  Dimensions,
+	StyleSheet,
+	Text,
+	View,
+	TouchableHighlight,
+	FlatList,
+	TouchableOpacity,
+	Alert,
+	Modal,
+	TextInput,
+	Dimensions
 } from "react-native";
 import { Container } from "native-base";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import {
-  getDeathreports,
-  getItemTypes,
-  getLowStockProducts,
-  generateExcel,
-  addRequestPurchase,
-  getRequestDetails,
+	getDeathreports,
+	getItemTypes,
+	getLowStockProducts,
+	generateExcel,
+	addRequestPurchase,
+	getRequestDetails
 } from "../../services/ReportsServices";
 import AppContext from "../../context/AppContext";
-import Config from "../../config/Configs";
-import * as WebBrowser from "expo-web-browser";
+import Config from '../../config/Configs';
+import * as WebBrowser from 'expo-web-browser';
 import { getFormattedDate, convertDate } from "../../utils/Util";
 import DownloadFile from "../../component/DownloadFile";
 import globalStyles from "../../config/Styles";
 
-const priorityExtra = { id: "all", name: "All" };
+const priorityExtra = { id: 'all', name: 'All' };
 
 const DATA = [
-  {
-    id: 1,
-    name: "Sun Conure",
-    date: "17.05.2022",
-    reason:
-      "Death by natural cause post mortem done but no proper reason found",
-  },
-  {
-    id: 2,
-    name: "Red-Tailed Amazon",
-    date: "14.05.2022",
-    reason: "Death by sickness",
-  },
+    {
+        id: 1,
+        name: 'Sun Conure',
+        date: '17.05.2022',
+        reason: 'Death by natural cause post mortem done but no proper reason found'
+    },
+    {
+        id: 2,
+        name: 'Red-Tailed Amazon',
+        date: '14.05.2022',
+        reason: 'Death by sickness'
+    }
 ];
 
 export default class DeathReport extends React.Component {
-  static contextType = AppContext;
+	static contextType = AppContext;
 
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      isLoading: false,
-      selectedMenuItem: "All",
-      menuItems: [],
-      products: [],
-      priority: [priorityExtra, ...Config.ITEM_PRIORITIES],
-      selectedPriorityItem: undefined,
-      modalVisible: false,
-      orderQuestionModalVisible: false,
-      orderEdit: false,
-      reOrderWarning: false,
-      prevRequestData: [],
-      requestingItem: [],
-      orderQuantity: 0,
-      isSearchModalOpen: false,
-      searchValue: "",
-      searchData: [],
-      downloadUrl: "",
-      isModalOpen: false,
-      // itemType : props.route.params.itemType
-    };
+		this.state = {
+			isLoading: false,
+			selectedMenuItem: "All",
+			menuItems: [],
+			products: [],
+			priority: [priorityExtra, ...Config.ITEM_PRIORITIES],
+			selectedPriorityItem: undefined,
+			modalVisible: false,
+			orderQuestionModalVisible: false,
+			orderEdit: false,
+			reOrderWarning: false,
+			prevRequestData: [],
+			requestingItem: [],
+			orderQuantity: 0,
+			isSearchModalOpen: false,
+			searchValue: "",
+			searchData: [],
+			downloadUrl:"",
+			isModalOpen:false,
+			// itemType : props.route.params.itemType
+		};
 
-    this.searchInput = React.createRef();
-  }
+		this.searchInput = React.createRef();
+	}
 
-  componentDidMount() {
-    let cid = this.context.userDetails.cid;
-    getDeathreports(cid)
-      .then((data) => {
-        console.log(data);
-        this.setState({ products: data, isLoading: false });
-      })
-      .catch((error) => console.log(error));
-  }
+	componentDidMount() {
+		let cid = this.context.userDetails.cid;
+		getDeathreports(cid)
+			.then((data) => {
+				console.log(data)
+				this.setState({ products: data, isLoading: false });
+			})
+			.catch((error) => console.log(error));
+	}
 
-  getRequestDetails = (item) => {
-    let cid = this.context.userDetails.cid;
-    item["cid"] = cid;
-    item["created_by"] = this.context.userDetails.user_code;
-    this.setState({
-      requestingItem: item,
-      isLoading: true,
-    });
-    getRequestDetails(item)
-      .then((response) => {
-        if (response.type == "fetch") {
-          if (response.msg == "Success") {
-            this.setState(
-              {
-                prevRequestData: response.data,
-                isLoading: false,
-              },
-              () => {
-                this.setModalVisible(true);
-              }
-            );
-          }
-        }
-        if (response.type == "already_requested") {
-          this.setState(
-            {
-              prevRequestData: response.data,
-              isLoading: false,
-            },
-            () => {
-              this.setReorderWarning(true);
-            }
-          );
-        }
-        if (response.type == "insert") {
-          this.setState(
-            {
-              isLoading: false,
-            },
-            () => {
-              Alert.alert(response.check, response.message);
-            }
-          );
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  setModalVisible = (visible) => {
-    this.setState({ modalVisible: visible, reOrderWarning: false });
-  };
+	getRequestDetails = (item) => {
+		let cid = this.context.userDetails.cid;
+		item['cid'] = cid;
+		item['created_by'] = this.context.userDetails.user_code;
+		this.setState({
+			requestingItem: item,
+			isLoading: true
+		})
+		getRequestDetails(item)
+			.then((response) => {
+				if (response.type == 'fetch') {
+					if (response.msg == 'Success') {
+						this.setState({
+							prevRequestData: response.data,
+							isLoading: false
+						}, () => { this.setModalVisible(true) })
+					}
+				}
+				if (response.type == 'already_requested') {
+					this.setState({
+						prevRequestData: response.data,
+						isLoading: false
+					}, () => { this.setReorderWarning(true) })
+				}
+				if (response.type == 'insert') {
+					this.setState({
+						isLoading: false,
+					}, () => { Alert.alert(response.check, response.message); })
+				}
+			})
+			.catch((error) => { console.log(error) })
+	}
 
-  setReorderWarning = (visible) => {
-    this.setState({ reOrderWarning: visible });
-  };
+	setModalVisible = (visible) => {
+		this.setState({ modalVisible: visible, reOrderWarning: false });
+	}
 
-  showOrderEditQuestion = (visible) => {
-    this.setState({
-      orderQuestionModalVisible: visible,
-      modalVisible: false,
-      reOrderWarning: false,
-    });
-  };
+	setReorderWarning = (visible) => {
+		this.setState({ reOrderWarning: visible });
+	}
 
-  showOrderEdit = (visible) => {
-    this.setState({
-      orderEdit: visible,
-      orderQuestionModalVisible: false,
-      modalVisible: false,
-      reOrderWarning: false,
-    });
-  };
+	showOrderEditQuestion = (visible) => {
+		this.setState({ orderQuestionModalVisible: visible, modalVisible: false, reOrderWarning: false });
+	}
 
-  loadProducts = (itemType, priority) => {
-    let params = { cid: this.context.userDetails.cid };
-    if (typeof itemType !== "undefined") {
-      params["type"] = itemType;
-    }
+	showOrderEdit = (visible) => {
+		this.setState({ orderEdit: visible, orderQuestionModalVisible: false, modalVisible: false, reOrderWarning: false });
+	}
 
-    if (typeof priority !== "undefined") {
-      if (priority === "all") {
-        params["priority"] = "all";
-      } else {
-        params["priority"] = priority;
-      }
-    }
+	loadProducts = (itemType, priority) => {
+		let params = { cid: this.context.userDetails.cid };
+		if (typeof itemType !== "undefined") {
+			params["type"] = itemType;
+		}
 
-    getLowStockProducts(params)
-      .then((data) => {
-        this.setState({
-          isLoading: false,
-          // products: data,
-          products: DATA,
-        });
-      })
-      .catch((error) => console.log(error));
-  };
+		if (typeof priority !== "undefined") {
+			if (priority === 'all') {
+				params["priority"] = 'all';
+			} else {
+				params["priority"] = priority;
+			}
+		}
 
-  handelRefresh = () => {
-    this.setState(
-      {
-        isLoading: true,
-      },
-      () => {
-        this.loadProducts();
-      }
-    );
-  };
 
-  onMenuItemChange = (type) => {
-    this.setState(
-      {
-        isLoading: true,
-        selectedMenuItem: type,
-      },
-      () => {
-        this.loadProducts(type, this.state.selectedPriorityItem);
-      }
-    );
-  };
+		getLowStockProducts(params)
+			.then((data) => {
+				this.setState({
+					isLoading: false,
+					// products: data,
+                    products: DATA
+				});
+			})
+			.catch((error) => console.log(error));
+	};
 
-  onPriorityItemChange = (type) => {
-    this.setState(
-      {
-        isLoading: true,
-        selectedPriorityItem: type,
-      },
-      () => {
-        this.loadProducts(this.state.selectedMenuItem, type);
-      }
-    );
-  };
 
-  // Generate Excel And Save on device
-  exportProducts = () => {
-    let params = { cid: this.context.userDetails.cid };
-    let itemType = this.state.selectedMenuItem;
-    let priority = this.state.selectedPriorityItem;
-    if (typeof itemType !== "undefined") {
-      params["type"] = itemType;
-    }
+	handelRefresh = () => {
+		this.setState(
+			{
+				isLoading: true,
+			},
+			() => {
+				this.loadProducts();
+			}
+		);
+	};
 
-    if (typeof priority !== "undefined") {
-      if (priority === "all") {
-        params["priority"] = "all";
-      } else {
-        params["priority"] = priority;
-      }
-    }
+	onMenuItemChange = (type) => {
+		this.setState(
+			{
+				isLoading: true,
+				selectedMenuItem: type,
+			},
+			() => {
+				this.loadProducts(type, this.state.selectedPriorityItem);
+			}
+		);
+	};
 
-    generateExcel(params)
-      .then((response) => {
-        let data = response.data;
-        this.setState({
-          downloadUrl: data.fileuri,
-          isModalOpen: true,
-        });
-      })
-      .catch((error) => console.log(error));
-  };
+	onPriorityItemChange = (type) => {
+		this.setState(
+			{
+				isLoading: true,
+				selectedPriorityItem: type,
+			},
+			() => {
+				this.loadProducts(this.state.selectedMenuItem, type);
+			}
+		);
+	};
 
-  closeModal = () =>
-    this.setState({
-      isModalOpen: false,
-    });
+	// Generate Excel And Save on device
+	exportProducts = () => {
+		let params = { cid: this.context.userDetails.cid };
+		let itemType = this.state.selectedMenuItem;
+		let priority = this.state.selectedPriorityItem;
+		if (typeof itemType !== "undefined") {
+			params["type"] = itemType;
+		}
 
-  changeOrderQuanity = (val) => {
-    let item = this.state.requestingItem;
-    item.orderQuantity = val;
-    this.setState({
-      requestingItem: item,
-      orderQuantity: val,
-    });
-  };
+		if (typeof priority !== "undefined") {
+			if (priority === 'all') {
+				params["priority"] = 'all';
+			} else {
+				params["priority"] = priority;
+			}
+		}
 
-  addToPurchaseRequest = () => {
-    let cid = this.context.userDetails.cid;
-    let item = this.state.requestingItem;
-    item.cid = cid;
-    item.created_by = this.context.userDetails.user_code;
-    this.setState(
-      {
-        isLoading: true,
-        modalVisible: false,
-        orderQuestionModalVisible: false,
-        orderEdit: false,
-      },
-      () => {
-        addRequestPurchase(item)
-          .then((response) => {
-            this.setState(
-              {
-                isLoading: false,
-              },
-              () => {
-                Alert.alert(response.check, response.message);
-              }
-            );
-          })
-          .catch((error) => console.log(error));
-        this.setState({
-          isLoading: false,
-        });
-      }
-    );
-  };
 
-  openSearchModal = () => {
-    this.setState({
-      isSearchModalOpen: true,
-      searchValue: "",
-      searchData: [],
-    });
+		generateExcel(params)
+		.then((response) => {
+			let data = response.data;
+			this.setState(
+				{
+					downloadUrl: data.fileuri,
+					isModalOpen: true,
+				});
+		})
+			.catch((error) => console.log(error));
+	};
 
-    setTimeout(() => {
-      this.searchInput.current.focus();
-    }, 500);
-  };
+	closeModal = () =>
+	this.setState({
+		isModalOpen: false,
+	});
 
-  closeSearchModal = () => {
-    this.setState({
-      isSearchModalOpen: false,
-      searchValue: "",
-      searchData: [],
-    });
-  };
+	changeOrderQuanity = (val) => {
+		let item = this.state.requestingItem;
+		item.orderQuantity = val;
+		this.setState({
+			requestingItem: item,
+			orderQuantity: val
+		});
+	}
 
-  searchProduct = () => {
-    let { searchValue, products } = this.state;
+	addToPurchaseRequest = () => {
+		let cid = this.context.userDetails.cid;
+		let item = this.state.requestingItem;
+		item.cid = cid;
+		item.created_by = this.context.userDetails.user_code;
+		this.setState(
+			{
+				isLoading: true,
+				modalVisible: false,
+				orderQuestionModalVisible: false,
+				orderEdit: false,
+			},
+			() => {
+				addRequestPurchase(item)
+					.then((response) => {
+						this.setState({
+							isLoading: false,
+						}, () => { Alert.alert(response.check, response.message); })
+					})
+					.catch((error) => console.log(error));
+				this.setState({
+					isLoading: false,
+				})
+			}
+		);
+	}
 
-    let data = products.filter((element) => {
-      let name = element.english_name.toLowerCase();
-      let index = name.indexOf(searchValue.toLowerCase());
-      return index > -1;
-    });
+	openSearchModal = () => {
+		this.setState({
+			isSearchModalOpen: true,
+			searchValue: "",
+			searchData: [],
+		});
 
-    this.setState({ searchData: data });
-  };
+		setTimeout(() => {
+			this.searchInput.current.focus();
+		}, 500);
+	};
 
-  renderSearchListItem = ({ item }) => (
-    <TouchableHighlight underlayColor={"#eee"}>
-      <View style={globalStyles.row}>
-        <View style={globalStyles.leftPart}>
-          <Text
-            style={[
-              globalStyles.labelName,
-              globalStyles.pd0,
-              globalStyles.no_bg_color,
-              globalStyles.text_bold,
-            ]}
-          >
-            {item.english_name}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Date: " + item.date}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Reason: " + item.animal_dead_reason}
-          </Text>
-          {/* <Text style={globalStyles.subText}>
+	closeSearchModal = () => {
+		this.setState({
+			isSearchModalOpen: false,
+			searchValue: "",
+			searchData: [],
+		});
+	};
+
+	searchProduct = () => {
+		let { searchValue, products } = this.state;
+
+		let data = products.filter((element) => {
+			let name = element.english_name.toLowerCase();
+			let index = name.indexOf(searchValue.toLowerCase());
+			return index > -1;
+		});
+
+		this.setState({ searchData: data });
+	};
+
+
+	renderSearchListItem = ({ item }) => (
+		<TouchableHighlight underlayColor={"#eee"}>
+			<View style={globalStyles.row}>
+				<View style={globalStyles.leftPart}>
+					<Text style={[globalStyles.labelName,globalStyles.pd0,globalStyles.no_bg_color,globalStyles.text_bold]}>
+					{item.english_name}
+					</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
+					{"Date: " + item.date}
+					</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
+						{"Reason: " + item.animal_dead_reason}
+					</Text>
+					{/* <Text style={globalStyles.subText}>
 						{"Reorder Level: " + item.reorder_level + " " + item.unit}
 					</Text> */}
-        </View>
-        <View style={globalStyles.rightPart}>
-          {/* <View style={globalStyles.rightPartStock}>
+				</View>
+				<View style={globalStyles.rightPart}>
+					{/* <View style={globalStyles.rightPartStock}>
 						<View style={globalStyles.qtyBox}>
 							<Text style={globalStyles.qtyText}>
 								{item.total_stock + " " + item.unit}
@@ -375,69 +330,42 @@ export default class DeathReport extends React.Component {
 						</View>
 						<Ionicons name="chevron-forward" style={globalStyles.iconStyle} />
 					</View> */}
-          {/* <View >
+					{/* <View >
 						<TouchableOpacity style={globalStyles.rightPartButton}
 							onPress={this.getRequestDetails.bind(this, item)}
 						>
 							<Text style={globalStyles.rightPartButtonText}>{'Add Request'}</Text>
 						</TouchableOpacity>
 					</View> */}
-        </View>
-      </View>
-    </TouchableHighlight>
-  );
+				</View>
+			</View>
+		</TouchableHighlight>
+	);
 
-  renderListItem = ({ item }) => (
-    <TouchableHighlight underlayColor={"#eee"}>
-      <View style={globalStyles.row}>
-        <View style={globalStyles.leftPart}>
-          <Text
-            style={[
-              globalStyles.labelName,
-              globalStyles.pd0,
-              globalStyles.no_bg_color,
-              globalStyles.text_bold,
-            ]}
-          >
-            {item.english_name}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Animal ID: " + item.animal_id}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Date: " +
-              getFormattedDate(
-                convertDate(item.animal_dead_date),
-                "DD/MM/YYYY"
-              )}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Reason: " + item.animal_dead_reason}
-          </Text>
-          {/* <Text style={globalStyles.subText}>
+
+
+	renderListItem = ({ item }) => (
+		<TouchableHighlight underlayColor={"#eee"}>
+			<View style={globalStyles.row}>
+				<View style={globalStyles.leftPart}>
+					<Text style={[globalStyles.labelName,globalStyles.pd0,globalStyles.no_bg_color,globalStyles.text_bold]}>
+					{item.english_name}
+					</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
+					{"Animal ID: " + item.animal_id }
+					</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
+					{"Date: " + getFormattedDate(convertDate(item.animal_dead_date),'DD/MM/YYYY') }
+					</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
+						{"Reason: " + item.animal_dead_reason}
+					</Text>
+					{/* <Text style={globalStyles.subText}>
 						{"Reorder Level: " + item.reorder_level + " " + item.unit}
 					</Text> */}
-        </View>
-        <View style={globalStyles.rightPart}>
-          {/* <View style={globalStyles.rightPartStock}>
+				</View>
+				<View style={globalStyles.rightPart}>
+					{/* <View style={globalStyles.rightPartStock}>
 						<View style={globalStyles.qtyBox}>
 							<Text style={globalStyles.qtyText}>
 								{item.total_stock + " " + item.unit}
@@ -445,147 +373,152 @@ export default class DeathReport extends React.Component {
 						</View>
 						<Ionicons name="chevron-forward" style={globalStyles.iconStyle} />
 					</View> */}
-          {/* <View >
+					{/* <View >
 						<TouchableOpacity style={globalStyles.rightPartButton}
 							onPress={this.getRequestDetails.bind(this, item)}
 						>
 							<Text style={globalStyles.rightPartButtonText}>{'Add Request'}</Text>
 						</TouchableOpacity>
 					</View> */}
-        </View>
-      </View>
-    </TouchableHighlight>
-  );
+				</View>
+			</View>
+		</TouchableHighlight>
+	);
 
-  render = () => (
-    <Container>
-      <Header
-        title={"Death Report"}
-        selectedMenuItem={this.state.selectedMenuItem}
-        menuItems={this.state.menuItems}
-        onMenuItemChange={this.onMenuItemChange}
-        selectedPriorityItem={this.state.selectedPriorityItem}
-        priorityItems={this.state.priority}
-        onPriorityItemChange={this.onPriorityItemChange}
-        exportProducts={this.exportProducts}
-        searchAction={this.state.isLoading ? undefined : this.openSearchModal}
-      />
-      <View style={globalStyles.container}>
-        {this.state.isLoading ? (
-          <Loader />
-        ) : (
-          <FlatList
-            ListEmptyComponent={() => <ListEmpty />}
-            data={this.state.products}
-            keyExtractor={(item, index) => item.id.toString()}
-            renderItem={this.renderListItem}
-            initialNumToRender={this.state.products.length}
-            refreshing={this.state.isLoading}
-            onRefresh={this.handelRefresh}
-            contentContainerStyle={
-              this.state.products.length === 0 ? globalStyles.container : null
-            }
-          />
-        )}
+	render = () => (
+		<Container>
+			<Header
+				title={"Death Report"}
+				selectedMenuItem={this.state.selectedMenuItem}
+				menuItems={this.state.menuItems}
+				onMenuItemChange={this.onMenuItemChange}
 
-        {/* Modal for download file */}
+				selectedPriorityItem={this.state.selectedPriorityItem}
+				priorityItems={this.state.priority}
+				onPriorityItemChange={this.onPriorityItemChange}
 
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.isModalOpen}
-          onRequestClose={this.closeModal}
-        >
-          <View style={globalStyles.container}>
-            <View style={globalStyles.modalBody}>
-              <DownloadFile
-                url={this.state.downloadUrl}
-                viewStyle={globalStyles.downloadBtn}
-                textStyle={globalStyles.downloadFileButtonText}
-                design={<AntDesign name="download" size={20} />}
-                text={"Download"}
-              />
-              <TouchableOpacity
-                activeOpacity={1}
-                style={globalStyles.closerBtn}
-                onPress={this.closeModal}
-              >
-                <Text style={globalStyles.closeBtnText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+				exportProducts={this.exportProducts}
+				searchAction={this.state.isLoading ? undefined : this.openSearchModal}
+			/>
+			<View style={globalStyles.container}>
+			{this.state.isLoading ? (
+				<Loader />
+			) : (
+				<FlatList
+					ListEmptyComponent={() => <ListEmpty />}
+					data={this.state.products}
+					keyExtractor={(item, index) => item.id.toString()}
+					renderItem={this.renderListItem}
+					initialNumToRender={this.state.products.length}
+					refreshing={this.state.isLoading}
+					onRefresh={this.handelRefresh}
+					contentContainerStyle={
+						this.state.products.length === 0 ? globalStyles.container : null
+					}
+				/>
+			)}
 
-        {/*Search Modal*/}
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={this.state.isSearchModalOpen}
-          onRequestClose={this.closeSearchModal}
-        >
-          <View style={[globalStyles.searchModalOverlay]}>
-            <View style={globalStyles.seacrhModalContainer}>
-              <View style={globalStyles.searchModalHeader}>
-                <TouchableOpacity
-                  activeOpacity={1}
-                  style={globalStyles.searchBackBtn}
-                  onPress={this.closeSearchModal}
-                >
-                  <Ionicons name="arrow-back" size={25} color={Colors.white} />
-                </TouchableOpacity>
+			{/* Modal for download file */}
+			 
+			<Modal
+				animationType="fade"
+				transparent={true}
+				visible={this.state.isModalOpen}
+				onRequestClose={this.closeModal}
+			>
+				<View style={globalStyles.container}>
+					<View style={globalStyles.modalBody}>
+						<DownloadFile
+							url={this.state.downloadUrl}
+							viewStyle={globalStyles.downloadBtn}
+							textStyle={[globalStyles.fontSize16,globalStyles.marginHorizontal5]}
+							design={<AntDesign name="download" size={20} />}
+							text={"Download"}
+						/>
+						<TouchableOpacity
+							activeOpacity={1}
+							style={globalStyles.closerBtn}
+							onPress={this.closeModal}
+						>
+							<Text style={globalStyles.closeBtnText}>Close</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</Modal>
 
-                <View style={globalStyles.searchContainer}>
-                  <View style={globalStyles.searchFieldBox}>
-                    <Ionicons name="search" size={24} color={Colors.white} />
-                    <TextInput
-                      ref={this.searchInput}
-                      value={this.state.searchValue}
-                      onChangeText={(searchValue) =>
-                        this.setState(
-                          {
-                            searchValue: searchValue,
-                          },
-                          () => {
-                            this.searchProduct();
-                          }
-                        )
-                      }
-                      autoCompleteType="off"
-                      placeholder="Search"
-                      placeholderTextColor={Colors.white}
-                      style={globalStyles.searchField}
-                    />
-                  </View>
-                </View>
-              </View>
+			{/*Search Modal*/}
+			<Modal
+				animationType="fade"
+				transparent={true}
+				visible={this.state.isSearchModalOpen}
+				onRequestClose={this.closeSearchModal}
+			>
+				<View style={[globalStyles.searchModalOverlay]}>
+					<View style={globalStyles.seacrhModalContainer}>
+						<View style={globalStyles.searchModalHeader}>
+							<TouchableOpacity
+								activeOpacity={1}
+								style={globalStyles.searchBackBtn}
+								onPress={this.closeSearchModal}
+							>
+								<Ionicons name="arrow-back" size={25} color={Colors.white} />
+							</TouchableOpacity>
 
-              <View style={globalStyles.searchModalBody}>
-                {this.state.searchValue.trim().length > 0 ? (
-                  <FlatList
-                    data={this.state.searchData}
-                    keyExtractor={(item, index) => item.id.toString()}
-                    renderItem={this.renderSearchListItem}
-                    initialNumToRender={this.state.searchData.length}
-                    keyboardShouldPersistTaps="handled"
-                    ListEmptyComponent={() => (
-                      <Text style={globalStyles.listEmptyComponentStyle}>
-                        No Result Found
-                      </Text>
-                    )}
-                  />
-                ) : null}
-              </View>
-            </View>
-          </View>
-        </Modal>
-      </View>
-    </Container>
-  );
+							<View style={globalStyles.searchContainer}>
+								<View style={globalStyles.searchFieldBox}>
+									<Ionicons name="search" size={24} color={Colors.white} />
+									<TextInput
+										ref={this.searchInput}
+										value={this.state.searchValue}
+										onChangeText={(searchValue) =>
+											this.setState(
+												{
+													searchValue: searchValue,
+												},
+												() => {
+													this.searchProduct();
+												}
+											)
+										}
+										autoCompleteType="off"
+										placeholder="Search"
+										placeholderTextColor={Colors.white}
+										style={globalStyles.searchField}
+									/>
+								</View>
+							</View>
+						</View>
+
+						<View style={globalStyles.searchModalBody}>
+							{this.state.searchValue.trim().length > 0 ? (
+								<FlatList
+									data={this.state.searchData}
+									keyExtractor={(item, index) => item.id.toString()}
+									renderItem={this.renderSearchListItem}
+									initialNumToRender={this.state.searchData.length}
+									keyboardShouldPersistTaps="handled"
+									ListEmptyComponent={() => (
+										<Text
+											style={[ globalStyles.detailText ,globalStyles.marginTop10,{
+												color: Colors.textColor}]}
+										>
+											No Result Found
+										</Text>
+									)}
+								/>
+							) : null}
+						</View>
+					</View>
+				</View>
+			</Modal>
+			</View>
+		</Container>
+	);
 }
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		backgroundColor: "#fff",

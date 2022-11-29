@@ -22,7 +22,7 @@ import {
 } from "../../services/APIServices";
 import { getFormattedDate } from "../../utils/Util";
 import AppContext from "../../context/AppContext";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 
 export default class TransferReport extends React.Component {
 	static contextType = AppContext;
@@ -103,23 +103,23 @@ export default class TransferReport extends React.Component {
 
     renderSearchListItem = ({ item }) => (
 		<TouchableHighlight underlayColor={"#eee"} onPress={this.goToDetails.bind(this,item)}>
-			<View style={styles.row}>
-				<View style={styles.leftPart}>
-					<Text style={[styles.labelName,styles.pd0,styles.no_bg_color,styles.text_bold]}>{`#${item.request_number}`}</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>{"Animals : " + item.animal_id}</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>
+			<View style={globalStyles.row}>
+				<View style={globalStyles.leftPart}>
+					<Text style={[globalStyles.labelName,globalStyles.pd0,globalStyles.no_bg_color,globalStyles.text_bold]}>{`#${item.request_number}`}</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>{"Animals : " + item.animal_id}</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
 						{"Requested By: " + item.changed_by_name}
 					</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
 						{"Reason: " + item.change_reason}
 					</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
 						{"Status: " + item.status}
 					</Text>
 				</View>
-				<View style={styles.rightPart}>
-					<View style={styles.rightPartStock}>
-						<Ionicons name="chevron-forward" style={styles.iconStyle} />
+				<View style={globalStyles.rightPart}>
+					<View style={globalStyles.rightPartStock}>
+						<Ionicons name="chevron-forward" style={globalStyles.iconStyle} />
 					</View>
 				</View>
 			</View>
@@ -128,23 +128,23 @@ export default class TransferReport extends React.Component {
 
 	renderListItem = ({ item }) => (
 		<TouchableHighlight underlayColor={"#eee"} onPress={this.goToDetails.bind(this,item)}>
-			<View style={styles.row}>
-				<View style={styles.leftPart}>
-					<Text style={[styles.labelName,styles.pd0,styles.no_bg_color,styles.text_bold]}>{`#${item.request_number}`}</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>{"Animals : " + item.animal_id}</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>
+			<View style={globalStyles.row}>
+				<View style={globalStyles.leftPart}>
+					<Text style={[globalStyles.labelName,globalStyles.pd0,globalStyles.no_bg_color,globalStyles.text_bold]}>{`#${item.request_number}`}</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>{"Animals : " + item.animal_id}</Text>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
 						{"Requested By: " + item.changed_by_name}
 					</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
 						{"Reason: " + item.change_reason}
 					</Text>
-					<Text style={[styles.textfield,styles.no_bg_color,styles.pd0]}>
+					<Text style={[globalStyles.textfield,globalStyles.no_bg_color,globalStyles.pd0]}>
 						{"Status: " + item.status}
 					</Text>
 				</View>
-				<View style={styles.rightPart}>
-					<View style={styles.rightPartStock}>
-						<Ionicons name="chevron-forward" style={styles.iconStyle} />
+				<View style={globalStyles.rightPart}>
+					<View style={globalStyles.rightPartStock}>
+						<Ionicons name="chevron-forward" style={globalStyles.iconStyle} />
 					</View>
 				</View>
 			</View>
@@ -165,7 +165,7 @@ export default class TransferReport extends React.Component {
 				title={"Death Report"}
 				searchAction={this.state.isLoading ? undefined : this.openSearchModal}
 			/>
-			<View style={styles.container}>
+			<View style={globalStyles.container}>
 				<FlatList
 					ListEmptyComponent={() => <ListEmpty />}
 					data={this.state.data}
@@ -175,7 +175,7 @@ export default class TransferReport extends React.Component {
 					refreshing={this.state.isLoading}
 					onRefresh={this.handelRefresh}
 					contentContainerStyle={
-						this.state.data.length === 0 ? styles.container : null
+						this.state.data.length === 0 ? globalStyles.container : null
 					}
 				/>
 			</View>
@@ -186,19 +186,19 @@ export default class TransferReport extends React.Component {
 				visible={this.state.isSearchModalOpen}
 				onRequestClose={this.closeSearchModal}
 			>
-				<View style={styles.searchModalOverlay}>
-					<View style={styles.seacrhModalContainer}>
-						<View style={styles.searchModalHeader}>
+				<View style={globalStyles.searchModalOverlay}>
+					<View style={globalStyles.seacrhModalContainer}>
+						<View style={globalStyles.searchModalHeader}>
 							<TouchableOpacity
 								activeOpacity={1}
-								style={styles.searchBackBtn}
+								style={globalStyles.searchBackBtn}
 								onPress={this.closeSearchModal}
 							>
 								<Ionicons name="arrow-back" size={25} color={Colors.white} />
 							</TouchableOpacity>
 
-							<View style={styles.searchContainer}>
-								<View style={styles.searchFieldBox}>
+							<View style={globalStyles.searchContainer}>
+								<View style={globalStyles.searchFieldBox}>
 									<Ionicons name="search" size={24} color={Colors.white} />
 									<TextInput
 										ref={this.searchInput}
@@ -216,13 +216,13 @@ export default class TransferReport extends React.Component {
 										autoCompleteType="off"
 										placeholder="Search"
 										placeholderTextColor={Colors.white}
-										style={styles.searchField}
+										style={globalStyles.searchField}
 									/>
 								</View>
 							</View>
 						</View>
 
-						<View style={styles.searchModalBody}>
+						<View style={globalStyles.searchModalBody}>
 							{this.state.searchValue.trim().length > 0 ? (
 								<FlatList
 									data={this.state.searchData}
@@ -232,11 +232,7 @@ export default class TransferReport extends React.Component {
 									keyboardShouldPersistTaps="handled"
 									ListEmptyComponent={() => (
 										<Text
-											style={{
-												color: Colors.textColor,
-												textAlign: "center",
-												marginTop: 10,
-											}}
+											style={[ globalStyles.detailText,globalStyles.marginTop10,{color: Colors.textColor}]}
 										>
 											No Result Found
 										</Text>
@@ -255,7 +251,7 @@ export default class TransferReport extends React.Component {
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		backgroundColor: "#fff",

@@ -16,9 +16,10 @@ import AppContext from "../../context/AppContext";
 import moment from "moment";
 import { Colors } from "../../config";
 import { ListEmpty, Loader, MultiSelectDropdown } from "../../component";
-import styles2 from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 import { getDepartments } from "../../services/UserManagementServices";
 import { getTaskReport } from "../../services/ReportsServices";
+import styles from  './Style'
 
 const individual = require("../../assets/tasks/manager.png");
 const rotate = require("../../assets/tasks/Rotate.png");
@@ -207,16 +208,16 @@ class TaskReport extends React.Component {
             selectedItems={this.state.selectedDepertments}
             items={this.state.departments}
             onSave={this.setDeptData}
-            placeHolderContainer={styles2.textfield}
-            placeholderStyle={styles2.placeholderStyle}
-            labelStyle={styles2.labelName}
-            textFieldStyle={styles2.textfield}
+            placeHolderContainer={globalStyles.textfield}
+            placeholderStyle={globalStyles.placeholderStyle}
+            labelStyle={globalStyles.labelName}
+            textFieldStyle={globalStyles.textfield}
             selectedItemsContainer={[
-              styles2.selectedItemsContainer,
-              styles2.width60,
+              globalStyles.selectedItemsContainer,
+              globalStyles.width60,
               { height: 100 }
             ]}
-            style={styles2.fieldBox}
+            style={globalStyles.fieldBox}
             listView={true}
           />
           {this.state.isFetching ? (
@@ -250,15 +251,15 @@ class TaskReport extends React.Component {
                   />
                 )}
                 contentContainerStyle={
-                  this.state.data.length === 0 ? styles2.container : null
+                  this.state.data.length === 0 ? globalStyles.container : null
                 }
                 ListEmptyComponent={() => <ListEmpty />}
                 stickySectionHeadersEnabled
                 renderSectionHeader={({ section: { title } }) => {
                   return (
-                    <View style={styles2.sectionHeader}>
-                      <View style={styles2.sectionHeaderRight}>
-                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: Colors.white }}>
+                    <View style={globalStyles.sectionHeader}>
+                      <View style={globalStyles.sectionHeaderRight}>
+                        <Text style={[globalStyles.fontWeightBold,globalStyles.fontSize16 ,{color: Colors.white }]}>
                           {title}
                         </Text>
                       </View>
@@ -281,34 +282,34 @@ class TaskReport extends React.Component {
 }
 export default TaskReport;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-  },
-  selected: { backgroundColor: "#d3d3d3" },
-  list: {},
-  icon: {
-    position: "absolute",
-    bottom: 20,
-    width: "100%",
-    left: 290,
-    zIndex: 1,
-  },
-  numberBox: {
-    position: "absolute",
-    bottom: 75,
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    left: 330,
-    zIndex: 3,
-    backgroundColor: "#e3e3e3",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  number: { fontSize: 14, color: "#000" },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//   },
+//   selected: { backgroundColor: "#d3d3d3" },
+//   list: {},
+//   icon: {
+//     position: "absolute",
+//     bottom: 20,
+//     width: "100%",
+//     left: 290,
+//     zIndex: 1,
+//   },
+//   numberBox: {
+//     position: "absolute",
+//     bottom: 75,
+//     width: 30,
+//     height: 30,
+//     borderRadius: 15,
+//     left: 330,
+//     zIndex: 3,
+//     backgroundColor: "#e3e3e3",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   number: { fontSize: 14, color: "#000" },
+// });

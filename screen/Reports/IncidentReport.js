@@ -20,12 +20,7 @@ import moment from "moment";
 import { Container } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../config/colors";
-import {
-  Header,
-  Loader,
-  ListEmpty,
-  MultiSelectDropdown,
-} from "../../component";
+import { Header, Loader, ListEmpty, MultiSelectDropdown } from "../../component";
 import {
   getIncidentReports,
   searchIncidentByType,
@@ -33,7 +28,7 @@ import {
 import AppContext from "../../context/AppContext";
 import { debounce } from "lodash";
 import { Configs } from "../../config";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 import { capitalize } from "./../../utils/Util";
 import { showDate } from "./../../utils/Util";
 import { userList } from "../../services/UserManagementServices";
@@ -97,6 +92,7 @@ export default class IncidentReport extends React.Component {
     this.focusListener();
   };
 
+
   getData = () => {
     userList()
       .then((res) => {
@@ -106,26 +102,23 @@ export default class IncidentReport extends React.Component {
             name: `${v.full_name} - ${v.dept_name}`,
           })),
           isLoading: false,
-          page: 1,
+          page: 1
         });
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   setSelectedUsers = (item) => {
     if (item.length > 0) {
-      this.setState(
-        {
-          selectedUsers: item,
-        },
-        () => {
-          this.getIncidentbyUser(item);
-        }
-      );
+      this.setState({
+        selectedUsers: item
+      }, () => {
+        this.getIncidentbyUser(item);
+      })
     } else {
-      alert("Select atleast one user");
+      alert("Select atleast one user")
     }
   };
 
@@ -137,7 +130,7 @@ export default class IncidentReport extends React.Component {
     let obj = {
       cid: this.context.userDetails.cid,
       users: users,
-      page: this.state.page,
+      page: this.state.page
     };
     getReportsforIncident(obj)
       .then((data) => {
@@ -157,7 +150,8 @@ export default class IncidentReport extends React.Component {
         });
       })
       .catch((error) => console.log(error));
-  };
+  }
+
 
   renderFooter = () => {
     //it will show indicator at the bottom of the list when data is loading otherwise it returns null
@@ -198,60 +192,58 @@ export default class IncidentReport extends React.Component {
     }
     return (
       <TouchableOpacity
-        style={[styles.CardBox, styles.mh5]}
+        style={[globalStyles.CardBox, globalStyles.mh5]}
         // onLongPress={this.gotoEdit.bind(this, item)}
         onPress={this.gotoView.bind(this, item)}
       >
         <View
-          style={[
-            globalStyles.flexDirectionRow,
-            globalStyles.justifyContentBetween,
-            globalStyles.pr5,
-          ]}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingRight: 5,
+          }}
         >
-          <Text style={[styles.labelName, styles.pd0]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"ID: "}
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {"#" + item.id}{" "}
             </Text>
           </Text>
-          <Image source={priority} style={styles.priorityImage} />
+          <Image
+            source={priority}
+            style={{ height: 15, width: 15, resizeMode: "contain" }}
+          />
         </View>
         <View
-          style={[
-            globalStyles.flexDirectionRow,
-            globalStyles.justifyContentBetween,
-            globalStyles.pr5,
-          ]}
+          style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceBetween,globalStyles.paddingRight5]}
         >
           <Text
             style={[
-              styles.labelName,
-              styles.pd0,
-              { width: "80%", marginVertical: 10 },
-            ]}
+              globalStyles.labelName,
+              globalStyles.pd0,globalStyles.marginVertical10,globalStyles.width80]}
           >
             {/* {"Desc: "} */}
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {item?.description ?? "N/A"}
             </Text>
           </Text>
         </View>
-        <Text style={[styles.labelName, styles.pd0]}>
+        <Text style={[globalStyles.labelName, globalStyles.pd0]}>
           {"Incident Type: "}
-          <Text style={[styles.textfield, styles.width60]}>
+          <Text style={[globalStyles.textfield, globalStyles.width60]}>
             {item.type_name}
           </Text>
         </Text>
         {item.ref == "others" ? null : (
-          <Text style={[styles.labelName, styles.pd0]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"Ref: "}
             {item.ref == "animal" ? (
-              <Text style={[styles.textfield, styles.width60]}>
+              <Text style={[globalStyles.textfield, globalStyles.width60]}>
                 {capitalize(item.english_name)} ({capitalize(item.ref_value)} )
               </Text>
             ) : (
-              <Text style={[styles.textfield, styles.width60]}>
+              <Text style={[globalStyles.textfield, globalStyles.width60]}>
                 {capitalize(item.ref_value)} ({capitalize(item.ref)} )
               </Text>
             )}
@@ -260,29 +252,29 @@ export default class IncidentReport extends React.Component {
 
         {item.ref == "animal" ? (
           <>
-            {/* <Text style={[styles.labelName,styles.pd0]}>
+            {/* <Text style={[globalStyles.labelName,globalStyles.pd0]}>
 							{"Common Name: "}
-							<Text style={[styles.textfield,styles.width60]}>{`${item.english_name}`}</Text>
+							<Text style={[globalStyles.textfield,globalStyles.width60]}>{`${item.english_name}`}</Text>
 						</Text> */}
             {item.dna == null || item.dna == "" ? null : (
-              <Text style={[styles.labelName, styles.pd0]}>
+              <Text style={[globalStyles.labelName, globalStyles.pd0]}>
                 {"DNA No: "}
                 <Text
-                  style={[styles.textfield, styles.width60]}
+                  style={[globalStyles.textfield, globalStyles.width60]}
                 >{`${item.dna}`}</Text>
               </Text>
             )}
             {item.microchip == null || item.microchip == "" ? null : (
-              <Text style={[styles.labelName, styles.pd0]}>
+              <Text style={[globalStyles.labelName, globalStyles.pd0]}>
                 {"Microchip No: "}
                 <Text
-                  style={[styles.textfield, styles.width60]}
+                  style={[globalStyles.textfield, globalStyles.width60]}
                 >{`${item.microchip}`}</Text>
               </Text>
             )}
-            <Text style={[styles.labelName, styles.pd0]}>
+            <Text style={[globalStyles.labelName, globalStyles.pd0]}>
               {"Encl: "}
-              <Text style={[styles.textfield, styles.width60]}>{`${capitalize(
+              <Text style={[globalStyles.textfield, globalStyles.width60]}>{`${capitalize(
                 item.enclosure
               )} (${capitalize(item.section)})`}</Text>
             </Text>
@@ -290,43 +282,43 @@ export default class IncidentReport extends React.Component {
         ) : null}
 
         {/* {!item.solution ? null :
-					<Text style={[styles.labelName, styles.pd0]}>
+					<Text style={[globalStyles.labelName, globalStyles.pd0]}>
 						{"Comments: "}
-						<Text style={[styles.textfield, styles.width60]}>{item?.solution ?? 'N/A'}</Text>
+						<Text style={[globalStyles.textfield, globalStyles.width60]}>{item?.solution ?? 'N/A'}</Text>
 					</Text>
 				} */}
         {!item.learning ? null : (
-          <Text style={[styles.labelName, styles.pd0]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"Learning: "}
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {item?.learning ?? "N/A"}
             </Text>
           </Text>
         )}
         <View></View>
         {!item.full_name ? null : (
-          <Text style={[styles.labelName, styles.pd0]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"Rep By: "}
-            <Text style={[styles.textfield, styles.width60]}>
+            <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {item?.full_name ?? "N/A"}
             </Text>
           </Text>
         )}
-        <Text style={[styles.labelName, styles.pd0]}>
+        <Text style={[globalStyles.labelName, globalStyles.pd0]}>
           {"Date: "}
-          <Text style={[styles.textfield, styles.width60]}>
+          <Text style={[globalStyles.textfield, globalStyles.width60]}>
             {moment(item.created_on, "YYYY-MM-DD").format("Do MMM YY (ddd)")}
           </Text>
         </Text>
         <Text
           style={[
-            styles.labelName,
-            styles.pd0,
-            // item.status === "P" ? styles.pendingStatus : styles.approveStatus,
+            globalStyles.labelName,
+            globalStyles.pd0,
+            // item.status === "P" ? globalStyles.pendingStatus : globalStyles.approveStatus,
           ]}
         >
           {"Status: "}
-          <Text style={[styles.textfield, styles.width60]}>
+          <Text style={[globalStyles.textfield, globalStyles.width60]}>
             {item.status === "P" ? "Pending" : ""}
           </Text>
         </Text>
@@ -336,24 +328,27 @@ export default class IncidentReport extends React.Component {
 
   render = () => (
     <Container>
-      <Header title={"Incident Reports"} searchAction={this.openSearchModal} />
+      <Header
+        title={"Incident Reports"}
+        searchAction={this.openSearchModal}
+      />
 
-      <View style={styles.listContainer}>
+      <View style={globalStyles.listContainer}>
         <MultiSelectDropdown
           label={"Select User"}
           items={this.state.users}
           selectedItems={this.state.selectedUsers}
           onSave={this.setSelectedUsers}
-          placeHolderContainer={styles.textfield}
-          placeholderStyle={styles.placeholderStyle}
-          labelStyle={styles.labelName}
-          textFieldStyle={styles.textfield}
+          placeHolderContainer={globalStyles.textfield}
+          placeholderStyle={globalStyles.placeholderStyle}
+          labelStyle={globalStyles.labelName}
+          textFieldStyle={globalStyles.textfield}
           selectedItemsContainer={[
-            styles.selectedItemsContainer,
-            styles.width60,
-            { height: 100 },
+            globalStyles.selectedItemsContainer,
+            globalStyles.width60,
+            { height: 100 }
           ]}
-          style={styles.fieldBox}
+          style={globalStyles.fieldBox}
           listView={true}
         />
         {this.state.isLoading && this.state.page === 1 ? (
@@ -364,21 +359,15 @@ export default class IncidentReport extends React.Component {
             keyExtractor={(item, index) => item.id.toString()}
             renderItem={this.renderItem}
             contentContainerStyle={
-              this.state.consumptions.length === 0 ? styles.container : null
+              this.state.consumptions.length === 0 ? globalStyles.container : null
             }
             ListEmptyComponent={() => <ListEmpty />}
             stickySectionHeadersEnabled
             renderSectionHeader={({ section: { title } }) => {
               return (
-                <View style={styles.sectionHeader}>
-                  <View style={styles.sectionHeaderRight}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        color: Colors.white,
-                      }}
-                    >
+                <View style={globalStyles.sectionHeader}>
+                  <View style={globalStyles.sectionHeaderRight}>
+                    <Text style={[globalStyles.fontSize16,globalStyles.fontWeightBold,{color: Colors.white }]}>
                       {title}
                     </Text>
                   </View>
@@ -401,7 +390,7 @@ export default class IncidentReport extends React.Component {
   );
 }
 
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		padding: 8,

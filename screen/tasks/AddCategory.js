@@ -27,6 +27,7 @@ import {
   getFileData,
 } from "../../utils/Util";
 import { Colors, Configs } from "../../config";
+import globalStyles from "../../config/Styles";
 
 const sampleimg = "https://www.pngarts.com/files/6/Vector-Carrot-PNG-Photo.png";
 

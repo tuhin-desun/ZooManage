@@ -12,9 +12,11 @@ import {
   SafeAreaView,
   SectionList,
   RefreshControl,
+  ScrollView,
 } from "react-native";
 import { Container } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
+import Accordion from "react-native-collapsible/Accordion";
 import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import {
@@ -40,6 +42,7 @@ export default class UserDepartments extends React.Component {
       isSearchModalOpen: false,
       searchValue: "",
       searchData: [],
+      activeSections: [],
     };
 
     this.searchInput = React.createRef();
@@ -73,6 +76,8 @@ export default class UserDepartments extends React.Component {
         for (let key in data) {
           dataArr.push({ title: key, data: data[key] });
         }
+
+        console.log({ dataArr });
         this.setState({
           isLoading: false,
           users: dataArr,
@@ -188,82 +193,88 @@ export default class UserDepartments extends React.Component {
     });
   }
 
-  renderSearchListItem = ({ item }) => (
-    <TouchableHighlight
-      underlayColor={"#eee"}
-      onPress={() => {
-        this.context.userDetails?.action_types.includes("Edit")
-          ? this.handleSearchEdit.bind(this, item)
-          : undefined;
-      }}
-    >
-      <View style={globalStyles.row}>
-        <View style={[globalStyles.leftPart, globalStyles.p5]}>
-          <Text
-            style={[
-              globalStyles.labelName,
-              globalStyles.pd0,
-              globalStyles.text_bold,
-            ]}
-          >
-            {item.full_name}
-          </Text>
-          <Text style={[globalStyles.textfield, globalStyles.pd0]}>
-            {`Department: ${item.dept_name}`}
-          </Text>
-          <Text style={[globalStyles.textfield, globalStyles.pd0]}>
-            {`Designation: ${item.desg_name}`}
-          </Text>
+  renderSearchListItem = ({ item }) => {
+    return (
+      <TouchableHighlight
+        underlayColor={"#eee"}
+        onPress={() => {
+          this.context.userDetails?.action_types.includes("Edit")
+            ? this.handleSearchEdit.bind(this, item)
+            : undefined;
+        }}
+      >
+        <View style={globalStyles.row}>
+          <View style={[globalStyles.leftPart, globalStyles.p5]}>
+            <Text
+              style={[
+                globalStyles.labelName,
+                globalStyles.pd0,
+                globalStyles.text_bold,
+              ]}
+            >
+              {item.full_name}
+            </Text>
+            <Text style={[globalStyles.textfield, globalStyles.pd0]}>
+              {`Department: ${item.dept_name}`}
+            </Text>
+            <Text style={[globalStyles.textfield, globalStyles.pd0]}>
+              {`Designation: ${item.desg_name}`}
+            </Text>
+          </View>
         </View>
-      </View>
-    </TouchableHighlight>
-  );
+      </TouchableHighlight>
+    );
+  };
 
-  renderListItem = ({ item }) => (
-    // <TouchableHighlight
-    // 	underlayColor={"#eee"}
-    // 	onPress={this.gotoUserListing.bind(this, item)}
-    // >
-    // 	<View style={[globalStyles.fieldBox,{height:50}]}>
-    // 		<View style={[globalStyles.leftPart,{padding:5}]}>
-    // 			<Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.text_bold]}>{item.dept_name}</Text>
-    // 		</View>
-    // 		<View style={[{padding:5,justifyContent:'flex-end'}]}>
-    // 			<Ionicons name="chevron-forward" size={18} color="#cecece" />
-    // 		</View>
-    // 	</View>
-    // </TouchableHighlight>
+  renderListItem = ({ item }) => {
+    console.log({ item });
 
-    <TouchableHighlight
-      underlayColor={"#eee"}
-      onPress={
-        this.context.userDetails?.action_types.includes("Edit")
-          ? this.gotoUserListing.bind(this, item)
-          : undefined
-      }
-    >
-      <View style={globalStyles.row}>
-        <View style={[globalStyles.leftPart, globalStyles.p5]}>
-          <Text
-            style={[
-              globalStyles.labelName,
-              globalStyles.pd0,
-              globalStyles.text_bold,
-            ]}
-          >
-            {item.full_name}
-          </Text>
-          {/* <Text style={[globalStyles.textfield, globalStyles.pd0]}>{"Department: " + item.dept_name}</Text> */}
-          <Text style={[globalStyles.textfield, globalStyles.pd0]}>
-            {"Designation: " + item.desg_name}
-          </Text>
+    return (
+      // <TouchableHighlight
+      // 	underlayColor={"#eee"}
+      // 	onPress={this.gotoUserListing.bind(this, item)}
+      // >
+      // 	<View style={[globalStyles.fieldBox,{height:50}]}>
+      // 		<View style={[globalStyles.leftPart,{padding:5}]}>
+      // 			<Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.text_bold]}>{item.dept_name}</Text>
+      // 		</View>
+      // 		<View style={[{padding:5,justifyContent:'flex-end'}]}>
+      // 			<Ionicons name="chevron-forward" size={18} color="#cecece" />
+      // 		</View>
+      // 	</View>
+      // </TouchableHighlight>
+
+      <TouchableHighlight
+        underlayColor={"#eee"}
+        onPress={
+          this.context.userDetails?.action_types.includes("Edit")
+            ? this.gotoUserListing.bind(this, item)
+            : undefined
+        }
+      >
+        <View style={globalStyles.row}>
+          <View style={[globalStyles.leftPart, globalStyles.p5]}>
+            <Text
+              style={[
+                globalStyles.labelName,
+                globalStyles.pd0,
+                globalStyles.text_bold,
+              ]}
+            >
+              {item.full_name}
+            </Text>
+            {/* <Text style={[globalStyles.textfield, globalStyles.pd0]}>{"Department: " + item.dept_name}</Text> */}
+            <Text style={[globalStyles.textfield, globalStyles.pd0]}>
+              {"Designation: " + item.desg_name}
+            </Text>
+          </View>
+          <View style={[styles.forwardIcon]}>
+            <Ionicons name="chevron-forward" size={18} color="#cecece" />
+          </View>
         </View>
-        <View style={[styles.forwardIcon]}>
-          <Ionicons name="chevron-forward" size={18} color="#cecece" />
-        </View>
-      </View>
-    </TouchableHighlight>
-  );
+      </TouchableHighlight>
+    );
+  };
 
   render = () => (
     <Container>
@@ -279,31 +290,143 @@ export default class UserDepartments extends React.Component {
       {this.state.isLoading ? (
         <Loader />
       ) : (
-        <SectionList
-          sections={this.state.users}
-          keyExtractor={(item, index) => item.id.toString()}
-          renderItem={this.renderListItem}
-          contentContainerStyle={
-            this.state.users.length === 0 ? globalStyles.container : null
-          }
-          ListEmptyComponent={() => <ListEmpty />}
-          stickySectionHeadersEnabled
-          renderSectionHeader={({ section: { title } }) => {
-            return (
-              <View style={globalStyles.sectionHeader}>
-                <View style={globalStyles.sectionHeaderRight}>
-                  <Text style={globalStyles.sectionHeaderText}>{title}</Text>
+        <ScrollView nestedScrollEnabled={true}>
+          <Accordion
+            sections={this.state.users}
+            activeSections={this.state.activeSections}
+            renderHeader={(section) => {
+              return (
+                <View style={globalStyles.sectionHeader}>
+                  <View style={globalStyles.sectionHeaderRight}>
+                    <Text style={globalStyles.sectionHeaderText}>
+                      {section.title}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            );
-          }}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isLoading}
-              onRefresh={this.handelRefresh}
-            />
-          }
-        />
+              );
+            }}
+            renderContent={(section) => {
+              console.log({ section });
+              return (
+                <FlatList
+                  ListEmptyComponent={() => <ListEmpty />}
+                  data={section.data}
+                  keyExtractor={(item, index) => item.id.toString()}
+                  renderItem={this.renderListItem}
+                  initialNumToRender={section.data.length}
+                  // refreshing={this.state.isLoading}
+                  // onRefresh={this.handelRefresh}
+                  contentContainerStyle={
+                    this.state.departments.length === 0
+                      ? globalStyles.container
+                      : null
+                  }
+                />
+              );
+            }}
+            onChange={(activeSections) => {
+              this.setState({ activeSections });
+            }}
+          />
+        </ScrollView>
+
+        // <ScrollView
+        //   nestedScrollEnabled={true}
+        //   showsVerticalScrollIndicator={false}
+        // >
+        //   {/* <Text style={styles.title}>Sub Categories</Text> */}
+        //   <View
+        //     style={[
+        //       styles.selectors,
+        //       { flexDirection: "row", flexWrap: "wrap" },
+        //     ]}
+        //   >
+        //     {this.state.users.map((section1, index) => (
+        //       <TouchableOpacity
+        //         key={section1.title}
+        //         onPress={() => this.setSections(section1)}
+        //       >
+        //         <View
+        //           // style={
+        //           //   section1.isCatSelect ? styles.capsulePress : styles.capsule
+        //           // }
+        //         >
+        //           <Text
+        //             style={
+        //               section1.isCatSelect
+        //                 ? styles.capsuleTextPress
+        //                 : styles.capsuleText
+        //             }
+        //           >
+        //             {section1.name}
+        //           </Text>
+        //         </View>
+        //       </TouchableOpacity>
+        //     ))}
+        //   </View>
+        //   <Collapsible collapsed={false}>
+        //     <View style={styles.content}>
+        //       {this.state.tasks && this.state.tasks.length > 0 ? (
+        //         <FlatList
+        //           // horizontal={true}
+        //           // showsHorizontalScrollIndicator={false}
+        //           data={this.state.tasks}
+        //           renderItem={this.renderTasksItem}
+        //           keyExtractor={(item) => item.id.toString()}
+        //         />
+        //       ) : (
+        //         <View style={{ justifyContent: "center" }}>
+        //           <View
+        //             style={{
+        //               justifyContent: "center",
+        //               textAlign: "center",
+        //             }}
+        //           >
+        //             <Text
+        //               style={{
+        //                 color: Colors.primary,
+        //                 textAlign: "center",
+        //               }}
+        //             >
+        //               No Tasks Found
+        //               {/* <Ionicons
+        //                                                     name="sad-outline"
+        //                                                     style={{ fontSize: 20, color: Colors.danger }}
+        //                                                 /> */}
+        //             </Text>
+        //           </View>
+        //         </View>
+        //       )}
+        //     </View>
+        //   </Collapsible>
+        // </ScrollView>
+
+        // <SectionList
+        //   sections={this.state.users}
+        //   keyExtractor={(item, index) => item.id.toString()}
+        //   renderItem={this.renderListItem}
+        //   contentContainerStyle={
+        //     this.state.users.length === 0 ? globalStyles.container : null
+        //   }
+        //   ListEmptyComponent={() => <ListEmpty />}
+        //   stickySectionHeadersEnabled
+        //   renderSectionHeader={({ section: { title } }) => {
+        //     return (
+        //       <View style={globalStyles.sectionHeader}>
+        //         <View style={globalStyles.sectionHeaderRight}>
+        //           <Text style={globalStyles.sectionHeaderText}>{title}</Text>
+        //         </View>
+        //       </View>
+        //     );
+        //   }}
+        //   refreshControl={
+        //     <RefreshControl
+        //       refreshing={this.state.isLoading}
+        //       onRefresh={this.handelRefresh}
+        //     />
+        //   }
+        // />
+
         // <FlatList
         // 	ListEmptyComponent={() => <ListEmpty />}
         // 	data={this.state.departments}

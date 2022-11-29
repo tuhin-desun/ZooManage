@@ -30,7 +30,7 @@ import { Modal } from "react-native";
 import { ImageBackground } from "react-native";
 import { TextInput } from "react-native";
 import { capitalize } from "../../utils/Util";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 
 const individual = require("../../assets/tasks/manager.png");
 const rotate = require("../../assets/tasks/Rotate.png");
@@ -127,7 +127,7 @@ class ApprovalTask extends React.Component {
             status: value.status,
             values: value,
             isSelect: false,
-            selectedClass: styles.list,
+            selectedClass: globalStyles.list,
             created: value.created_by_name,
             closed: value.updated_by_name,
           };
@@ -261,26 +261,50 @@ class ApprovalTask extends React.Component {
 
   renderListItem = ({ item }) => (
     <TouchableHighlight underlayColor={"#eee"} style={{ paddingHorizontal: 5 }}>
-      <View style={styles.row}>
-        <View style={styles.leftPart}>
+      <View style={globalStyles.row}>
+        <View style={globalStyles.leftPart}>
           <Text
             style={[
-              styles.labelName,
-              styles.pd0,
-              styles.no_bg_color,
-              styles.text_bold,
+              globalStyles.labelName,
+              globalStyles.pd0,
+              globalStyles.no_bg_color,
+              globalStyles.text_bold,
             ]}
           >{`#${item.request_number}`}</Text>
-          <Text style={[styles.textfield, styles.no_bg_color, styles.pd0]}>
+          <Text
+            style={[
+              globalStyles.textfield,
+              globalStyles.no_bg_color,
+              globalStyles.pd0,
+            ]}
+          >
             {"Animals : " + item.animal_id}
           </Text>
-          <Text style={[styles.textfield, styles.no_bg_color, styles.pd0]}>
+          <Text
+            style={[
+              globalStyles.textfield,
+              globalStyles.no_bg_color,
+              globalStyles.pd0,
+            ]}
+          >
             {"Requested By: " + item.changed_by_name}
           </Text>
-          <Text style={[styles.textfield, styles.no_bg_color, styles.pd0]}>
+          <Text
+            style={[
+              globalStyles.textfield,
+              globalStyles.no_bg_color,
+              globalStyles.pd0,
+            ]}
+          >
             {"Reason: " + item.change_reason}
           </Text>
-          <Text style={[styles.textfield, styles.no_bg_color, styles.pd0]}>
+          <Text
+            style={[
+              globalStyles.textfield,
+              globalStyles.no_bg_color,
+              globalStyles.pd0,
+            ]}
+          >
             {"Status: " + capitalize(item.status)}
           </Text>
           {item.status == "approved" || item.status == "rejected" ? null : (
@@ -333,9 +357,9 @@ class ApprovalTask extends React.Component {
   render() {
     if (this.state.isFetching) {
       return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={globalStyles.container}>
           <Header navigation={this.props.navigation} leftNavTo={"Home"} />
-          <View style={styles.body}>
+          <View style={globalStyles.body}>
             <Spinner />
           </View>
           {/* <Footer /> */}
@@ -343,7 +367,7 @@ class ApprovalTask extends React.Component {
       );
     }
     return (
-      <SafeAreaView style={[styles.container, globalStyles.p0]}>
+      <SafeAreaView style={[globalStyles.container, globalStyles.p0]}>
         <Header
           navigation={this.props.navigation}
           leftNavTo={"Home"}
@@ -353,19 +377,19 @@ class ApprovalTask extends React.Component {
               : "Enclosure Approval"
           }
         />
-        <View style={styles.tabContainer}>
+        <View style={globalStyles.tabContainer}>
           <TouchableOpacity
             onPress={this.setActiveTab.bind(this, "task")}
             style={[
-              styles.tab,
-              this.state.activeTabKey == "task" ? styles.activeTab : null,
+              globalStyles.tab,
+              this.state.activeTabKey == "task" ? globalStyles.activeTab : null,
             ]}
           >
             <Text
               style={
                 this.state.activeTabKey == "task"
-                  ? styles.activeTexttab
-                  : styles.inActiveText
+                  ? globalStyles.activeTexttab
+                  : globalStyles.inActiveText
               }
             >
               Tasks
@@ -374,15 +398,17 @@ class ApprovalTask extends React.Component {
           <TouchableOpacity
             onPress={this.setActiveTab.bind(this, "enclosure")}
             style={[
-              styles.tab,
-              this.state.activeTabKey == "enclosure" ? styles.activeTab : null,
+              globalStyles.tab,
+              this.state.activeTabKey == "enclosure"
+                ? globalStyles.activeTab
+                : null,
             ]}
           >
             <Text
               style={
                 this.state.activeTabKey == "enclosure"
-                  ? styles.activeTexttab
-                  : styles.inActiveText
+                  ? globalStyles.activeTexttab
+                  : globalStyles.inActiveText
               }
             >
               Enclosure
@@ -391,7 +417,7 @@ class ApprovalTask extends React.Component {
         </View>
         <View>
           {this.state.activeTabKey == "task" ? (
-            <View style={styles.body}>
+            <View style={globalStyles.body}>
               {this.state.data.length > 0 ? (
                 <FlatList
                   data={this.state.data}
@@ -429,7 +455,7 @@ class ApprovalTask extends React.Component {
               )}
             </View>
           ) : (
-            <View style={styles.body}>
+            <View style={globalStyles.body}>
               {this.state.enclosureData.length > 0 ? (
                 <FlatList
                   data={this.state.enclosureData}
@@ -458,17 +484,17 @@ class ApprovalTask extends React.Component {
             }}
           >
             <ImageBackground
-              style={styles.container}
+              style={globalStyles.container}
               blurRadius={this.state.rejectModal ? 2 : 0}
               source={require("../../assets/bg.jpg")}
             >
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
+              <View style={globalStyles.centeredView}>
+                <View style={globalStyles.modalView}>
                   <View>
                     <Text>Reject Reason</Text>
                   </View>
                   <TextInput
-                    style={styles.input}
+                    style={globalStyles.input}
                     onChangeText={(text) => {
                       this.setState({ reject_reason: text });
                     }}
@@ -491,15 +517,15 @@ class ApprovalTask extends React.Component {
                       onPress={() => {
                         this.toggleRejectModal(!this.state.rejectModal);
                       }}
-                      style={[styles.btn, styles.btnDanger]}
+                      style={[globalStyles.btn, globalStyles.btnDanger]}
                     >
-                      <Text style={styles.btnText}>Cancel</Text>
+                      <Text style={globalStyles.btnText}>Cancel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={this.rejectRequest}
-                      style={[styles.btn, styles.btnSuccess]}
+                      style={[globalStyles.btn, globalStyles.btnSuccess]}
                     >
-                      <Text style={styles.btnText}>Reject</Text>
+                      <Text style={globalStyles.btnText}>Reject</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

@@ -458,6 +458,8 @@ class Todo extends React.Component {
           title2={true}
           leftIcon={"ios-add"}
           rightIcon={this.state.switchCategoryStatus ? undefined : "filter"}
+          goToCompleteTaskIcon={"AddCompleteTasks"}
+          // onPressCNavTo = {}
           // extra={this.advance}
           // adv={this.state.advance}
         />

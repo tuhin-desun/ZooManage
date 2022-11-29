@@ -229,6 +229,27 @@ class Header extends React.Component {
               </TouchableOpacity>
             )}
 
+            {!this.props.goToCompleteTaskIcon ? null : (
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.push(
+                    this.props.goToCompleteTaskIcon,
+                    this.props.params
+                  )
+                }
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "400",
+                    color: Colors.white,
+                  }}
+                >
+                  C
+                </Text>
+              </TouchableOpacity>
+            )}
+
             {/* Delicate Assign icon here */}
             {/* {this.props.params == "assign_user" ? null : (
               <TouchableOpacity

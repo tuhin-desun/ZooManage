@@ -13,7 +13,7 @@ import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import { getTagGroups } from "../../services/TagServices";
 import AppContext from "../../context/AppContext";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const tabHeight = 50;
@@ -85,16 +85,16 @@ export default class TagGroupList extends React.Component {
   renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={this.gotoEdit.bind(this, item)}
-      style={styles.fieldBox}
+      style={globalStyles.fieldBox}
     >
-      <Text style={styles.labelName}>{item.name}</Text>
+      <Text style={globalStyles.labelName}>{item.name}</Text>
     </TouchableOpacity>
   );
 
   render = () => (
     <Container>
       <Header title={"Tag Groups"} addAction={this.gotoAddTagGroup} />
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         {this.state.isLoading ? (
           <Loader />
         ) : (
@@ -107,7 +107,7 @@ export default class TagGroupList extends React.Component {
             refreshing={this.state.isLoading}
             onRefresh={this.loadTagGroups}
             contentContainerStyle={
-              this.state.tagGroups.length === 0 ? styles.container : null
+              this.state.tagGroups.length === 0 ? globalStyles.container : null
             }
           />
         )}

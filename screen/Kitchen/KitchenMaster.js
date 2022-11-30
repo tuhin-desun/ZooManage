@@ -23,77 +23,47 @@ export default class KitchenMaster extends React.Component {
     this.state = {
       today: new Date(),
       menus: [
-        {
-          id: 1,
-          name: "Feeding Factors",
-          onclick: () =>
-            this.props.navigation.navigate("FeedingFactors", {
-              type: "enclosure",
-            }),
-          icon: (
-            <MaterialCommunityIcons
-              name="food-fork-drink"
-              size={35}
-              color={Colors.textColor}
-            />
-          ),
-        },
-        {
-          id: 2,
-          name: "Meal Slots",
-          onclick: () =>
-            this.props.navigation.navigate("MealSlots", {
-              type: "enclosure",
-            }),
-          icon: (
-            <MaterialCommunityIcons
-              name="food-fork-drink"
-              size={35}
-              color={Colors.textColor}
-            />
-          ),
-        },
-        {
-          id: 3,
-          name: "Feeding Platers",
-          onclick: () =>
-            this.props.navigation.navigate("FeedingPlaters", {
-              type: "enclosure",
-            }),
-          icon: (
-            <MaterialCommunityIcons
-              name="food-fork-drink"
-              size={35}
-              color={Colors.textColor}
-            />
-          ),
-        },
-        {
-          id: 4,
-          name: "Feed Types",
-          onclick: () =>
-            this.props.navigation.navigate("FeedTypes", {
-              type: "enclosure",
-            }),
-          icon: (
-            <MaterialCommunityIcons
-              name="food-fork-drink"
-              size={35}
-              color={Colors.textColor}
-            />
-          ),
-        },
+          {
+            id: 1,
+            name: "Feeding Factors",
+            onclick: () =>
+              this.props.navigation.navigate("FeedingFactors", {
+                type: "enclosure",
+              }),
+            icon: <MaterialCommunityIcons name="food-fork-drink" size={35} color={Colors.textColor} />,
+          },
+          {
+            id: 2,
+            name: "Meal Slots",
+            onclick: () =>
+              this.props.navigation.navigate("MealSlots", {
+                type: "enclosure",
+              }),
+            icon: <MaterialCommunityIcons name="food-fork-drink" size={35} color={Colors.textColor} />,
+          },
+          {
+            id: 3,
+            name: "Feeding Platers",
+            onclick: () =>
+              this.props.navigation.navigate("FeedingPlaters", {
+                type: "enclosure",
+              }),
+            icon: <MaterialCommunityIcons name="food-fork-drink" size={35} color={Colors.textColor} />,
+          },
+          {
+            id: 4,
+            name: "Feed Types",
+            onclick: () =>
+              this.props.navigation.navigate("FeedTypes", {
+                type: "enclosure",
+              }),
+            icon: <MaterialCommunityIcons name="food-fork-drink" size={35} color={Colors.textColor} />,
+          },
         {
           id: 5,
           name: "Foods",
           onclick: () => this.props.navigation.navigate("Foods"),
-          icon: (
-            <MaterialCommunityIcons
-              name="food-fork-drink"
-              size={35}
-              color={Colors.textColor}
-            />
-          ),
+          icon: <MaterialCommunityIcons name="food-fork-drink" size={35} color={Colors.textColor} />,
         },
       ],
     };
@@ -109,8 +79,10 @@ export default class KitchenMaster extends React.Component {
         onPress={item.onclick}
         style={[globalStyles.icon_btn, globalStyles.pl12]}
       >
-        <View style={globalStyles.imgContainer}>{item.icon}</View>
-        <Text style={[globalStyles.title, globalStyles.fontWeightNormal]}>
+        <View style={globalStyles.imgContainer}>
+        {item.icon}
+        </View>
+        <Text style={[globalStyles.title,globalStyles.fontWeightNormal]}>
           {item.name}
         </Text>
       </TouchableOpacity>
@@ -138,7 +110,7 @@ export default class KitchenMaster extends React.Component {
   );
 }
 
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		backgroundColor: "#fff",

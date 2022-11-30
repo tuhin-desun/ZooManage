@@ -13,11 +13,12 @@ import Colors from "../../../config/colors";
 import { Header, Loader, ListEmpty } from "../../../component";
 import { getDiagnosis } from "../../../services/MedicalAndIncidenTServices";
 import AppContext from "../../../context/AppContext";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { get_feed_factor } from "../../../services/KitchenServices";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const tabHeight = 50;
+import Styles from '../Style'
 
 export default class FeedingFactors extends React.Component {
   static contextType = AppContext;
@@ -64,7 +65,7 @@ export default class FeedingFactors extends React.Component {
           .then((data) => {
             this.setState({
               isLoading: false,
-              factors: data.data,
+              factors: data.data
             });
           })
           .catch((error) => console.log(error));
@@ -83,38 +84,24 @@ export default class FeedingFactors extends React.Component {
 
   renderItem = ({ item }) => (
     <TouchableOpacity
-      style={[globalStyles.fieldBox, { justifyContent: "space-between" }]}
-      activeOpacity={1}
-      onPress={this.gotoEdit.bind(this, item)}
-    >
-      <View>
-        <Text
-          style={[
-            globalStyles.labelName,
-            globalStyles.pd0,
-            { padding: 5, fontWeight: "bold" },
-          ]}
-        >
-          Sl. No. : {item.id}
-        </Text>
+        style={[globalStyles.fieldBox,globalStyles.justifyContentSpaceBetween]}
+        activeOpacity={1}
+        onPress={this.gotoEdit.bind(this, item)}
+      >
+        <View>
+          <Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.p5 , Styles.fW ]}>
+            Sl. No.  :  {item.id}
+          </Text>
 
-        <Text
-          style={[
-            globalStyles.labelName,
-            globalStyles.pd0,
-            { padding: 5, fontWeight: "bold" },
-          ]}
-        >
-          Factor Name : {item.factor_name}
-        </Text>
+          <Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.p5, Styles.fW]}>
+           Factor Name :  {item.factor_name}
+          </Text>
 
-        <Text
-          style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}
-        >
-          Details : {item.details}
-        </Text>
-      </View>
-    </TouchableOpacity>
+          <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+           Details :  {item.details}
+          </Text>
+        </View>
+      </TouchableOpacity>
   );
 
   render = () => (

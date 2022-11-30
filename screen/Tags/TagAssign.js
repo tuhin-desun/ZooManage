@@ -14,6 +14,7 @@ import {
   RefreshControl,
 } from "react-native";
 import { Modal as Modal2 } from "react-native";
+
 import { Container } from "native-base";
 import { MaterialCommunityIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -48,11 +49,13 @@ import Modal from "react-native-modal";
 import AppContext from "../../context/AppContext";
 import moment from "moment";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "../../config/Styles";
+//import globalStyles from "../../config/Styles";
+import globalStyles from "../../config/Styles"
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Camera } from "expo-camera";
 import MultiSelectDropdown from "./../../component/MultiSelectDropdown";
 import Category from "../../component/category";
+import styles from './Styles'
 
 export default class TagAssign extends React.Component {
   static contextType = AppContext;
@@ -108,34 +111,34 @@ export default class TagAssign extends React.Component {
       selectionTypeName: props.route.params?.item?.ref
         ? capitalize(props.route.params.item.ref)
         : props.route.params.selectionType
-        ? capitalize(props.route.params.selectionType)
-        : "",
+          ? capitalize(props.route.params.selectionType)
+          : "",
       selectionTypeId: props.route.params?.item?.ref
         ? props.route.params.item.ref
         : props.route.params.selectionType
-        ? props.route.params.selectionType
-        : undefined,
-      selectedRef: props.route.params?.item?.selectedRef
+          ? props.route.params.selectionType
+          : undefined,
+      selectedRef : props.route.params?.item?.selectedRef
         ? props.route.params.item.selectedRef
         : props.route.params.selectedRef
-        ? props.route.params.selectedRef
-        : [],
+          ? props.route.params.selectedRef
+          : [],
       ref_name: props.route.params?.item?.ref_value
         ? props.route.params.item.ref_value
         : props.route.params.ref_name
-        ? props.route.params.ref_name
-        : undefined,
+          ? props.route.params.ref_name
+          : undefined,
 
       section_id: props.route.params?.grand_parent_id
         ? props.route.params?.grand_parent_id
         : props.route.params?.parent_id
-        ? props.route.params?.parent_id
-        : "",
+          ? props.route.params?.parent_id
+          : "",
       section_name: props.route.params?.grand_parent_name
         ? props.route.params?.grand_parent_name
         : props.route.params?.parent_name
-        ? props.route.params?.parent_name
-        : "",
+          ? props.route.params?.parent_name
+          : "",
       enclosure_id: props.route.params?.grand_parent_id
         ? props.route.params?.parent_id
         : "",
@@ -156,7 +159,7 @@ export default class TagAssign extends React.Component {
       subcategories: [],
       commonNames: [],
       tags: [],
-      class: [],
+      class : [],
 
       show: false,
       isrefMenuOpen: false,
@@ -353,45 +356,40 @@ export default class TagAssign extends React.Component {
         console.log(err);
       });
   };
-
   setSelectionTypeData = (v) =>
-    this.setState(
-      {
-        selectionTypeId: v.value,
-        selectionTypeName: v.name,
-        selectedRef: [],
-        ref_name: "",
-        isSelectionTypeMenuOpen: false,
-      },
-      () => this.getTags(v.value)
-    );
+    this.setState({
+      selectionTypeId: v.value,
+      selectionTypeName: v.name,
+      selectedRef: [],
+      ref_name: "",
+      isSelectionTypeMenuOpen: false,
+    },()=>
+      this.getTags(v.value)
+      )
 
-  getTags = (v) => {
-    if (v == undefined) {
-      alert("Choose Assign by First!!");
-    } else {
-      this.setState(
-        {
-          tags: [],
-          selectedTags: [],
-          isTagsMenuOpen: true,
-        },
-        () => {
-          getAllTagsbyGroup(this.context.userDetails.cid, v)
-            .then((res) => {
-              let dataArr = [];
-              for (let key in res.data) {
-                dataArr.push({ title: key, data: res.data[key] });
-              }
-              this.setState({
-                tags: dataArr,
-              });
-            })
-            .catch((err) => console.log(err));
-        }
-      );
-    }
-  };
+
+  getTags = (v) =>{
+    if(v == undefined){
+      alert("Choose Assign by First!!")
+    }else{
+    this.setState({
+      tags:[],
+      selectedTags:[],
+      isTagsMenuOpen : true
+    },()=>{
+      getAllTagsbyGroup(this.context.userDetails.cid,v).then((res)=>{
+        let dataArr = [];
+            for (let key in res.data) {
+              dataArr.push({ title: key, data: res.data[key] });
+            }
+        this.setState({
+          tags : dataArr
+        })
+      }).catch((err)=>console.log(err))
+    });
+  }
+}
+
 
   setref = (v) => {
     this.setState({
@@ -400,40 +398,38 @@ export default class TagAssign extends React.Component {
     });
   };
 
+
   setClass = (v) => {
     let cid = this.context.userDetails.cid;
-    this.setState(
-      {
-        class_id: v.id,
-        class_name: v.name,
-        section_id: "",
-        section_name: "",
-        enclosure_id: "",
-        enclosure_name: "",
-        category_id: "",
-        category_name: "",
-        subcategory_id: "",
-        subcategory_name: "",
-        selectedRef: [],
-        ref_name: "",
-        isClassMenuOpen: false,
-      },
-      () => {
-        getCategories(cid, v.id)
-          .then((res) => {
-            this.setState({
-              categories: res.map((v, i) => ({
-                id: v.id,
-                name: v.name,
-                value: v.id,
-              })),
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    );
+    this.setState({
+      class_id: v.id,
+      class_name: v.name,
+      section_id: "",
+      section_name: "",
+      enclosure_id: "",
+      enclosure_name: "",
+      category_id:"",
+      category_name: "",
+      subcategory_id: "",
+      subcategory_name: "",
+      selectedRef: [],
+      ref_name: "",
+      isClassMenuOpen: false,
+    },()=>{
+      getCategories(cid,v.id)
+      .then((res) => {
+        this.setState({
+          categories: res.map((v, i) => ({
+            id: v.id,
+            name: v.name,
+            value: v.id,
+          })),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    });
   };
 
   setSection = (v) => {
@@ -458,11 +454,11 @@ export default class TagAssign extends React.Component {
     let arr = this.state.selectedTags;
     let index = arr.findIndex((element) => element.id === id);
 
-    if (index > -1) {
-      arr = arr.filter((element) => element.id !== id);
-    } else {
-      arr.push(item);
-    }
+        if (index > -1) {
+            arr = arr.filter((element) => element.id !== id);
+        } else {
+            arr.push(item);
+        }
     this.setState({
       selectedTags: arr,
     });
@@ -557,8 +553,8 @@ export default class TagAssign extends React.Component {
                   ?.map((item) => item.id)
                   .join(","),
                 ref_id: this.state.selectedRef
-                  ?.map((item) => item.id)
-                  .join(","),
+                ?.map((item) => item.id)
+                .join(","),
                 type: this.state.selectionTypeId,
                 cid,
               };
@@ -621,22 +617,23 @@ export default class TagAssign extends React.Component {
           enclosure_name: scanData.enclosure_name,
         });
       } else {
-        let arr =
-          type == this.state.selectionTypeId ? this.state.selectedRef : [];
+        let arr = type == this.state.selectionTypeId ? this.state.selectedRef : [];
         let id = scanData.enclosure_db_id
-          ? scanData.enclosure_db_id
-          : scanData.id
+        ? scanData.enclosure_db_id
+        : scanData.id
           ? scanData.id
           : scanData.section_id;
         let name = scanData.animal_code
-          ? scanData?.common_name
-          : scanData.enclosure_id
+        ? scanData?.common_name
+        : scanData.enclosure_id
           ? scanData.enclosure_id
           : scanData.section;
-        arr.push({
-          id: id,
-          name: name,
-        });
+        arr.push(
+          {
+            id : id ,
+            name : name
+          }
+        )
         this.setState({
           isScanModal: !this.state.isScanModal,
 
@@ -649,8 +646,8 @@ export default class TagAssign extends React.Component {
           ref_name: scanData.animal_code
             ? scanData?.common_name
             : scanData.enclosure_id
-            ? scanData.enclosure_id
-            : scanData.section,
+              ? scanData.enclosure_id
+              : scanData.section,
 
           section_id: scanData.section_id,
 
@@ -669,7 +666,7 @@ export default class TagAssign extends React.Component {
   };
 
   render = () => (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={globalStyles.container}>
       <OverlayLoader visible={this.state.showLoader} />
       <Header
         // title={parseInt(this.state.id) > 0 ? "Edit Record" : "Medical Record"}
@@ -677,7 +674,7 @@ export default class TagAssign extends React.Component {
         showRelatedScanButton={true}
         openRelatedScaner={this.openRelatedScaner}
       />
-      <View style={globalStyles.mb50}>
+      <View>
         <KeyboardAwareScrollView
           refreshControl={
             <RefreshControl
@@ -686,14 +683,16 @@ export default class TagAssign extends React.Component {
             />
           }
           ref={this.formScrollViewRef}
-          style={{
-            paddingHorizontal: Colors.formPaddingHorizontal,
-            paddingBottom: 20,
-            paddingTop: 5,
-            marginBottom: 20,
-          }}
+          // 
+          
+          // style={{
+          //   paddingHorizontal: Colors.formPaddingHorizontal,
+          //   paddingBottom: 20,
+          //   paddingTop: 5,
+          //   marginBottom: 20,
+          // }}
         >
-          <View style={styles.boxBorder}>
+          <View style={globalStyles.boxBorder}>
             <>
               <InputDropdown
                 label={"Assign By"}
@@ -704,12 +703,12 @@ export default class TagAssign extends React.Component {
                 closeAction={this.toggleSelectionTypeMenu}
                 setValue={this.setSelectionTypeData}
                 // placeholder="Select Incident Related To"
-                labelStyle={styles.labelName}
-                textFieldStyle={styles.textfield}
+                labelStyle={globalStyles.labelName}
+                textFieldStyle={globalStyles.textfield}
                 style={[
-                  styles.fieldBox,
+                  globalStyles.fieldBox,
                   this.state.hasTypeValidationError
-                    ? styles.errorFieldBox
+                    ? globalStyles.errorFieldBox
                     : null,
                 ]}
               />
@@ -717,22 +716,22 @@ export default class TagAssign extends React.Component {
               {this.state.selectionTypeId == "section" ? (
                 <MultiSelectDropdown
                   label={"Sections"}
-                  style={styles.fieldBox}
+                  style={globalStyles.fieldBox}
                   selectedItems={this.state.selectedRef}
                   // isOpen={this.state.isrefMenuOpen}
                   items={this.state.sections}
                   // openAction={this.togglerefMenu}
                   // closeAction={this.togglerefMenu}
                   onSave={this.setref}
-                  placeHolderContainer={styles.textfield}
-                  placeholderStyle={styles.placeholderStyle}
+                  placeHolderContainer={globalStyles.textfield}
+                placeholderStyle={globalStyles.placeholderStyle}
                   // placeholder="Select Sections"
-                  labelStyle={styles.labelName}
-                  textFieldStyle={styles.textfield}
-                  // style={[styles.fieldBox]}
+                  labelStyle={globalStyles.labelName}
+                  textFieldStyle={globalStyles.textfield}
+                  // style={[globalStyles.fieldBox]}
                   selectedItemsContainer={[
-                    styles.selectedItemsContainer,
-                    styles.width60,
+                    globalStyles.selectedItemsContainer,
+                    globalStyles.width60,
                   ]}
                 />
               ) : null}
@@ -749,29 +748,29 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleSectionMenu}
                       setValue={this.setSection}
                       // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                     <MultiSelectDropdown
                       label={"Enclosures"}
-                      style={styles.fieldBox}
+                      style={globalStyles.fieldBox}
                       selectedItems={this.state.selectedRef}
-                      // isOpen={this.state.isrefMenuOpen}
-                      items={this.state.enclosures}
-                      // openAction={this.togglerefMenu}
-                      // closeAction={this.togglerefMenu}
-                      onSave={this.setref}
-                      placeHolderContainer={styles.textfield}
-                      placeholderStyle={styles.placeholderStyle}
-                      // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      // style={[styles.fieldBox]}
-                      selectedItemsContainer={[
-                        styles.selectedItemsContainer,
-                        styles.width60,
-                      ]}
+                  // isOpen={this.state.isrefMenuOpen}
+                  items={this.state.enclosures}
+                  // openAction={this.togglerefMenu}
+                  // closeAction={this.togglerefMenu}
+                  onSave={this.setref}
+                  placeHolderContainer={globalStyles.textfield}
+                placeholderStyle={globalStyles.placeholderStyle}
+                  // placeholder="Select Sections"
+                  labelStyle={globalStyles.labelName}
+                  textFieldStyle={globalStyles.textfield}
+                  // style={[globalStyles.fieldBox]}
+                  selectedItemsContainer={[
+                    globalStyles.selectedItemsContainer,
+                    globalStyles.width60,
+                  ]}
                     />
                   </>
                 ) : null
@@ -780,7 +779,7 @@ export default class TagAssign extends React.Component {
               {this.state.selectionTypeId == "animal" ? (
                 this.state.id == 0 ? (
                   <>
-                    {/* <View style={styles.inputContainer}> */}
+                    {/* <View style={globalStyles.inputContainer}> */}
                     <InputDropdown
                       label={"Section"}
                       value={this.state.section_name}
@@ -790,12 +789,12 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleSectionMenu}
                       setValue={this.setSection}
                       // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                     {/* </View> */}
-                    {/* <View style={styles.inputContainer}> */}
+                    {/* <View style={globalStyles.inputContainer}> */}
                     <InputDropdown
                       label={"Enclosures"}
                       value={this.state.enclosure_name}
@@ -805,9 +804,9 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleEnclosureMenu}
                       setValue={this.setEnclosure}
                       // placeholder="Select Enclosures"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                     {/* </View> */}
                   </>
@@ -817,22 +816,22 @@ export default class TagAssign extends React.Component {
               {this.state.selectionTypeId == "animal" ? (
                 <MultiSelectDropdown
                   label={"Animals"}
-                  style={styles.fieldBox}
+                  style={globalStyles.fieldBox}
                   selectedItems={this.state.selectedRef}
                   // isOpen={this.state.isrefMenuOpen}
                   items={this.state.animals}
                   // openAction={this.togglerefMenu}
                   // closeAction={this.togglerefMenu}
                   onSave={this.setref}
-                  placeHolderContainer={styles.textfield}
-                  placeholderStyle={styles.placeholderStyle}
+                  placeHolderContainer={globalStyles.textfield}
+                placeholderStyle={globalStyles.placeholderStyle}
                   // placeholder="Select Sections"
-                  labelStyle={styles.labelName}
-                  textFieldStyle={styles.textfield}
-                  // style={[styles.fieldBox]}
+                  labelStyle={globalStyles.labelName}
+                  textFieldStyle={globalStyles.textfield}
+                  // style={[globalStyles.fieldBox]}
                   selectedItemsContainer={[
-                    styles.selectedItemsContainer,
-                    styles.width60,
+                    globalStyles.selectedItemsContainer,
+                    globalStyles.width60,
                   ]}
                 />
               ) : null}
@@ -850,33 +849,32 @@ export default class TagAssign extends React.Component {
                     closeAction={this.toggleClassMenu}
                     setValue={this.setClass}
                     // placeholder="Select Sections"
-                    labelStyle={styles.labelName}
-                    textFieldStyle={styles.textfield}
-                    style={[styles.fieldBox]}
+                    labelStyle={globalStyles.labelName}
+                    textFieldStyle={globalStyles.textfield}
+                    style={[globalStyles.fieldBox]}
                   />
                   <MultiSelectDropdown
                     label={"Category"}
-                    style={styles.fieldBox}
+                    style={globalStyles.fieldBox}
                     selectedItems={this.state.selectedRef}
-                    // isOpen={this.state.isrefMenuOpen}
-                    items={this.state.categories}
-                    // openAction={this.togglerefMenu}
-                    // closeAction={this.togglerefMenu}
-                    onSave={this.setref}
-                    placeHolderContainer={styles.textfield}
-                    placeholderStyle={styles.placeholderStyle}
-                    // placeholder="Select Sections"
-                    labelStyle={styles.labelName}
-                    textFieldStyle={styles.textfield}
-                    // style={[styles.fieldBox]}
-                    selectedItemsContainer={[
-                      styles.selectedItemsContainer,
-                      styles.width60,
-                    ]}
+                  // isOpen={this.state.isrefMenuOpen}
+                  items={this.state.categories}
+                  // openAction={this.togglerefMenu}
+                  // closeAction={this.togglerefMenu}
+                  onSave={this.setref}
+                  placeHolderContainer={globalStyles.textfield}
+                placeholderStyle={globalStyles.placeholderStyle}
+                  // placeholder="Select Sections"
+                  labelStyle={globalStyles.labelName}
+                  textFieldStyle={globalStyles.textfield}
+                  // style={[globalStyles.fieldBox]}
+                  selectedItemsContainer={[
+                    globalStyles.selectedItemsContainer,
+                    globalStyles.width60,
+                  ]}
                   />
                 </>
               ) : null}
-
               {this.state.selectionTypeId == "sub_category" ? (
                 this.state.id == 0 ? (
                   <>
@@ -889,9 +887,9 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleClassMenu}
                       setValue={this.setClass}
                       // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                     <InputDropdown
                       label={"Category"}
@@ -902,29 +900,29 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleCategoryMenu}
                       setValue={this.setCategory}
                       // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                     <MultiSelectDropdown
                       label={"Subcategory"}
-                      style={styles.fieldBox}
+                      style={globalStyles.fieldBox}
                       selectedItems={this.state.selectedRef}
-                      // isOpen={this.state.isrefMenuOpen}
-                      items={this.state.subcategories}
-                      // openAction={this.togglerefMenu}
-                      // closeAction={this.togglerefMenu}
-                      onSave={this.setref}
-                      placeHolderContainer={styles.textfield}
-                      placeholderStyle={styles.placeholderStyle}
-                      // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      // style={[styles.fieldBox]}
-                      selectedItemsContainer={[
-                        styles.selectedItemsContainer,
-                        styles.width60,
-                      ]}
+                  // isOpen={this.state.isrefMenuOpen}
+                  items={this.state.subcategories}
+                  // openAction={this.togglerefMenu}
+                  // closeAction={this.togglerefMenu}
+                  onSave={this.setref}
+                  placeHolderContainer={globalStyles.textfield}
+                placeholderStyle={globalStyles.placeholderStyle}
+                  // placeholder="Select Sections"
+                  labelStyle={globalStyles.labelName}
+                  textFieldStyle={globalStyles.textfield}
+                  // style={[globalStyles.fieldBox]}
+                  selectedItemsContainer={[
+                    globalStyles.selectedItemsContainer,
+                    globalStyles.width60,
+                  ]}
                     />
                   </>
                 ) : null
@@ -942,9 +940,9 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleClassMenu}
                       setValue={this.setClass}
                       // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                     <InputDropdown
                       label={"Category"}
@@ -955,9 +953,9 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleCategoryMenu}
                       setValue={this.setCategory}
                       // placeholder="Select Sections"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
 
                     <InputDropdown
@@ -969,9 +967,9 @@ export default class TagAssign extends React.Component {
                       closeAction={this.toggleSubcategoryMenu}
                       setValue={this.setSubcategory}
                       // placeholder="Select Enclosures"
-                      labelStyle={styles.labelName}
-                      textFieldStyle={styles.textfield}
-                      style={[styles.fieldBox]}
+                      labelStyle={globalStyles.labelName}
+                      textFieldStyle={globalStyles.textfield}
+                      style={[globalStyles.fieldBox]}
                     />
                   </>
                 ) : null
@@ -986,77 +984,82 @@ export default class TagAssign extends React.Component {
                   // openAction={this.togglerefMenu}
                   // closeAction={this.togglerefMenu}
                   onSave={this.setref}
-                  placeHolderContainer={styles.textfield}
-                  placeholderStyle={styles.placeholderStyle}
-                  labelStyle={styles.labelName}
-                  textFieldStyle={styles.textfield}
-                  // style={[styles.fieldBox]}
+                  placeHolderContainer={globalStyles.textfield}
+                  placeholderStyle={globalStyles.placeholderStyle}
+                  labelStyle={globalStyles.labelName}
+                  textFieldStyle={globalStyles.textfield}
+                  // style={[globalStyles.fieldBox]}
                   selectedItemsContainer={[
-                    styles.selectedItemsContainer,
-                    styles.width60,
+                    globalStyles.selectedItemsContainer,
+                    globalStyles.width60,
                   ]}
-                  style={styles.fieldBox}
+                  style={globalStyles.fieldBox}
                   listView={true}
                 />
               ) : null}
             </>
 
-            <TouchableOpacity
-              style={[styles.fieldBox, styles.bbw0]}
-              onPress={() => this.getTags(this.state.selectionTypeId)}
+          <TouchableOpacity style={[globalStyles.fieldBox,globalStyles.bbw0]}
+          onPress={()=>this.getTags(this.state.selectionTypeId)}
+          >
+          <Text style={[globalStyles.labelName]}>
+            Tags
+          </Text>
+            <View
+              style={[
+                globalStyles.selectedItemsContainer,globalStyles.width60,
+              ]}
             >
-              <Text style={[styles.labelName]}>Tags</Text>
-              <View style={[styles.selectedItemsContainer, styles.width60]}>
-                {this.state.selectedTags.map((element) => (
-                  <View
-                    key={element.id.toString()}
-                    style={{
-                      height: 25,
-                      justifyContent: "center",
-                      paddingHorizontal: 5,
-                      marginHorizontal: 3,
-                      marginVertical: 5,
-                      borderRadius: 2,
-                      backgroundColor: Colors.white,
-                      borderColor: Colors.primary,
-                      borderWidth: 1,
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-around",
-                    }}
-                  >
-                    <Image
-                      style={{ height: 20, width: 20, marginRight: 5 }}
-                      source={{ uri: element.tag_icon }}
-                    />
-                    <Text style={{ fontSize: 12, color: Colors.primary }}>
-                      {element.name}
-                    </Text>
-                    <TouchableOpacity
-                      activeOpacity={1}
-                      onPress={this.catPressed.bind(this, element)}
-                    >
-                      <MaterialCommunityIcons
-                        name="close"
-                        size={18}
-                        color={Colors.textColor}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                ))}
+              {this.state.selectedTags.map((element) => (
+                <View
+                key={element.id.toString()}
+                // style={{
+                //   height: 25,
+                //   justifyContent: "center",
+                //   paddingHorizontal: 5,
+                //   marginHorizontal: 3,
+                //   marginVertical: 5,
+                //   borderRadius: 2,
+                //   backgroundColor: Colors.white,
+                //   borderColor : Colors.primary,
+                //   borderWidth : 1,
+                //   display: "flex",
+                //   flexDirection: "row",
+                //   alignItems: "center",
+                //   justifyContent: "space-around",
+                // }}
+              >
+                <Image
+                  style={globalStyles.images}
+                  source={{ uri: element.tag_icon }}
+                />
+                <Text style={[styles.fontSize12, {color: Colors.primary }]}>
+                  {element.name}
+                </Text>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  onPress={this.catPressed.bind(this, element)}
+                >
+                  <MaterialCommunityIcons
+                    name="close"
+                    size={18}
+                    color={Colors.textColor}
+                  />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+                 ))}
+            </View>
+        </TouchableOpacity>
           </View>
-          <View style={styles.buttonsContainer}>
+          <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.saveAssignTag}>
-              <Text style={[styles.buttonText, styles.saveBtnText]}>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>
                 Assign
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[styles.buttonText, styles.exitBtnText]}>EXIT</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>
@@ -1069,9 +1072,9 @@ export default class TagAssign extends React.Component {
         visible={this.state.isScanModal}
         onRequestClose={this.closeScanModal}
       >
-        <SafeAreaView style={globalStyles.safeAreaViewStyle}>
-          <View style={styles.scanModalOverlay}>
-            <View style={styles.qrCodeSacnBox}>
+        <SafeAreaView style={[styles.backgroundColorTransparent,styles.flex1]}>
+          <View style={globalStyles.scanModalOverlay}>
+            <View style={globalStyles.qrCodeSacnBox}>
               <Camera
                 onBarCodeScanned={this.handleBarCodeScanned}
                 barCodeScannerSettings={{
@@ -1081,27 +1084,27 @@ export default class TagAssign extends React.Component {
               />
             </View>
             <TouchableOpacity
-              style={styles.cancelButton}
+              style={globalStyles.cancelButton}
               onPress={this.closeScanModal}
             >
-              <Ionicons name="close-outline" style={styles.cancelButtonText} />
+              <Ionicons name="close-outline" style={globalStyles.cancelButtonText} />
             </TouchableOpacity>
           </View>
         </SafeAreaView>
       </Modal2>
       {/* <View style={{ flex: 0.8, backgroundColor: "red" }}> */}
-      {this.state.isTagsMenuOpen ? (
-        <Category
-          categoryData={this.state.tags}
-          onCatPress={this.catPressed}
-          heading={"Choose Tags"}
-          // userType={}
-          navigation={this.props.navigation}
-          permission={"Yes"}
-          screen={"AddTag"}
-        />
-      ) : null}
-      {/* </View> */}
+      {this.state.isTagsMenuOpen ? 
+            <Category
+              categoryData={this.state.tags}
+              onCatPress={this.catPressed}
+              heading={"Choose Tags"}
+              // userType={}
+              navigation={this.props.navigation}
+              permission={"Yes"}
+              screen={"AddTag"}
+            />
+            : null}
+          {/* </View> */}
     </SafeAreaView>
   );
 }

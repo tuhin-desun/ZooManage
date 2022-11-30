@@ -17,7 +17,7 @@ import OverlayLoader from "../../component/OverlayLoader";
 import { Colors } from "../../config";
 import { manageTags, getTagGroups } from "../../services/TagServices";
 import AppContext from "../../context/AppContext";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 import { InputDropdown } from "../../component";
 import {
   getCapitalizeTextWithoutExtraSpaces,
@@ -27,6 +27,7 @@ import Upload from "../../component/tasks/AddTodo/Upload";
 import { translate } from "../Settings/LanguageSettigs/LanguageSettings";
 import { translations } from "../Settings/LanguageSettigs/localizations";
 import { I18n } from "i18n-js";
+import styles from "./Styles";
 
 const i18n = new I18n(translations);
 
@@ -145,12 +146,13 @@ export default class AddTag extends React.Component {
 
   addTag = () => {
     let cid = this.context.userDetails.cid;
-    this.setState({
-      tagNameError: false,
-      tagGroupNameError: false,
-      selectionTypeError: false,
-      tagIconError: false,
-    });
+    this.setState(
+      {
+        tagNameError: false,
+        tagGroupNameError: false,
+        selectionTypeError: false,
+        tagIconError: false,
+      });
 
     if (this.state.selectionTypeId.length === 0) {
       this.setState({
@@ -167,6 +169,7 @@ export default class AddTag extends React.Component {
 
       return;
     }
+
 
     if (this.state.tagName.trim().length === 0) {
       this.setState({
@@ -247,9 +250,9 @@ export default class AddTag extends React.Component {
   };
 
   toggleSelectionTypeMenu = () =>
-    this.setState({
-      isSelectionTypeMenuOpen: !this.state.isSelectionTypeMenuOpen,
-    });
+  this.setState({
+    isSelectionTypeMenuOpen: !this.state.isSelectionTypeMenuOpen,
+  });
 
   setSelectionTypeData = (v) =>
     this.setState({
@@ -301,10 +304,10 @@ export default class AddTag extends React.Component {
           leftButtonFunc={this.gotoBack}
         />
         <View
-          style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
+          style={[globalStyles.container, { padding: Colors.formPaddingHorizontal }]}
         >
           <ScrollView ref={this.formScrollViewRef}>
-            <View style={styles.boxBorder}>
+            <View style={globalStyles.boxBorder}>
               <InputDropdown
                 label={i18n.t("assignfor")}
                 value={this.state.selectionTypeName}
@@ -314,18 +317,18 @@ export default class AddTag extends React.Component {
                 closeAction={this.toggleSelectionTypeMenu}
                 setValue={this.setSelectionTypeData}
                 // placeholder="Select Incident Related To"
-                labelStyle={styles.labelName}
-                textFieldStyle={styles.textfield}
+                labelStyle={globalStyles.labelName}
+                textFieldStyle={globalStyles.textfield}
                 style={[
-                  styles.fieldBox,
+                  globalStyles.fieldBox,
                   this.state.hasTypeValidationError
-                    ? styles.errorFieldBox
+                    ? globalStyles.errorFieldBox
                     : null,
                 ]}
               />
               {this.state.selectionTypeError ? (
-                // <Text style={styles.errorText}>Select tag group name</Text>
-                <Text style={styles.errorText}>
+                // <Text style={globalStyles.errorText}>Select tag group name</Text>
+                <Text style={globalStyles.errorText}>
                   {i18n.t("this_field_should_not_be_empty")}
                 </Text>
               ) : null}
@@ -339,42 +342,42 @@ export default class AddTag extends React.Component {
                 closeAction={this.toggleSectionMenu}
                 setValue={this.handleSetValues}
                 // placeholder="Select Sections"
-                labelStyle={styles.labelName}
-                textFieldStyle={styles.textfield}
-                style={[styles.fieldBox]}
+                labelStyle={globalStyles.labelName}
+                textFieldStyle={globalStyles.textfield}
+                style={[globalStyles.fieldBox]}
               />
               {this.state.tagGroupNameError ? (
-                // <Text style={styles.errorText}>Select tag group name</Text>
-                <Text style={styles.errorText}>
+                // <Text style={globalStyles.errorText}>Select tag group name</Text>
+                <Text style={globalStyles.errorText}>
                   {i18n.t("this_field_should_not_be_empty")}
                 </Text>
               ) : null}
-              <View style={[styles.fieldBox]}>
-                <Text style={styles.labelName}>{i18n.t("tagName")}</Text>
+              <View style={[globalStyles.fieldBox]}>
+                <Text style={globalStyles.labelName}>{i18n.t("tagName")}</Text>
                 <TextInput
                   value={this.state.tagName}
-                  style={[styles.textfield, styles.width60]}
+                  style={[globalStyles.textfield, globalStyles.width60]}
                   onChangeText={(tagName) => this.setState({ tagName })}
                   autoCompleteType="off"
                   autoCapitalize="words"
                 />
-              </View>
-              {this.state.tagNameError ? (
-                // <Text style={styles.errorText}>Enter tag name</Text>
-                <Text style={styles.errorText}>
-                  {i18n.t("this_field_should_not_be_empty")}
-                </Text>
-              ) : null}
-              <View style={[styles.fieldBox, styles.bbw0]}>
-                <Text style={styles.labelName}>{i18n.t("coverImage")}</Text>
+                  </View>
+                {this.state.tagNameError ? (
+                  // <Text style={globalStyles.errorText}>Enter tag name</Text>
+                  <Text style={globalStyles.errorText}>
+                    {i18n.t("this_field_should_not_be_empty")}
+                  </Text>
+                ) : null}
+              <View style={[globalStyles.fieldBox,globalStyles.bbw0]}>
+                <Text style={globalStyles.labelName}>{i18n.t("coverImage")}</Text>
                 <TouchableOpacity
                   activeOpacity={1}
-                  // style={styles.imageContainer}
+                  // style={globalStyles.imageContainer}
                   onPress={this.chooseTagIcon}
                 >
                   {typeof this.state.tagIconURI !== "undefined" ? (
                     <Image
-                      style={{ width: 35, height: 35 }}
+                      style={styles.images}
                       source={{ uri: this.state.tagIconURI }}
                     />
                   ) : (
@@ -383,20 +386,20 @@ export default class AddTag extends React.Component {
                 </TouchableOpacity>
               </View>
               {this.state.tagIconValidationError ? (
-                <View style={globalStyles.mr10}>
-                  {/* <Text style={styles.errorText}>Choose cover image</Text> */}
-                  <Text style={styles.errorText}>
+                <View style={styles.marginRight10}>
+                  {/* <Text style={globalStyles.errorText}>Choose cover image</Text> */}
+                  <Text style={globalStyles.errorText}>
                     {i18n.t("this_field_should_not_be_empty")}
                   </Text>
                 </View>
               ) : null}
               {/* <
                */}
-              {/* <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>{`Upload Photo`}</Text>
+              {/* <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>{`Upload Photo`}</Text>
               <TouchableOpacity
                 activeOpacity={1}
-                style={styles.dateField}
+                style={globalStyles.dateField}
                 onPress={this.chooseIncidentPhotos}
               >
                 <MaterialIcons
@@ -407,9 +410,9 @@ export default class AddTag extends React.Component {
               </TouchableOpacity>
             </View>
             {this.state.medicalImages.length > 0 ? (
-              <View style={[styles.fieldBox]}>
+              <View style={[globalStyles.fieldBox]}>
                 <ScrollView
-                  contentContainerStyle={globalStyles.alignItemsCenter}
+                  contentContainerStyle={{ alignItems: "center" }}
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
                 >
@@ -417,15 +420,21 @@ export default class AddTag extends React.Component {
                     return (
                       <View key={index}>
                         <Image
-                            source={{ uri: item.uri }}
-                            style={styles.attachedImage}
-                          />
+                          source={{ uri: item.uri }}
+                          style={{
+                            height: 100,
+                            width: 100,
+                            marginHorizontal: 3,
+                            borderWidth: 0.6,
+                            borderColor: "rgba(68,68,68,0.4)",
+                          }}
+                        />
                         <TouchableOpacity
-                            style={styles.imageRemoveBtn}
-                            onPress={() => {
-                              this.removeImage(item);
-                            }}
-                          >
+                          style={{ position: "absolute", right: -2, top: -3 }}
+                          onPress={() => {
+                            this.removeImage(item);
+                          }}
+                        >
                           <Entypo
                             name="circle-with-cross"
                             size={24}
@@ -440,15 +449,15 @@ export default class AddTag extends React.Component {
             ) : null} */}
             </View>
 
-            <View style={styles.buttonsContainer}>
+            <View style={globalStyles.buttonsContainer}>
               <TouchableOpacity activeOpacity={1} onPress={this.addTag}>
-                <Text style={[styles.buttonText, styles.saveBtnText]}>
+                <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>
                   {i18n.t("save")}
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-                <Text style={[styles.buttonText, styles.exitBtnText]}>
+                <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>
                   {i18n.t("exit")}
                 </Text>
               </TouchableOpacity>

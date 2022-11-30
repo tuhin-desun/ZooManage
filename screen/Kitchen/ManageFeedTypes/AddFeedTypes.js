@@ -17,13 +17,14 @@ import { Colors } from "../../../config";
 import * as ImagePicker from "expo-image-picker";
 import { addTagName } from "../../../services/MedicalAndIncidenTServices";
 import AppContext from "../../../context/AppContext";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { MultiSelectDropdown } from "../../../component";
 import {TriangleColorPicker, toHsv } from 'react-native-color-picker'
 import Upload from "../../../component/tasks/AddTodo/Upload";
 import colors from "../../../config/colors";
 import { getFileData } from "../../../utils/Util";
 import { managefeedtype } from "../../../services/KitchenServices";
+import Styles from '../Style'
 
 export default class AddFeedTypes extends React.Component {
   static contextType = AppContext;
@@ -168,38 +169,47 @@ componentToHex(c) {
         leftButtonFunc={this.gotoBack}
       />
       <View
-        style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
+        style={[globalStyles.container, { padding: Colors.formPaddingHorizontal }]}
       >
         <ScrollView ref={this.formScrollViewRef} showsVerticalScrollIndicator={false}>
-          <View style={styles.boxBorder}>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Feed Type</Text>
+          <View style={globalStyles.boxBorder}>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>
+              Feed Type
+              </Text>
               <TextInput
                 value={this.state.feed_type_name}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(feed_type_name) => this.setState({ feed_type_name })}
                 autoCompleteType="off"
                 autoCapitalize="words"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Color</Text>
-              <TouchableOpacity style={{backgroundColor:this.state.color == null ? colors.primary : this.state.color , height:50,width:50 , borderColor : "#ddd" , borderWidth : 1 , alignItems:"center" , justifyContent:'center'}} onPress={this.toogleColorPicker}>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Color</Text>
+              <TouchableOpacity style=
+              { [ globalStyles.justifyContentCenter, Styles.borderColor,globalStyles.borderWidth1,
+              { 
+                backgroundColor:this.state.color == null ? colors.primary : this.state.color ,
+               height:50,
+               width:50 ,  
+               }]} 
+               onPress={this.toogleColorPicker}>
               <MaterialIcons name="colorize" size={24} color="black" />
               </TouchableOpacity>
             </View>
-            <View style={[styles.fieldBox,styles.bbw0]}>
-              <Text style={styles.labelName}>
+            <View style={[globalStyles.fieldBox,globalStyles.bbw0]}>
+              <Text style={globalStyles.labelName}>
               Icon
               </Text>
               <TouchableOpacity
                 activeOpacity={1}
-                // style={styles.imageContainer}
+                // style={globalStyles.imageContainer}
                 onPress={this.chooseTagIcon}
               >
                 {typeof this.state.iconURI !== "undefined" ? (
                   <Image
-                    style={{ width: 35, height: 35 }}
+                    style={Styles.uploadedImage}
                     source={{ uri: this.state.iconURI }}
                   />
                 ) : (
@@ -209,26 +219,26 @@ componentToHex(c) {
             </View>
           </View>
 
-          <View style={styles.buttonsContainer}>
+          <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.addFeedType}>
-              <Text style={[styles.buttonText, styles.saveBtnText]}>SAVE</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>SAVE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[styles.buttonText, styles.exitBtnText]}>EXIT</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
       </View>
       {this.state.isColorPickeropen ? 
-      <View style={{flex: 1, padding: 45,}}>
-        <View style={{flexDirection:"row" , alignItems : "center" , justifyContent : 'center'}}>
-        <Text style={styles.labelName}>Pick any Color</Text>
+      <View style={[globalStyles.flex1,{ padding: 45}]}>
+        <View style={[globalStyles.flexDirectionRow,globalStyles.justifyContentCenter,globalStyles.alignItemsCenter]}>
+        <Text style={globalStyles.labelName}>Pick any Color</Text>
         <TouchableOpacity
-              style={styles.closeButton}
+              style={globalStyles.closeButton}
               onPress={this.toogleColorPicker}
             >
-              <Ionicons name="close-outline" style={styles.closeButtonText} />
+              <Ionicons name="close-outline" style={globalStyles.closeButtonText} />
         </TouchableOpacity>
         </View>
         <TriangleColorPicker
@@ -237,7 +247,7 @@ componentToHex(c) {
           onColorChange={this.onColorChange}
           onColorSelected={color => alert(`Color selected: ${color}`)}
           onOldColorSelected={color => alert(`Old color selected: ${color}`)}
-          style={{flex: 1}}
+          style={globalStyles.flex1}
         />
       </View>
       : null}

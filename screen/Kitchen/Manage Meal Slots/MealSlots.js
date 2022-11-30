@@ -13,7 +13,7 @@ import Colors from "../../../config/colors";
 import { Header, Loader, ListEmpty } from "../../../component";
 import { getDiagnosis } from "../../../services/MedicalAndIncidenTServices";
 import AppContext from "../../../context/AppContext";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { getfeedmealslot } from "../../../services/KitchenServices";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -64,7 +64,7 @@ export default class MealSlots extends React.Component {
           .then((data) => {
             this.setState({
               isLoading: false,
-              mealSlots: data.data,
+              mealSlots: data.data
             });
           })
           .catch((error) => console.log(error));
@@ -83,46 +83,34 @@ export default class MealSlots extends React.Component {
 
   renderItem = ({ item }) => (
     <TouchableOpacity
-      style={[styles.fieldBox, { justifyContent: "space-between" }]}
-      activeOpacity={1}
-      onPress={this.gotoEdit.bind(this, item)}
-    >
-      <View>
-        <Text
-          style={[
-            styles.labelName,
-            styles.pd0,
-            { padding: 5, fontWeight: "bold" },
-          ]}
-        >
-          Sl. No. : {item.id}
-        </Text>
+        style={[globalStyles.fieldBox, { justifyContent: "space-between" }]}
+        activeOpacity={1}
+        onPress={this.gotoEdit.bind(this, item)}
+      >
+        <View>
+          <Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.p5,globalStyles.fontWeightBold]}>
+            Sl. No.  :  {item.id}
+          </Text>
 
-        <Text
-          style={[
-            styles.labelName,
-            styles.pd0,
-            { padding: 5, fontWeight: "bold" },
-          ]}
-        >
-          Slot Name : {item.slot_name}
-        </Text>
+          <Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.p5,globalStyles.fontWeightBold]}>
+           Slot Name :  {item.slot_name}
+          </Text>
 
-        <Text style={[styles.textfield, styles.pd0, globalStyles.p5]}>
-          Start Time : {moment(item.start_time, "HH:mm:ss").format("LT")}
-        </Text>
-
-        <Text style={[styles.textfield, styles.pd0, globalStyles.p5]}>
-          End Time : {moment(item.end_time, "HH:mm:ss").format("LT")}
-        </Text>
-      </View>
-    </TouchableOpacity>
+          <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+           Start Time :  {moment(item.start_time,"HH:mm:ss").format("LT")}
+          </Text>
+          
+          <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+           End Time :  {moment(item.end_time,"HH:mm:ss").format("LT")}
+          </Text>
+        </View>
+      </TouchableOpacity>
   );
 
   render = () => (
     <Container>
       <Header title={"MealSlots"} addAction={this.gotoAddMealSlots} />
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         {this.state.isLoading ? (
           <Loader />
         ) : (
@@ -135,7 +123,7 @@ export default class MealSlots extends React.Component {
             refreshing={this.state.isLoading}
             onRefresh={this.loadMealSlots}
             contentContainerStyle={
-              this.state.mealSlots.length === 0 ? styles.container : null
+              this.state.mealSlots.length === 0 ? globalStyles.container : null
             }
           />
         )}

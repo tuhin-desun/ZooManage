@@ -15,7 +15,7 @@ import OverlayLoader from "../../../component/OverlayLoader";
 import { Colors } from "../../../config";
 import { addTagName } from "../../../services/MedicalAndIncidenTServices";
 import AppContext from "../../../context/AppContext";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { MultiSelectDropdown } from "../../../component";
 import moment from "moment";
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
@@ -104,29 +104,29 @@ export default class AddMealSlots extends React.Component {
         leftButtonFunc={this.gotoBack}
       />
       <View
-        style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
+        style={[globalStyles.container, { padding: Colors.formPaddingHorizontal }]}
       >
         <ScrollView ref={this.formScrollViewRef} showsVerticalScrollIndicator={false}>
-          <View style={styles.boxBorder}>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Name</Text>
+          <View style={globalStyles.boxBorder}>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Name</Text>
               <TextInput
                 value={this.state.slot_name}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(slot_name) => this.setState({ slot_name })}
                 autoCompleteType="off"
                 autoCapitalize="words"
               />
             </View>
-            <View style={styles.fieldBox}>
-              <Text style={styles.labelName}>Start Time </Text>
+            <View style={globalStyles.fieldBox}>
+              <Text style={globalStyles.labelName}>Start Time </Text>
               <TouchableOpacity
                 onPress={() => {
                   this.showDatePicker("start");
                 }}
-                style={{ width: "60%", justifyContent: "center" }}
+                style={[globalStyles.justifyContentCenter,globalStyles.width60]}
               >
-                <Text style={[styles.textfield]}>
+                <Text style={[globalStyles.textfield]}>
                   {moment(this.state.start_time, "HH:mm:ss").format("LT")}{" "}
                   <MaterialCommunityIcons
                     slot_name="clock-check-outline"
@@ -136,15 +136,15 @@ export default class AddMealSlots extends React.Component {
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.fieldBox}>
-              <Text style={styles.labelName}>End Time </Text>
+            <View style={globalStyles.fieldBox}>
+              <Text style={globalStyles.labelName}>End Time </Text>
               <TouchableOpacity
                 onPress={() => {
                   this.showDatePicker("end");
                 }}
-                style={{ width: "60%", justifyContent: "center" }}
+                style={[globalStyles.justifyContentCenter,globalStyles.width60]}
               >
-                <Text style={[styles.textfield]}>
+                <Text style={[globalStyles.textfield]}>
                   {moment(this.state.end_time, "HH:mm:ss").format("LT")}{" "}
                   <MaterialCommunityIcons
                     slot_name="clock-check-outline"
@@ -156,13 +156,13 @@ export default class AddMealSlots extends React.Component {
             </View>
           </View>
 
-          <View style={styles.buttonsContainer}>
+          <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.addMealSlot}>
-              <Text style={[styles.buttonText, styles.saveBtnText]}>SAVE</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>SAVE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[styles.buttonText, styles.exitBtnText]}>EXIT</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

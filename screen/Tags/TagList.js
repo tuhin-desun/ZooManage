@@ -14,7 +14,8 @@ import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import { getAllTags } from "../../services/TagServices";
 import AppContext from "../../context/AppContext";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
 
 export default class TagList extends React.Component {
   static contextType = AppContext;
@@ -84,26 +85,21 @@ export default class TagList extends React.Component {
     <TouchableOpacity
       onPress={this.gotoEdit.bind(this, item)}
       style={[
-        styles.fieldBox,
-        {
-          display: "flex",
-          justifyContent: "flex-start",
-        },
-      ]}
+        globalStyles.fieldBox, styles.displayFlex,styles.justifyContentFlexStart]}
     >
       <Image
         resizeMode="contain"
         source={{ uri: item.tag_icon }}
-        style={{ height: 35, width: 35, marginRight: 10 }}
+           style={[styles.images, styles.marginRight10]}
       />
-      <Text style={styles.labelName}>{item.name}</Text>
+      <Text style={globalStyles.labelName}>{item.name}</Text>
     </TouchableOpacity>
   );
 
   render = () => (
     <Container>
       <Header title={"Tags"} addAction={this.gotoAddTag} />
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         {this.state.isLoading ? (
           <Loader />
         ) : (
@@ -116,7 +112,7 @@ export default class TagList extends React.Component {
             refreshing={this.state.isLoading}
             onRefresh={this.loadTags}
             contentContainerStyle={
-              this.state.tags.length === 0 ? styles.container : null
+              this.state.tags.length === 0 ? globalStyles.container : null
             }
           />
         )}

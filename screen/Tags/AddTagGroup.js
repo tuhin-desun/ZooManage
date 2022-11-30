@@ -11,10 +11,10 @@ import {
 import { Container } from "native-base";
 import Header from "../../component/Header";
 import OverlayLoader from "../../component/OverlayLoader";
-import { Colors } from "../../config";
+//import { Colors } from "../../config";
 import { manageTagGroup } from "../../services/TagServices";
 import AppContext from "../../context/AppContext";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 import { getCapitalizeTextWithoutExtraSpaces } from "../../utils/Util";
 
 export default class AddTagGroup extends React.Component {
@@ -92,32 +92,32 @@ export default class AddTagGroup extends React.Component {
         leftButtonFunc={this.gotoBack}
       />
       <View
-        style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
+        //style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
       >
         <ScrollView ref={this.formScrollViewRef}>
-          <View style={styles.boxBorder}>
-            <View style={[styles.fieldBox, styles.bbw0]}>
-              <Text style={styles.labelName}>Group Name</Text>
+          <View style={globalStyles.boxBorder}>
+            <View style={[globalStyles.fieldBox, globalStyles.bbw0]}>
+              <Text style={globalStyles.labelName}> Group Name </Text>
               <TextInput
                 value={this.state.tagGroupName}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(tagGroupName) => this.setState({ tagGroupName })}
                 autoCompleteType="off"
                 autoCapitalize="words"
               />
             </View>
               {this.state.tagGroupNameError ? (
-                <Text style={styles.errorText}>Enter tag group name</Text>
+                <Text style={globalStyles.errorText}>Enter tag group name</Text>
               ) : null}
           </View>
 
-          <View style={styles.buttonsContainer}>
+          <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.addTagGroup}>
-              <Text style={[styles.buttonText, styles.saveBtnText]}>SAVE</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>SAVE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[styles.buttonText, styles.exitBtnText]}>EXIT</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

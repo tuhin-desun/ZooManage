@@ -15,7 +15,8 @@ import {
 } from "@expo/vector-icons";
 import Colors from "../../config/colors";
 import { Header } from "../../component";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
+import styles from './Styles'
 
 export default class TagMaster extends React.Component {
   constructor(props) {
@@ -59,10 +60,10 @@ export default class TagMaster extends React.Component {
     return (
       <TouchableOpacity
         onPress={item.onclick}
-        style={[styles.icon_btn, styles.pl12]}
+        style={[globalStyles.icon_btn, globalStyles.pl12]}
       >
-        <View style={styles.imgContainer}>{item.icon}</View>
-        <Text style={[styles.title, { fontWeight: "normal" }]}>
+        <View style={globalStyles.imgContainer}>{item.icon}</View>
+        <Text style={[globalStyles.title, styles.fontWeightNormal  ]}>
           {item.name}
         </Text>
       </TouchableOpacity>
@@ -79,7 +80,7 @@ export default class TagMaster extends React.Component {
         rightIconShow={false}
         leftButtonFunc={this.gotoBack}
       />
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <FlatList
           data={this.state.menus}
           keyExtractor={(item) => item.id.toString()}
@@ -90,7 +91,7 @@ export default class TagMaster extends React.Component {
   );
 }
 
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		backgroundColor: "#fff",

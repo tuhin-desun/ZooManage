@@ -45,6 +45,8 @@ import globalStyles from "../../config/Styles";
 import { userList } from "../../utils/api";
 import UserItem from "../../component/tasks/UserItem";
 import OverlayLoader from "./../../component/OverlayLoader";
+import styles from './Styles'
+
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -77,9 +79,9 @@ export default class JornalRecord extends React.Component {
       selectUserName: "",
       clickUser: false,
       activeTab: Configs.JOURNAL_TAB_MENU[0], //{ id: "" },
-      pdf_records: [],
-      page: 1,
-      dataLength: "",
+      pdf_records : [],
+      page:1,
+      dataLength:''
     };
     this.inputRef = React.createRef();
   }
@@ -119,7 +121,7 @@ export default class JornalRecord extends React.Component {
         activeTabKey: "O",
         clickUser: this.state.selectUserId ? true : false,
         records: [],
-        page: 1,
+        page:1
       },
       () => {
         this.getJournalRecords(1);
@@ -214,30 +216,27 @@ export default class JornalRecord extends React.Component {
     //it will show indicator at the bottom of the list when data is loading otherwise it returns null
     if (!this.state.isLoading) return null;
     return <ActivityIndicator style={{ color: Colors.primary }} />;
-  };
+};
 
   handleLoadMore = () => {
     if (!this.state.isLoading && this.state.dataLength > 0) {
-      this.state.page = this.state.page + 1; // increase page by 1
-      this.getJournalRecords(this.state.page); // method for API call
+        this.state.page = this.state.page + 1; // increase page by 1
+        this.getJournalRecords(this.state.page); // method for API call
     }
-  };
+};
 
-  onRefresh = () => {
-    this.setState(
-      {
-        isLoading: true,
-        selectUserId: "",
-        clickUser: this.state.selectUserId ? true : false,
-        selectUserName: "",
-        records: [],
-        tag: "all_task",
-      },
-      () => {
-        this.getJournalRecords(1);
-      }
-    );
-  };
+onRefresh = () => {
+  this.setState({
+      isLoading: true,
+      selectUserId: '',
+      clickUser: this.state.selectUserId ? true : false,
+      selectUserName: "",
+      records:[],
+      tag: "all_task"
+  }, () => {
+    this.getJournalRecords(1);;
+  });
+}
 
   // end of user filters
 
@@ -255,10 +254,11 @@ export default class JornalRecord extends React.Component {
             ? this.state.selectUserId
             : this.context.userDetails.id,
           type: this.state.activeTab.value,
-          page: page,
+          page : page
         };
         journalRecords(obj)
           .then((res) => {
+            
             let dataArr = [];
             for (let key in res) {
               dataArr.push({ title: key, data: res[key] });
@@ -275,7 +275,7 @@ export default class JornalRecord extends React.Component {
           .catch((err) => {
             console.log(err);
           });
-        get_journal_record_for_pdf(obj)
+          get_journal_record_for_pdf(obj)
           .then((res) => {
             this.setState({
               isLoading: false,
@@ -446,16 +446,15 @@ export default class JornalRecord extends React.Component {
 			<body style="background: white">
 				<main style="font-family: 'Roboto', sans-serif">
 					<div style="text-align: center">
-						<h3>${
-              this.state.selectUserName
-                ? this.state.selectUserName
-                : this.context.userDetails.full_name
-            }</h3>
+						<h3>${this.state.selectUserName
+        ? this.state.selectUserName
+        : this.context.userDetails.full_name
+      }</h3>
 					</div>`;
 
     this.state.pdf_records?.forEach(
       (item) =>
-        (html += `<div style="width: 100%; margin: 0 auto">
+      (html += `<div style="width: 100%; margin: 0 auto">
         <div
           style="
             display: flex;
@@ -549,37 +548,30 @@ export default class JornalRecord extends React.Component {
     item.type == "feed"
       ? item.name.split("-")[0]
       : item.type == "incident"
-      ? item.name + " (Incident)"
-      : item.name;
+        ? item.name + " (Incident)"
+        : item.name;
 
   getDateWithCustomFormat = (item) => moment(item.created_at).format("LT");
-
-  getDateTimeWithCustomFormat = (item) =>
-    moment(item.created_at).format("DD-MM-YYYY dddd");
+  
+  getDateTimeWithCustomFormat = (item) => moment(item.created_at).format("DD-MM-YYYY dddd");
 
   renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
-        style={[globalStyles.fieldBox, { justifyContent: "space-between" }]}
+        style={[globalStyles.fieldBox,globalStyles.justifyContentSpaceBetween]}
         activeOpacity={1}
       >
         <View>
-          <Text
-            style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}
-          >
+          <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
             {this.getName(item)}
           </Text>
 
-          <Text
-            style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}
-          >
+          <Text style={[globalStyles.textfield, globalStyles.pd0,globalStyles.p5]}>
             {this.getType(item)}
           </Text>
         </View>
         <View>
-          <Text
-            style={[globalStyles.textfield, globalStyles.p5, { fontSize: 20 }]}
-          >
+          <Text style={[globalStyles.textfield,globalStyles.p5 ,globalStyles.fontSize20]}>
             {this.getDateWithCustomFormat(item)}
           </Text>
         </View>
@@ -595,7 +587,7 @@ export default class JornalRecord extends React.Component {
       // 			<Text style={globalStyles.textfield}>{index}</Text>
       // 		</Text> */}
 
-      //     <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+      //     <Text style={[globalStyles.textfield, globalStyles.pd0, { padding: 5 }]}>
       //       {/* {item.type == "feed"
       //         ? item.name.split("-")[0]
       //         : item.type == "incident"
@@ -604,7 +596,7 @@ export default class JornalRecord extends React.Component {
       //       {this.getName(item)}
       //     </Text>
 
-      //     <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+      //     <Text style={[globalStyles.textfield, globalStyles.pd0, { padding: 5 }]}>
       //       {this.getType(item)}
       //     </Text>
       //     {/* <Text style={globalStyles.labelName}>
@@ -615,7 +607,7 @@ export default class JornalRecord extends React.Component {
       // 		</Text> */}
       //   </View>
       //   <View>
-      //     <Text style={[globalStyles.textfield, globalStyles.p5, { fontSize: 20 }]}>
+      //     <Text style={[globalStyles.textfield, { padding: 5 }, { fontSize: 20 }]}>
       //       {/* {moment(item.created_at).format("LT")} */}
       //       {this.getDateWithCustomFormat(item)}
       //     </Text>
@@ -665,7 +657,7 @@ export default class JornalRecord extends React.Component {
   };
 
   toggleTab = (item) => {
-    this.setState({ activeTab: { ...item }, isLoading: true, page: 1 }, () => {
+    this.setState({ activeTab: { ...item } ,isLoading: true ,page : 1 }, () => {
       this.getJournalRecords(1);
     });
   };
@@ -680,7 +672,7 @@ export default class JornalRecord extends React.Component {
         exportCommonName={
           this.context.userDetails?.journal_action_types.includes("Report")
             ? // ? this.download_data
-              this.exportPdf
+            this.exportPdf
             : undefined
         }
         // filter={this.context.userDetails?.journal_action_types.includes("Filter") ? this.filterData : undefined}
@@ -708,7 +700,7 @@ export default class JornalRecord extends React.Component {
               >
                 <View
                   style={[
-                    Styles.listItem,
+                    styles.listItem,
                     {
                       backgroundColor:
                         this.state.activeTab?.id === item.id
@@ -720,7 +712,7 @@ export default class JornalRecord extends React.Component {
                 >
                   <Text
                     style={[
-                      Styles.name,
+                      styles.name,
                       {
                         color:
                           this.state.activeTab.id === item.id
@@ -754,7 +746,7 @@ export default class JornalRecord extends React.Component {
 								<Text style={{ color: colors.primary }}>{moment(this.state.toDate).format("DD-MM-YYYY")}</Text>
 							</TouchableOpacity>
 						</View>
-						<View style={globalStyles.mt10}>
+						<View style={{ marginTop: 10 }}>
 							<TouchableOpacity
 								style={{
 									paddingHorizontal: 5,
@@ -769,7 +761,7 @@ export default class JornalRecord extends React.Component {
 								}}
 								onPress={this.dateFilterSubmit}
 							>
-								<Text style={globalStyles.sectionHeaderText}>Submit</Text>
+								<Text style={{ fontSize: 16, color: colors.white }}>Submit</Text>
 							</TouchableOpacity>
 						</View>
 						<DateTimePickerModal
@@ -825,23 +817,22 @@ export default class JornalRecord extends React.Component {
                       contentContainerStyle={
                         this.getData().length === 0
                           ? [
-                              globalStyles.container,
-                              { height: windowHeight - tabHeight },
-                            ]
+                            globalStyles.container,
+                            { height: windowHeight - tabHeight },
+                          ]
                           : null
                       }
                       keyExtractor={(item) => item.id.toString()}
-                      // onRefresh={() => this.onRefresh()}
-                      // refreshing={this.state.isLoading}
+                    // onRefresh={() => this.onRefresh()}
+                    // refreshing={this.state.isLoading}
                     />
                   ) : (
                     <Text
-                      style={{
-                        paddingBottom: 2,
+                      style={[ globalStyles.fontWeightBold,globalStyles.paddingBottom2,
+                      { 
                         fontSize: 16,
-                        fontWeight: "bold",
                         color: "#7f7f7f",
-                      }}
+                      }]}
                     >
                       No Data
                     </Text>
@@ -851,7 +842,7 @@ export default class JornalRecord extends React.Component {
                 {/* <Footer /> */}
               </>
             ) : (
-              <View style={[globalStyles.listContainer, { marginBottom: 20 }]}>
+              <View style={[globalStyles.listContainer,{marginBottom:20}]}>
                 {this.context.userDetails?.journal_action_types.includes(
                   "View"
                 ) ? (
@@ -860,9 +851,7 @@ export default class JornalRecord extends React.Component {
                     keyExtractor={(item, index) => item.id.toString()}
                     renderItem={this.renderItem}
                     contentContainerStyle={
-                      this.state.records.length === 0
-                        ? globalStyles.container
-                        : null
+                      this.state.records.length === 0 ? globalStyles.container : null
                     }
                     ListEmptyComponent={() => <ListEmpty />}
                     stickySectionHeadersEnabled
@@ -870,19 +859,15 @@ export default class JornalRecord extends React.Component {
                       return (
                         <View style={globalStyles.sectionHeader}>
                           <View style={globalStyles.sectionHeaderLeft}>
-                            <Text style={[globalStyles.sectionListHeaderDay]}>
+                            <Text style={{ fontSize: 26, color: Colors.white }}>
                               {moment(title, "YYYY-MM-DD").format("DD")}
                             </Text>
                           </View>
                           <View style={globalStyles.sectionHeaderRight}>
-                            <Text
-                              style={[globalStyles.sectionListHeaderWeekDay]}
-                            >
+                            <Text style={{ fontSize: 16, color: Colors.white }}>
                               {moment(title, "YYYY-MM-DD").format("dddd")}
                             </Text>
-                            <Text
-                              style={[globalStyles.sectionListHeaderMonthYear]}
-                            >
+                            <Text style={{ fontSize: 14, color: Colors.white }}>
                               {showDate(title)}
                             </Text>
                           </View>
@@ -892,16 +877,13 @@ export default class JornalRecord extends React.Component {
                     ListFooterComponent={this.renderFooter.bind(this)}
                     refreshControl={
                       <RefreshControl
-                        refreshing={
-                          this.state.isLoading && this.state.page === 1
-                        }
+                        refreshing={this.state.isLoading && this.state.page === 1}
                         onRefresh={this.onRefresh}
                       />
                     }
                     onEndReachedThreshold={0.4}
                     onEndReached={this.handleLoadMore.bind(this)}
                   />
-                ) : (
                   // <FlatList
                   //   showsVerticalScrollIndicator={false}
                   //   ListEmptyComponent={() => <ListEmpty />}
@@ -915,8 +897,9 @@ export default class JornalRecord extends React.Component {
                   //     this.state.records.length === 0 ? globalStyles.container : null
                   //   }
                   // />
+                ) : (
                   <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
+                    style={[globalStyles.justifyContentCenter,globalStyles.alignItemsCenter]}
                   >
                     <Text style={{ color: Colors.primary }}>
                       You don't have permission to view
@@ -949,16 +932,16 @@ const Styles = StyleSheet.create({
   //   top: 10,
   // },
 
-  listItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5,
-    paddingHorizontal: 8,
-    borderWidth: 0.6,
-    borderRadius: 2,
-    borderColor: Colors.primary,
-    marginRight: 5,
-  },
+  // listItem: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   paddingVertical: 5,
+  //   paddingHorizontal: 8,
+  //   borderWidth: 0.6,
+  //   borderRadius: 2,
+  //   borderColor: Colors.primary,
+  //   marginRight: 5,
+  // },
   // left: {
   //   width: "20%",
   //   justifyContent: "center",
@@ -977,10 +960,10 @@ const Styles = StyleSheet.create({
   //   width: "100%",
   //   height: 40,
   // },
-  name: {
-    fontSize: 14,
-    color: Colors.white,
-  },
+  // name: {
+  //   fontSize: 14,
+  //   color: Colors.white,
+  // },
 
   // scroll: {
   //   // backgroundColor: Colors.grey,
@@ -1012,7 +995,7 @@ const Styles = StyleSheet.create({
   // },
 });
 
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		padding: 3
@@ -1136,3 +1119,4 @@ const Styles = StyleSheet.create({
 // 		marginHorizontal: 15,
 // 	},
 // });
+ 

@@ -41,6 +41,9 @@ import globalStyles from "../../config/Styles";
 import { userList } from "../../utils/api";
 import UserItem from "../../component/tasks/UserItem";
 import OverlayLoader from "./../../component/OverlayLoader";
+import globalStyles from "./Styles";
+import styles from "./Styles";
+
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -501,26 +504,20 @@ export default class JornalRecord extends React.Component {
   renderItem = ({ item, index }) => {
     return (
       <TouchableOpacity
-        style={[globalStyles.fieldBox, { justifyContent: "space-between" }]}
+        style={[globalStyles.fieldBox, globalStyles.justifyContentSpaceBetween]}
         activeOpacity={1}
       >
         <View>
-          <Text
-            style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}
-          >
+          <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
             {this.getName(item)}
           </Text>
 
-          <Text
-            style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}
-          >
+          <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
             {this.getType(item)}
           </Text>
         </View>
         <View>
-          <Text
-            style={[globalStyles.textfield, globalStyles.p5, { fontSize: 20 }]}
-          >
+          <Text style={[globalStyles.textfield, globalStyles.p5, globalStyles.fontSize20]}>
             {this.getDateWithCustomFormat(item)}
           </Text>
         </View>
@@ -536,7 +533,7 @@ export default class JornalRecord extends React.Component {
       // 			<Text style={globalStyles.textfield}>{index}</Text>
       // 		</Text> */}
 
-      //     <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+      //     <Text style={[globalStyles.textfield, globalStyles.pd0, { padding: 5 }]}>
       //       {/* {item.type == "feed"
       //         ? item.name.split("-")[0]
       //         : item.type == "incident"
@@ -545,7 +542,7 @@ export default class JornalRecord extends React.Component {
       //       {this.getName(item)}
       //     </Text>
 
-      //     <Text style={[globalStyles.textfield, globalStyles.pd0, globalStyles.p5]}>
+      //     <Text style={[globalStyles.textfield, globalStyles.pd0, { padding: 5 }]}>
       //       {this.getType(item)}
       //     </Text>
       //     {/* <Text style={globalStyles.labelName}>
@@ -556,7 +553,7 @@ export default class JornalRecord extends React.Component {
       // 		</Text> */}
       //   </View>
       //   <View>
-      //     <Text style={[globalStyles.textfield, globalStyles.p5, { fontSize: 20 }]}>
+      //     <Text style={[globalStyles.textfield, { padding: 5 }, { fontSize: 20 }]}>
       //       {/* {moment(item.created_at).format("LT")} */}
       //       {this.getDateWithCustomFormat(item)}
       //     </Text>
@@ -649,7 +646,7 @@ export default class JornalRecord extends React.Component {
               >
                 <View
                   style={[
-                    Styles.listItem,
+                    styles.listItem,
                     {
                       backgroundColor:
                         this.state.activeTab?.id === item.id
@@ -661,7 +658,7 @@ export default class JornalRecord extends React.Component {
                 >
                   <Text
                     style={[
-                      Styles.name,
+                      styles.name,
                       {
                         color:
                           this.state.activeTab.id === item.id
@@ -695,7 +692,7 @@ export default class JornalRecord extends React.Component {
 								<Text style={{ color: colors.primary }}>{moment(this.state.toDate).format("DD-MM-YYYY")}</Text>
 							</TouchableOpacity>
 						</View>
-						<View style={globalStyles.mt10}>
+						<View style={{ marginTop: 10 }}>
 							<TouchableOpacity
 								style={{
 									paddingHorizontal: 5,
@@ -710,7 +707,7 @@ export default class JornalRecord extends React.Component {
 								}}
 								onPress={this.dateFilterSubmit}
 							>
-								<Text style={globalStyles.sectionHeaderText}>Submit</Text>
+								<Text style={{ fontSize: 16, color: colors.white }}>Submit</Text>
 							</TouchableOpacity>
 						</View>
 						<DateTimePickerModal
@@ -777,12 +774,8 @@ export default class JornalRecord extends React.Component {
                     />
                   ) : (
                     <Text
-                      style={{
-                        paddingBottom: 2,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        color: "#7f7f7f",
-                      }}
+                      style={[ 
+                        globalStyles.paddingBottom2,globalStyles.fontWeightBold,globalStyles.fontSize16,{color: "#7f7f7f"}]}
                     >
                       No Data
                     </Text>
@@ -806,14 +799,12 @@ export default class JornalRecord extends React.Component {
                     refreshing={this.state.isLoading}
                     onRefresh={() => this.dateFilterSubmit(this.state.today)}
                     contentContainerStyle={
-                      this.state.records.length === 0
-                        ? globalStyles.container
-                        : null
+                      this.state.records.length === 0 ? globalStyles.container : null
                     }
                   />
                 ) : (
                   <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
+                    style={[globalStyles.justifyContentCenter,globalStyles.alignItemsCenter]}
                   >
                     <Text style={{ color: Colors.primary }}>
                       You don't have permission to view
@@ -846,16 +837,16 @@ const Styles = StyleSheet.create({
   //   top: 10,
   // },
 
-  listItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5,
-    paddingHorizontal: 8,
-    borderWidth: 0.6,
-    borderRadius: 2,
-    borderColor: Colors.primary,
-    marginRight: 5,
-  },
+  // listItem: {
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   paddingVertical: 5,
+  //   paddingHorizontal: 8,
+  //   borderWidth: 0.6,
+  //   borderRadius: 2,
+  //   borderColor: Colors.primary,
+  //   marginRight: 5,
+  // },
   // left: {
   //   width: "20%",
   //   justifyContent: "center",
@@ -874,10 +865,10 @@ const Styles = StyleSheet.create({
   //   width: "100%",
   //   height: 40,
   // },
-  name: {
-    fontSize: 14,
-    color: Colors.white,
-  },
+  // name: {
+  //   fontSize: 14,
+  //   color: Colors.white,
+  // },
 
   // scroll: {
   //   // backgroundColor: Colors.grey,
@@ -909,7 +900,7 @@ const Styles = StyleSheet.create({
   // },
 });
 
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 // 	container: {
 // 		flex: 1,
 // 		padding: 3

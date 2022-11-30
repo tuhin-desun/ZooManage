@@ -16,7 +16,7 @@ import { Colors } from "../../../config";
 import AppContext from "../../../context/AppContext";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { MultiSelectDropdown } from "../../../component";
 import Upload from "../../../component/tasks/AddTodo/Upload";
 import { getFileData } from "../../../utils/Util";
@@ -127,33 +127,33 @@ export default class AddFeedingPlaters extends React.Component {
         leftButtonFunc={this.gotoBack}
       />
       <View
-        style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
+        style={[globalStyles.container, { padding: Colors.formPaddingHorizontal }]}
       >
         <ScrollView ref={this.formScrollViewRef} showsVerticalScrollIndicator={false}>
-          <View style={styles.boxBorder}>
-          <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Platers Name</Text>
+          <View style={globalStyles.boxBorder}>
+          <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Platers Name</Text>
               <TextInput
                 value={this.state.platers_name}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(platers_name) => this.setState({ platers_name })}
                 autoCompleteType="off"
                 autoCapitalize="words"
               />
             </View>
           
-          <View style={[styles.fieldBox,styles.bbw0]}>
-              <Text style={styles.labelName}>
+          <View style={[globalStyles.fieldBox,globalStyles.bbw0]}>
+              <Text style={globalStyles.labelName}>
               Icon
               </Text>
               <TouchableOpacity
                 activeOpacity={1}
-                // style={styles.imageContainer}
+                // style={globalStyles.imageContainer}
                 onPress={this.chooseTagIcon}
               >
                 {typeof this.state.iconURI !== "undefined" ? (
                   <Image
-                    style={{ width: 35, height: 35 }}
+                   // style={{ width: 35, height: 35 }}
                     source={{ uri: this.state.iconURI }}
                   />
                 ) : (
@@ -162,13 +162,13 @@ export default class AddFeedingPlaters extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.buttonsContainer}>
+          <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.addPlaters}>
-              <Text style={[styles.buttonText, styles.saveBtnText]}>SAVE</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>SAVE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[styles.buttonText, styles.exitBtnText]}>EXIT</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

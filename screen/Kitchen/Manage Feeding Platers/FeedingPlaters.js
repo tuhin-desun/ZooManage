@@ -14,8 +14,10 @@ import Colors from "../../../config/colors";
 import { Header, Loader, ListEmpty } from "../../../component";
 import { getDiagnosis } from "../../../services/MedicalAndIncidenTServices";
 import AppContext from "../../../context/AppContext";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { getfeedplaters } from "../../../services/KitchenServices";
+import Styles from '../Style'
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const tabHeight = 50;
@@ -84,16 +86,16 @@ export default class FeedingPlaters extends React.Component {
 
   renderItem = ({ item }) => (
     <TouchableOpacity
-        style={[styles.fieldBox, { justifyContent: "space-between" }]}
+        style={[globalStyles.fieldBox, globalStyles.justifyContentSpaceBetween]}
         activeOpacity={1}
         onPress={this.gotoEdit.bind(this, item)}
       >
         <View>
-          <Text style={[styles.labelName, styles.pd0, { padding: 5 , fontWeight:'bold' }]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0, ]}>
             Sl. No.  :  {item.id}
           </Text>
 
-          <Text style={[styles.labelName, styles.pd0, { padding: 5 , fontWeight:'bold' }]}>
+          <Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.p5, globalStyles.fontWeightBold]}>
            Platers Name :  {item.platers_name}
           </Text>
         </View>
@@ -104,7 +106,7 @@ export default class FeedingPlaters extends React.Component {
   render = () => (
     <Container>
       <Header title={"FeedingPlaters"} addAction={this.gotoAddFeedingPlaters} />
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         {this.state.isLoading ? (
           <Loader />
         ) : (
@@ -117,7 +119,7 @@ export default class FeedingPlaters extends React.Component {
             refreshing={this.state.isLoading}
             onRefresh={this.loadFeedingPlaters}
             contentContainerStyle={
-              this.state.platers.length === 0 ? styles.container : null
+              this.state.platers.length === 0 ? globalStyles.container : null
             }
           />
         )}

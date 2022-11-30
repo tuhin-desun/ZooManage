@@ -15,7 +15,7 @@ import OverlayLoader from "../../../component/OverlayLoader";
 import { Colors } from "../../../config";
 import AppContext from "../../../context/AppContext";
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
-import styles from "../../../config/Styles";
+import globalStyles from "../../../config/Styles";
 import { InputDropdown, MultiSelectDropdown } from "../../../component";
 import { getfeedtype, getfoods, getUnitsAndStores, managefoods } from "../../../services/KitchenServices";
 import moment from "moment";
@@ -334,15 +334,15 @@ export default class AddFoods extends React.Component {
         leftButtonFunc={this.gotoBack}
       />
       <View
-        style={[styles.container, { padding: Colors.formPaddingHorizontal }]}
+        style={[globalStyles.container, { padding: Colors.formPaddingHorizontal }]}
       >
         <ScrollView ref={this.formScrollViewRef} showsVerticalScrollIndicator={false}>
-          <View style={styles.boxBorder}>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Name</Text>
+          <View style={globalStyles.boxBorder}>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Name</Text>
               <TextInput
                 value={this.state.name}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(name) => this.setState({ name })}
                 autoCompleteType="off"
                 autoCapitalize="words"
@@ -357,9 +357,9 @@ export default class AddFoods extends React.Component {
               closeAction={this.toggleTypeMenu}
               setValue={this.handleSetType}
               // placeholder="Select Sections"
-              labelStyle={styles.labelName}
-              textFieldStyle={styles.textfield}
-              style={[styles.fieldBox]}
+              labelStyle={globalStyles.labelName}
+              textFieldStyle={globalStyles.textfield}
+              style={[globalStyles.fieldBox]}
             />
 
             {this.state.id > 0 ? null : 
@@ -373,187 +373,187 @@ export default class AddFoods extends React.Component {
               closeAction={this.toggleUnitMenu}
               setValue={this.handleSetUnit}
               // placeholder="Select Sections"
-              labelStyle={styles.labelName}
-              textFieldStyle={styles.textfield}
-              style={[styles.fieldBox]}
+              labelStyle={globalStyles.labelName}
+              textFieldStyle={globalStyles.textfield}
+              style={[globalStyles.fieldBox]}
             />
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>HSN Code *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>HSN Code *</Text>
               <TextInput
                 value={this.state.hsn}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(hsn) => this.setState({ hsn })}
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>GST *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>GST *</Text>
               <TextInput
                 value={this.state.gst}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(gst) => this.setState({ gst })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Purchase Price *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Purchase Price *</Text>
               <TextInput
                 value={this.state.purchase_price}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(purchase_price) => this.setState({ purchase_price })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Sales Price *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Sales Price *</Text>
               <TextInput
                 value={this.state.sale_price}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(sale_price) => this.setState({ sale_price })}
                 keyboardType="number-pad"
               />
             </View>
             </>
             }
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Energy *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Energy *</Text>
               <TextInput
                 value={this.state.Energy}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Energy) => this.setState({ Energy })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Protein *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Protein *</Text>
               <TextInput
                 value={this.state.Protein}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Protein) => this.setState({ Protein })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Fat *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Fat *</Text>
               <TextInput
                 value={this.state.Fat}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Fat) => this.setState({ Fat })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Fiber *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Fiber *</Text>
               <TextInput
                 value={this.state.Fiber}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Fiber) => this.setState({ Fiber })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Carbs *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Carbs *</Text>
               <TextInput
                 value={this.state.Carbs}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Carbs) => this.setState({ Carbs })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Minerals *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Minerals *</Text>
               <TextInput
                 value={this.state.Minerals}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Minerals) => this.setState({ Minerals })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Sugar *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Sugar *</Text>
               <TextInput
                 value={this.state.Sugar}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Sugar) => this.setState({ Sugar })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Vitamin A *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Vitamin A *</Text>
               <TextInput
                 value={this.state.Vitamin_A}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Vitamin_A) => this.setState({ Vitamin_A })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Vitamin B *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Vitamin B *</Text>
               <TextInput
                 value={this.state.Vitamin_B}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Vitamin_B) => this.setState({ Vitamin_B })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Vitamin C *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Vitamin C *</Text>
               <TextInput
                 value={this.state.Vitamin_C}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Vitamin_C) => this.setState({ Vitamin_C })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Vitamin D *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Vitamin D *</Text>
               <TextInput
                 value={this.state.Vitamin_D}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Vitamin_D) => this.setState({ Vitamin_D })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Vitamin B 12 *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Vitamin B 12 *</Text>
               <TextInput
                 value={this.state.Vitamin_B_12}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Vitamin_B_12) => this.setState({ Vitamin_B_12 })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Calcium *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Calcium *</Text>
               <TextInput
                 value={this.state.Calcium}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Calcium) => this.setState({ Calcium })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Iron *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Iron *</Text>
               <TextInput
                 value={this.state.Iron}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Iron) => this.setState({ Iron })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Potassium *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Potassium *</Text>
               <TextInput
                 value={this.state.Potassium}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Potassium) => this.setState({ Potassium })}
                 keyboardType="number-pad"
               />
             </View>
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Sodium *</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Sodium *</Text>
               <TextInput
                 value={this.state.Sodium}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(Sodium) => this.setState({ Sodium })}
                 keyboardType="number-pad"
               />
@@ -569,9 +569,9 @@ export default class AddFoods extends React.Component {
               closeAction={this.toggleexpiry_fieldMenu}
               setValue={this.handleSetexpiry_field}
               // placeholder="Select Sections"
-              labelStyle={styles.labelName}
-              textFieldStyle={styles.textfield}
-              style={[styles.fieldBox]}
+              labelStyle={globalStyles.labelName}
+              textFieldStyle={globalStyles.textfield}
+              style={[globalStyles.fieldBox]}
             />
             <InputDropdown
               label="Has Opening Stock ? *"
@@ -582,41 +582,41 @@ export default class AddFoods extends React.Component {
               closeAction={this.togglehas_opening_stockMenu}
               setValue={this.handleSethas_opening_stock}
               // placeholder="Select Sections"
-              labelStyle={styles.labelName}
-              textFieldStyle={styles.textfield}
-              style={[styles.fieldBox]}
+              labelStyle={globalStyles.labelName}
+              textFieldStyle={globalStyles.textfield}
+              style={[globalStyles.fieldBox]}
             />
             {this.state.has_opening_stock == 1 ? <>
 
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Opening Stock</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Opening Stock</Text>
               <TextInput
                 value={this.state.opening_stock}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(opening_stock) => this.setState({ opening_stock })}
                 keyboardType="number-pad"
               />
             </View>
 
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Batch Number </Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Batch Number </Text>
               <TextInput
                 value={this.state.batch_no}
-                style={[styles.textfield, styles.width60]}
+                style={[globalStyles.textfield, globalStyles.width60]}
                 onChangeText={(batch_no) => this.setState({ batch_no })}
                 keyboardType="number-pad"
               />
             </View>
 
-            <View style={[styles.fieldBox]}>
-              <Text style={styles.labelName}>Expiry Date</Text>
+            <View style={[globalStyles.fieldBox]}>
+              <Text style={globalStyles.labelName}>Expiry Date</Text>
               <TouchableOpacity
                 onPress={() => {
                   this.showDatePicker();
                 }}
                 style={{ width: "60%", justifyContent: "center" }}
               >
-                <Text style={[styles.textfield]}>
+                <Text style={[globalStyles.textfield]}>
                   {moment(this.state.expiry_date).format("Do MMM YY (ddd)")}{""}
                 </Text>
               </TouchableOpacity>
@@ -631,9 +631,9 @@ export default class AddFoods extends React.Component {
               closeAction={this.togglestore_nameMenu}
               setValue={this.handleSetstore_name}
               // placeholder="Select Sections"
-              labelStyle={styles.labelName}
-              textFieldStyle={styles.textfield}
-              style={[styles.fieldBox]}
+              labelStyle={globalStyles.labelName}
+              textFieldStyle={globalStyles.textfield}
+              style={[globalStyles.fieldBox]}
             />
 
             </>
@@ -651,19 +651,19 @@ export default class AddFoods extends React.Component {
               closeAction={this.toggleStatusMenu}
               setValue={this.handleSetStatus}
               // placeholder="Select Sections"
-              labelStyle={styles.labelName}
-              textFieldStyle={styles.textfield}
-              style={[styles.fieldBox, styles.bbw0]}
+              labelStyle={globalStyles.labelName}
+              textFieldStyle={globalStyles.textfield}
+              style={[globalStyles.fieldBox, globalStyles.bbw0]}
             />
           </View>
 
-          <View style={styles.buttonsContainer}>
+          <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.addFood}>
-              <Text style={[styles.buttonText, styles.saveBtnText]}>SAVE</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>SAVE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[styles.buttonText, styles.exitBtnText]}>EXIT</Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

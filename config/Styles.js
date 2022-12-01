@@ -1175,6 +1175,42 @@ const styles = StyleSheet.create({
   },
   animalCodeTextInput: { width: "100%", textAlign: "left", fontSize: 14 },
   //============================================
+
+  //==== added by Dibyendu =======
+
+  fontSize: { fontSize: 12 },
+  mb50: { marginBottom: 50 },
+  p5: { padding: 5 },
+  alignItemsCenter: { alignItems: "center" },
+  flexDirectionRow: { flexDirection: "row" },
+  justifyContentCenter: { justifyContent: "center" },
+  justifyContentSpaceBetween: { justifyContent: "space-between" },
+  fontWeightNormal: { fontWeight: "normal" },
+  fontWeightBold: { fontWeight: "bold" },
+  borderWidth1: { borderWidth: 1 },
+  flex1: { flex: 1 },
+  paddingBottom2: { paddingBottom: 2 },
+  fontSize20: { fontSize: 20 },
+  fontSize16: { fontSize: 16 },
+  marginHorizontal5: { marginHorizontal: 5 },
+  marginTop10: { marginTop: 10 },
+  paddingRight5: { paddingRight: 5 },
+  marginVertical10: { marginVertical: 10 },
+  width80: { width: "80%" },
+  width90: { width: "90%" },
+  displayFlex: { display: "flex" },
+  marginRight3: { marginRight: 3 },
+  marginTop2: { marginTop: 2 },
+  justifyContentFlexStart: { justifyContent: "flex-start" },
+  alignItemsFlexEnd: { alignItems: "flex-end" },
+  justifyContentSpaceAround: { justifyContent: "space-around" },
+  flex05: { flex: 0.5 },
+  marginTop20: { marginTop: 20 },
+  justifyContentSpaceEvenly: { justifyContent: "space-evenly" },
+  alignSelfCenter: { alignSelf: "center" },
+  textAlignRight: { textAlign: "right" },
+
+  //===========
 });
 
 export default styles;

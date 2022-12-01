@@ -705,11 +705,15 @@ const Header = (props) => {
               </>
             ) : null}
             {routeName === "GetPrintLabel" ||
-            routeName === "OptionsAfterScan" ? (
-              props.isShowGetPrintLabel ? (
+            routeName === "OptionsAfterScan" ||
+            routeName === "TaskReport" ||
+            routeName === "IncidentReport" ||
+            routeName === "MedicalReport" ||
+            routeName === "ObservationsReport" ? (
+              props.isShowExportIcon ? (
                 <TouchableOpacity
                   activeOpacity={0.5}
-                  onPress={props.getPrintLabel}
+                  onPress={props.onPressExport}
                   style={globalStyles.p5}
                 >
                   <AntDesign name="export" size={20} color={Colors.white} />

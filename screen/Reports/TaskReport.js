@@ -14,12 +14,14 @@ import Header from "../../component/Header";
 import CatItemCard from "../../component/tasks/CatItemCard";
 import AppContext from "../../context/AppContext";
 import moment from "moment";
-import { Colors } from "../../config";
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
+import { Colors, Configs } from "../../config";
 import { ListEmpty, Loader, MultiSelectDropdown } from "../../component";
 import globalStyles from "../../config/Styles";
 import { getDepartments } from "../../services/UserManagementServices";
 import { getTaskReport } from "../../services/ReportsServices";
-import styles from  './Style'
+import styles from "./Style";
 
 const individual = require("../../assets/tasks/manager.png");
 const rotate = require("../../assets/tasks/Rotate.png");
@@ -83,21 +85,24 @@ class TaskReport extends React.Component {
               name: item.dept_name,
               value: item.dept_code,
             };
-          })
-        })
-      }).catch((err) => console.log(err))
-  }
-
+          }),
+        });
+      })
+      .catch((err) => console.log(err));
+  };
 
   setDeptData = (item) => {
     if (item.length > 0) {
-      this.setState({
-        selectedDepertments: item
-      }, () => {
-        this.getTasksbyDept(item);
-      })
+      this.setState(
+        {
+          selectedDepertments: item,
+        },
+        () => {
+          this.getTasksbyDept(item);
+        }
+      );
     } else {
-      alert("Select atleast one department")
+      alert("Select atleast one department");
     }
   };
 
@@ -108,7 +113,7 @@ class TaskReport extends React.Component {
     let departments = depts.map((v, i) => v.value).join(",");
     let obj = {
       cid: this.context.userDetails.cid,
-      departments: departments
+      departments: departments,
     };
     getTaskReport(obj)
       .then((res) => {
@@ -148,15 +153,14 @@ class TaskReport extends React.Component {
               title: value.name,
               category_id: value.category_id,
               date: value.schedule_start,
-              due_by:
-                moment(value.schedule_start).format("Do MMM YY"),
+              due_by: moment(value.schedule_start).format("Do MMM YY"),
               due_time:
                 moment(value.schedule_start).format("dddd") +
                 ", " +
                 moment(value.schedule_time, "HH:mm:ss").format("LT"),
               closed_date:
                 moment(value.updated_at).format("Do MMM YY, ddd") ==
-                  "Invalid date"
+                "Invalid date"
                   ? ""
                   : moment(value.updated_at).format("Do MMM YY, ddd"),
               members: value.assign_level_1,
@@ -171,9 +175,9 @@ class TaskReport extends React.Component {
               created: value.created_by_name,
               closed: value.updated_by_name,
             };
-          })
+          });
           return { title: value1.title, data: data2 };
-        })
+        });
         this.setState({
           data: data,
           isFetching: false,
@@ -187,7 +191,7 @@ class TaskReport extends React.Component {
           isFetching: false,
         });
       });
-  }
+  };
 
   onRefresh = () => {
     this.setState({ isFetching: true, data: [], page: 1 }, () => {
@@ -196,11 +200,133 @@ class TaskReport extends React.Component {
     });
   };
 
+  htmlForExportReport = () => {
+    let html = `
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funtoo App Html</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap");
+    </style>
+  </head>
+
+  <body style="background: white">
+    <main style="font-family: 'Roboto', sans-serif">
+    `;
+
+    this.state.data.forEach((item) => {
+      html += `
+      <div
+        style="
+          text-align: left;
+          background: #65c3a8;
+          color: white;
+          padding: 1px 10px;
+          border-radius: 5px;
+        "
+      >
+        <h3 style="line-height: 10px">${item.title}</h3>
+      </div>
+      `;
+
+      item.data?.forEach((item) => {
+        html += `
+        <div
+        style="
+          border-bottom: 1px solid lightgray;
+          padding-bottom: 1px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          ${
+            item.title
+              ? `<h4
+            style="line-height: 0; padding: 0; margin: 35px 0 0 0; color: gray"
+          >
+            ${item.title}
+          </h4>`
+              : ""
+          }
+          <p style="line-height: 24px; color: gray">
+          ${
+            item.incident_type && item.category_id == "64"
+              ? `Incident Type: ${item.incident_type}`
+              : ""
+          }
+          ${item.category_name ? `Category Name: ${item.category_name}` : ""}
+            Due By: ${item.due_by} <br />
+            ${item.due_time} <br />
+            ${item.created} to ${item.members}<br />
+            Status:
+            ${
+              Configs.TASK_STATUS[item.status] == "Completed"
+                ? `<span style="color: green">${
+                    Configs.TASK_STATUS[item.status]
+                  }</span>`
+                : `<span style="color: #7f7f7f">${
+                    Configs.TASK_STATUS[item.status]
+                  }</span>`
+            }<br />
+            ${
+              Configs.TASK_STATUS[item.status] == "Pending"
+                ? ""
+                : `Completed Date: ${item.closed_date} <br /> Completed by: ${item.closed}`
+            }
+          </p>
+        </div>
+        <div>
+          <div>
+            <img src=${item.priority} width="35" height="35" />
+          </div>
+        </div>
+      </div>
+        `;
+      });
+    });
+
+    html += `
+    </main>
+  </body>
+</html>
+    `;
+
+    return html;
+  };
+
+  exportReport = async (data) => {
+    let html = this.htmlForExportReport();
+
+    this.setState({ isFetching: true });
+
+    // this.setShowLoader(true);
+    const { uri } = await Print.printToFileAsync({
+      html,
+    });
+    this.setState({ isFetching: false });
+    this.exportPdf(uri);
+  };
+
+  exportPdf = async (uri) => {
+    await shareAsync(uri, {
+      UTI: ".pdf",
+      mimeType: "application/pdf",
+    });
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <Header
           title={"Task Reports"}
+          isShowExportIcon={this.state.data.length > 0}
+          onPressExport={this.exportReport}
         />
         <View style={styles.body}>
           <MultiSelectDropdown
@@ -215,7 +341,7 @@ class TaskReport extends React.Component {
             selectedItemsContainer={[
               globalStyles.selectedItemsContainer,
               globalStyles.width60,
-              { height: 100 }
+              { height: 100 },
             ]}
             style={globalStyles.fieldBox}
             listView={true}
@@ -259,7 +385,13 @@ class TaskReport extends React.Component {
                   return (
                     <View style={globalStyles.sectionHeader}>
                       <View style={globalStyles.sectionHeaderRight}>
-                        <Text style={[globalStyles.fontWeightBold,globalStyles.fontSize16 ,{color: Colors.white }]}>
+                        <Text
+                          style={[
+                            globalStyles.fontWeightBold,
+                            globalStyles.fontSize16,
+                            { color: Colors.white },
+                          ]}
+                        >
                           {title}
                         </Text>
                       </View>

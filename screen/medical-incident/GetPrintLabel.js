@@ -600,8 +600,8 @@ export default class GetPrintLabel extends React.Component {
       <OverlayLoader visible={this.state.showLoader} />
       <Header
         title={"Get Print Label"}
-        isShowGetPrintLabel={this.state.showPdf}
-        getPrintLabel={this.exportPdf}
+        isShowExportIcon={this.state.showPdf}
+        onPressExport={this.exportPdf}
       />
       {this.state.showPdf ? (
         <PDFReader

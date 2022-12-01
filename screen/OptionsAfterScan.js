@@ -569,8 +569,8 @@ const OptionsAfterScan = (props) => {
         <>
           <Header
             title="Get Print Label"
-            isShowGetPrintLabel={showPdf}
-            getPrintLabel={exportPdf}
+            isShowExportIcon={showPdf}
+            onPressExport={exportPdf}
           />
           <PDFReader
             source={{

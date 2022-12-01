@@ -18,8 +18,15 @@ import {
 import moment from "moment";
 import { Container } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
 import Colors from "../../config/colors";
-import { Header, Loader, ListEmpty, MultiSelectDropdown } from "../../component";
+import {
+  Header,
+  Loader,
+  ListEmpty,
+  MultiSelectDropdown,
+} from "../../component";
 import {
   getObservationReports,
   getObservation,
@@ -33,7 +40,7 @@ import { capitalize } from "../../utils/Util";
 import { showDate } from "../../utils/Util";
 import { userList } from "../../services/UserManagementServices";
 import { getReportsforObservation } from "../../services/ReportsServices";
-import styles from './Style'
+import styles from "./Style";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -94,7 +101,6 @@ export default class ObservationsReport extends React.Component {
     this.focusListener();
   };
 
-
   getData = () => {
     userList()
       .then((res) => {
@@ -104,23 +110,26 @@ export default class ObservationsReport extends React.Component {
             name: `${v.full_name} - ${v.dept_name}`,
           })),
           isLoading: false,
-          page: 1
+          page: 1,
         });
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   setSelectedUsers = (item) => {
     if (item.length > 0) {
-      this.setState({
-        selectedUsers: item
-      }, () => {
-        this.getObservationbyUser(item);
-      })
+      this.setState(
+        {
+          selectedUsers: item,
+        },
+        () => {
+          this.getObservationbyUser(item);
+        }
+      );
     } else {
-      alert("Select atleast one user")
+      alert("Select atleast one user");
     }
   };
 
@@ -132,11 +141,11 @@ export default class ObservationsReport extends React.Component {
     let obj = {
       cid: this.context.userDetails.cid,
       users: users,
-      page: this.state.page
+      page: this.state.page,
     };
     getReportsforObservation(obj)
       .then((data) => {
-        console.log("Observation Report****", data)
+        console.log("Observation Report****", data);
         let dataArr = [];
         for (let key in data) {
           dataArr.push({ title: key, data: data[key] });
@@ -153,8 +162,7 @@ export default class ObservationsReport extends React.Component {
         });
       })
       .catch((error) => console.log(error));
-  }
-
+  };
 
   renderFooter = () => {
     //it will show indicator at the bottom of the list when data is loading otherwise it returns null
@@ -199,26 +207,34 @@ export default class ObservationsReport extends React.Component {
         onPress={this.gotoView.bind(this, item)}
       >
         <View
-          style={[ globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceBetween,
-          globalStyles.paddingRight5,globalStyles.marginBottom
-           
-           
+          style={[
+            globalStyles.flexDirectionRow,
+            globalStyles.justifyContentSpaceBetween,
+            globalStyles.paddingRight5,
+            globalStyles.marginBottom,
           ]}
         >
-          <Text style={[globalStyles.labelName, globalStyles.pd0,globalStyles.width80]}>
+          <Text
+            style={[
+              globalStyles.labelName,
+              globalStyles.pd0,
+              globalStyles.width80,
+            ]}
+          >
             {/* {"Desc: "} */}
             <Text style={[globalStyles.textfield, globalStyles.width60]}>
               {item?.description ?? "N/A"}
             </Text>
           </Text>
-          <Image
-            source={priority}
-            style={styles.images}
-          />
+          <Image source={priority} style={styles.images} />
         </View>
         <View
-          style={[globalStyles.flexDirectionRow,
-          globalStyles.justifyContentSpaceBetween,globalStyles.paddingRight5,globalStyles.displayFlex]}
+          style={[
+            globalStyles.flexDirectionRow,
+            globalStyles.justifyContentSpaceBetween,
+            globalStyles.paddingRight5,
+            globalStyles.displayFlex,
+          ]}
         >
           <Text style={[globalStyles.labelName, globalStyles.pd0]}>
             {"ID: "}
@@ -272,9 +288,11 @@ export default class ObservationsReport extends React.Component {
             )}
             <Text style={[globalStyles.labelName, globalStyles.pd0]}>
               {"Encl: "}
-              <Text style={[globalStyles.textfield, globalStyles.width60]}>{`${capitalize(
-                item.enclosure
-              )} (${capitalize(item.section)})`}</Text>
+              <Text
+                style={[globalStyles.textfield, globalStyles.width60]}
+              >{`${capitalize(item.enclosure)} (${capitalize(
+                item.section
+              )})`}</Text>
             </Text>
           </>
         ) : null}
@@ -324,11 +342,151 @@ export default class ObservationsReport extends React.Component {
     );
   };
 
+  htmlForExportReport = () => {
+    let html = `
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funtoo App Html</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap");
+    </style>
+  </head>
+
+  <body style="background: white">
+    <main style="font-family: 'Roboto', sans-serif">
+    `;
+
+    this.state.consumptions.forEach((item) => {
+      html += `
+      <div
+        style="
+          text-align: left;
+          background: #65c3a8;
+          color: white;
+          padding: 1px 10px;
+          border-radius: 5px;
+          margin-bottom: 20px;
+        "
+      >
+        <h3 style="line-height: 10px">${item.title}</h3>
+      </div>
+      `;
+
+      item?.data?.forEach((item) => {
+        let priority = low;
+        if (item.priority == "High") {
+          priority = high;
+        } else if (item.priority == "Medium") {
+          priority = moderate;
+        } else if (item.priority == "Top") {
+          priority = danger;
+        }
+
+        html += `
+        <div
+        style="
+          box-shadow: 0 0 10px 1px gray;
+          padding: 10px;
+          background: white;
+          border-radius: 5px;
+          margin-bottom: 18px;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <h4 style="line-height: 0; padding: 0; margin: 0; color: black">
+          ${item?.description ?? "N/A"}
+          </h4>
+          <div>
+            <img src=${priority} width="15" height="15" />
+          </div>
+        </div>
+
+        <p style="line-height: 24px; color: gray; margin: 10px 0 0 0">
+          
+          ID: #${item.id} <br />
+          ${
+            item.ref == "others"
+              ? ""
+              : "Ref: " +
+                `${
+                  item.ref == "animal"
+                    ? capitalize(item.english_name) +
+                      capitalize(item.ref_value) +
+                      " "
+                    : capitalize(item.ref_value) + " " + capitalize(item.ref)
+                }`
+          }
+          ${
+            item.ref == "animal"
+              ? (item.dna == null || item.dna == ""
+                  ? ""
+                  : "DNA No: " + item.dna + "\n") +
+                (item.microchip == null || item.microchip == ""
+                  ? ""
+                  : "Microchip No: " + item.microchip + "\n") +
+                ("Encl: " +
+                  capitalize(item.enclosure) +
+                  " " +
+                  capitalize(item.section))
+              : ""
+          }
+
+          ${!item.learning ? "" : "Learning: " + item?.learning ?? "N/A"}<br />
+          ${!item.full_name ? "" : "Rep By: " + item?.full_name ?? "N/A"}<br />
+          Date: ${moment(item.created_on, "YYYY-MM-DD").format(
+            "Do MMM YY (ddd)"
+          )}<br />
+        </p>
+      </div>
+        `;
+      });
+    });
+
+    html += `
+    </main>
+  </body>
+</html>
+    `;
+
+    return html;
+  };
+
+  exportReport = async () => {
+    let html = this.htmlForExportReport();
+
+    this.setState({ isLoading: true });
+
+    // this.setShowLoader(true);
+    const { uri } = await Print.printToFileAsync({
+      html,
+    });
+    this.setState({ isLoading: false });
+    this.exportPdf(uri);
+  };
+
+  exportPdf = async (uri) => {
+    await shareAsync(uri, {
+      UTI: ".pdf",
+      mimeType: "application/pdf",
+    });
+  };
 
   render = () => (
     <Container>
       <Header
         title={"Observation Reports"}
+        isShowExportIcon={this.state.consumptions.length > 0}
+        onPressExport={this.exportReport}
       />
 
       <View style={globalStyles.listContainer}>
@@ -344,7 +502,7 @@ export default class ObservationsReport extends React.Component {
           selectedItemsContainer={[
             globalStyles.selectedItemsContainer,
             globalStyles.width60,
-            { height: 100 }
+            { height: 100 },
           ]}
           style={globalStyles.fieldBox}
           listView={true}
@@ -357,7 +515,9 @@ export default class ObservationsReport extends React.Component {
             keyExtractor={(item, index) => item.id.toString()}
             renderItem={this.renderItem}
             contentContainerStyle={
-              this.state.consumptions.length === 0 ? globalStyles.container : null
+              this.state.consumptions.length === 0
+                ? globalStyles.container
+                : null
             }
             ListEmptyComponent={() => <ListEmpty />}
             stickySectionHeadersEnabled
@@ -365,7 +525,13 @@ export default class ObservationsReport extends React.Component {
               return (
                 <View style={globalStyles.sectionHeader}>
                   <View style={globalStyles.sectionHeaderRight}>
-                    <Text style={[globalStyles.fontSize16,globalStyles.fontWeightBold ,{color: Colors.white }]}>
+                    <Text
+                      style={[
+                        globalStyles.fontSize16,
+                        globalStyles.fontWeightBold,
+                        { color: Colors.white },
+                      ]}
+                    >
                       {title}
                     </Text>
                   </View>

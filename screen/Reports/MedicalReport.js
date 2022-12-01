@@ -13,8 +13,15 @@ import {
 } from "react-native";
 import moment from "moment";
 import { Container } from "native-base";
+import * as Print from "expo-print";
+import { shareAsync } from "expo-sharing";
 import Colors from "../../config/colors";
-import { Header, Loader, ListEmpty, MultiSelectDropdown } from "../../component";
+import {
+  Header,
+  Loader,
+  ListEmpty,
+  MultiSelectDropdown,
+} from "../../component";
 import {
   getMedicalRecords,
   filterMedicalRecords,
@@ -83,23 +90,26 @@ export default class MedicalReport extends React.Component {
             name: `${v.full_name} - ${v.dept_name}`,
           })),
           isLoading: false,
-          page: 1
+          page: 1,
         });
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   setSelectedUsers = (item) => {
     if (item.length > 0) {
-      this.setState({
-        selectedUsers: item
-      }, () => {
-        this.getMedicalbyUser(item);
-      })
+      this.setState(
+        {
+          selectedUsers: item,
+        },
+        () => {
+          this.getMedicalbyUser(item);
+        }
+      );
     } else {
-      alert("Select atleast one user")
+      alert("Select atleast one user");
     }
   };
 
@@ -111,7 +121,7 @@ export default class MedicalReport extends React.Component {
     let obj = {
       cid: this.context.userDetails.cid,
       users: users,
-      page: this.state.page
+      page: this.state.page,
     };
     getReportsforMedical(obj)
       .then((data) => {
@@ -128,7 +138,7 @@ export default class MedicalReport extends React.Component {
         });
       })
       .catch((error) => console.log(error));
-  }
+  };
 
   renderFooter = () => {
     //it will show indicator at the bottom of the list when data is loading otherwise it returns null
@@ -179,14 +189,16 @@ export default class MedicalReport extends React.Component {
             style={[
               globalStyles.labelName,
               globalStyles.pd0,
-              item.status === "P" ? globalStyles.pendingStatus : globalStyles.approveStatus,
+              item.status === "P"
+                ? globalStyles.pendingStatus
+                : globalStyles.approveStatus,
             ]}
           >
             {item.status === "P"
               ? "(Pending)"
               : item.status === "O"
-                ? "(Ongoing)"
-                : ""}
+              ? "(Ongoing)"
+              : ""}
           </Text>
         </View>
         <Text
@@ -194,7 +206,7 @@ export default class MedicalReport extends React.Component {
             globalStyles.labelName,
             globalStyles.pd0,
             globalStyles.width80,
-            globalStyles.marginVertical10
+            globalStyles.marginVertical10,
           ]}
         >
           {/* {"Desc: "} */}
@@ -274,10 +286,124 @@ export default class MedicalReport extends React.Component {
     );
   };
 
+  htmlForExportReport = () => {
+    let html = `
+    <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funtoo App Html</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap");
+    </style>
+  </head>
+
+  <body style="background: white">
+    <main style="font-family: 'Roboto', sans-serif">
+    `;
+
+    this.state.records.forEach((item) => {
+      html += `
+      <div
+        style="
+          text-align: left;
+          background: #65c3a8;
+          color: white;
+          padding: 1px 10px;
+          border-radius: 5px;
+          margin-bottom: 20px;
+        "
+      >
+        <h3 style="line-height: 10px">${item.title}</h3>
+      </div>
+      `;
+
+      item?.data?.forEach((item) => {
+        html += `
+        <div
+        style="
+          box-shadow: 0 0 10px 1px gray;
+          padding: 10px;
+          background: white;
+          border-radius: 5px;
+          margin-bottom: 18px;
+        "
+      >
+        <p style="line-height: 24px; color: gray; margin: 10px 0 0 0">
+        Case ID: #${item.id}
+        <span style="color: ${item.status === "P" ? "#ffc107" : "#1e7e34"};">${
+          item.status === "P"
+            ? "(Pending)"
+            : item.status === "O"
+            ? "(Ongoing)"
+            : ""
+        }</span>
+         <br />
+          ${item?.description ?? "N/A"} <br />
+          Diagnosis: ${item.diagnosis_name} <br />
+          Ref: 
+          ${
+            item.ref == "animal"
+              ? item.english_name + " " + item.ref_value
+              : item.english_name + " " + item.ref_value
+          }
+
+          ${
+            item.ref == "animal"
+              ? (item.dna == null || item.dna == ""
+                  ? ""
+                  : "DNA No: " + item.dna + "\n") +
+                (item.microchip == null || item.microchip == ""
+                  ? ""
+                  : "Microchip No: " + item.microchip + "\n") +
+                ("Encl: " + item.enclosure + " " + item.section)
+              : ""
+          }<br />
+          Rep By: ${item?.reported_by_name ?? "N/A"}<br />
+          Date: ${moment(item.date, "YYYY-MM-DD").format("DD/MM/YYYY")}
+        </p>
+      </div>
+        `;
+      });
+    });
+
+    html += `
+    </main>
+  </body>
+</html>
+    `;
+
+    return html;
+  };
+
+  exportReport = async () => {
+    let html = this.htmlForExportReport();
+
+    this.setState({ isLoading: true });
+
+    // this.setShowLoader(true);
+    const { uri } = await Print.printToFileAsync({
+      html,
+    });
+    this.setState({ isLoading: false });
+    this.exportPdf(uri);
+  };
+
+  exportPdf = async (uri) => {
+    await shareAsync(uri, {
+      UTI: ".pdf",
+      mimeType: "application/pdf",
+    });
+  };
+
   render = () => (
     <Container>
       <Header
         title={"Medical Reports"}
+        isShowExportIcon={this.state.records.length > 0}
+        onPressExport={this.exportReport}
       />
       <View style={globalStyles.listContainer}>
         <MultiSelectDropdown
@@ -292,7 +418,7 @@ export default class MedicalReport extends React.Component {
           selectedItemsContainer={[
             globalStyles.selectedItemsContainer,
             globalStyles.width60,
-            { height: 100 }
+            { height: 100 },
           ]}
           style={globalStyles.fieldBox}
           listView={true}
@@ -313,7 +439,13 @@ export default class MedicalReport extends React.Component {
               return (
                 <View style={globalStyles.sectionHeader}>
                   <View style={globalStyles.sectionHeaderRight}>
-                    <Text style={[globalStyles.fontSize16,globalStyles.fontWeightBold,{color: Colors.white }]}>
+                    <Text
+                      style={[
+                        globalStyles.fontSize16,
+                        globalStyles.fontWeightBold,
+                        { color: Colors.white },
+                      ]}
+                    >
                       {title}
                     </Text>
                   </View>

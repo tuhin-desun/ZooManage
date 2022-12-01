@@ -14,7 +14,7 @@ import {
 } from "@expo/vector-icons";
 import Colors from "../../config/colors";
 import { Header } from "../../component";
-import styles from "../../config/Styles";
+import globalStyles from "../../config/Styles";
 
 export default class GetPrintLabelMaster extends React.Component {
   constructor(props) {

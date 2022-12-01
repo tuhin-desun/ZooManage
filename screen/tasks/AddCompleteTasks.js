@@ -65,8 +65,6 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import globalStyles from "../../config/Styles";
 import styles from "./Styles";
 
-
-
 const level1 = require("../../assets/tasks/level1.png");
 const level2 = require("../../assets/tasks/level2.png");
 
@@ -962,9 +960,8 @@ class AddCompleteTasks extends React.Component {
               marginBottom: 20,
             }}
           >
-            <View
-              style={globalStyles.formBorder}
-            >
+            <></>
+            <View style={globalStyles.formBorder}>
               {this.props.route.params?.prefilled ? null : (
                 <>
                   {/* task related to here */}
@@ -1209,8 +1206,10 @@ class AddCompleteTasks extends React.Component {
             <View style={globalStyles.h50} />
 
             <View
-              style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100
-               
+              style={[
+                globalStyles.flexDirectionRow,
+                globalStyles.justifyContentSpaceEvenly,
+                globalStyles.width100,
               ]}
             >
               {this.state.loading === true ? (

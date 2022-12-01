@@ -12,6 +12,8 @@ import { Header, OverlayLoader } from "../../component";
 import { manageItemType } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
 import { getCapitalizeTextWithoutExtraSpaces } from "../../utils/Util";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class AddItemCategory extends React.Component {
   static contextType = AppContext;
@@ -96,7 +98,7 @@ export default class AddItemCategory extends React.Component {
             multiline
             value={this.state.categoryName}
             onChangeText={(categoryName) => this.setState({ categoryName })}
-            style={[styles.textfield, globalStyles.width60]}
+            style={[styles.textfield, globalStyle.width60]}
             autoCompleteType="off"
             autoCapitalize="words"
             placeholder="Enter Category Name"
@@ -112,63 +114,63 @@ export default class AddItemCategory extends React.Component {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Colors.lableSize,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 8,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Colors.lableSize,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
 
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: Colors.primary,
-    padding: 10,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 2,
-    // },
-    // shadowOpacity: 0.23,
-    // shadowRadius: 2.62,
-    // elevation: 4,
-    borderRadius: 20,
-    color: "#fff",
-    marginVertical: 10,
-  },
-  textWhite: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  errorFieldBox: {
-    borderWidth: 1,
-    borderColor: Colors.tomato,
-  },
-});
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
+//   button: {
+//     alignItems: "center",
+//     backgroundColor: Colors.primary,
+//     padding: 10,
+//     // shadowColor: "#000",
+//     // shadowOffset: {
+//     // 	width: 0,
+//     // 	height: 2,
+//     // },
+//     // shadowOpacity: 0.23,
+//     // shadowRadius: 2.62,
+//     // elevation: 4,
+//     borderRadius: 20,
+//     color: "#fff",
+//     marginVertical: 10,
+//   },
+//   textWhite: {
+//     color: "#fff",
+//     fontWeight: "bold",
+//   },
+//   errorFieldBox: {
+//     borderWidth: 1,
+//     borderColor: Colors.tomato,
+//   },
+// });

@@ -22,6 +22,9 @@ import { debounce } from "lodash";
 import { searchTasks } from "../../services/APIServices";
 import { formatdate } from "../../utils/helper";
 import CatItemCard from "../../component/tasks/CatItemCard";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
 
 const individual = require('../../assets/tasks/manager.png')
 const rotate = require('../../assets/tasks/Rotate.png')
@@ -257,10 +260,11 @@ class SearchByUser extends React.Component {
                             />
                             :
                             <View
-                                                    style={{ justifyContent: "center" }}
+                                                    style={globalStyles.justifyContentCenter}
                                                 >
-                                                    <View style={{ justifyContent: "center", textAlign: "center" }}>
-                                                        <Text style={{ color: Colors.primary, textAlign: "center" }}>No Tasks Found 
+                                                    <View style={[globalStyles.justifyContentCenter,globalStyles.textAlignCenter]}>
+                                                        <Text style={[globalStyles.textAlignCenter,
+                                                            { color: Colors.primary}]}>No Tasks Found 
                                                         {/* <Ionicons
                                                             name="sad-outline"
                                                             style={{ fontSize: 20, color: Colors.danger }}
@@ -281,34 +285,34 @@ class SearchByUser extends React.Component {
 }
 export default SearchByUser;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    body: {
-        flex: 9,
-        marginTop: 20,
-    },
-    searchBackground:{
-        backgroundColor: Colors.primary,
-    },
-    searchContainer: {
-        backgroundColor: Colors.white,
-        flexDirection: 'row',
-        alignItems: 'center',
-        elevation: 5,
-        borderRadius: 3,
-        padding: 5,
-        marginTop: -5,
-        marginBottom :5,
-        marginHorizontal: 10,
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#fff'
+//     },
+//     body: {
+//         flex: 9,
+//         marginTop: 20,
+//     },
+//     searchBackground:{
+//         backgroundColor: Colors.primary,
+//     },
+//     searchContainer: {
+//         backgroundColor: Colors.white,
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//         elevation: 5,
+//         borderRadius: 3,
+//         padding: 5,
+//         marginTop: -5,
+//         marginBottom :5,
+//         marginHorizontal: 10,
         
-    },
-    searchField: {
-        width:"90%",
-        marginLeft: 5,
-        color: Colors.textColor,
-        fontSize: 18,
-    },
-});
+//     },
+//     searchField: {
+//         width:"90%",
+//         marginLeft: 5,
+//         color: Colors.textColor,
+//         fontSize: 18,
+//     },
+// });

@@ -22,6 +22,10 @@ import moment from "moment";
 import { Colors } from "../../config";
 import { Ionicons } from "@expo/vector-icons";
 import { Loader } from "../../component";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
+
 
 const individual = require("../../assets/tasks/manager.png");
 const rotate = require("../../assets/tasks/Rotate.png");
@@ -299,7 +303,7 @@ class CategoryItems extends React.Component {
                 />
               ) : (
                 <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
+                  style={[globalStyles.justifyContentCenter,globalStyles.alignItemsCenter]}
                 >
                   <Text style={{ color: Colors.primary }}>
                     No Records !!
@@ -339,34 +343,34 @@ class CategoryItems extends React.Component {
 }
 export default CategoryItems;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-  },
-  selected: { backgroundColor: "#d3d3d3" },
-  list: {},
-  icon: {
-    position: "absolute",
-    bottom: 20,
-    width: "100%",
-    left: 290,
-    zIndex: 1,
-  },
-  numberBox: {
-    position: "absolute",
-    bottom: 75,
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    left: 330,
-    zIndex: 3,
-    backgroundColor: "#e3e3e3",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  number: { fontSize: 14, color: "#000" },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//   },
+//   selected: { backgroundColor: "#d3d3d3" },
+//   list: {},
+//   icon: {
+//     position: "absolute",
+//     bottom: 20,
+//     width: "100%",
+//     left: 290,
+//     zIndex: 1,
+//   },
+//   numberBox: {
+//     position: "absolute",
+//     bottom: 75,
+//     width: 30,
+//     height: 30,
+//     borderRadius: 15,
+//     left: 330,
+//     zIndex: 3,
+//     backgroundColor: "#e3e3e3",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   number: { fontSize: 14, color: "#000" },
+// });

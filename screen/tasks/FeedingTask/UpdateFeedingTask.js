@@ -20,7 +20,8 @@ import AppContext from "../../../context/AppContext";
 import Spinner from "../../../component/tasks/Spinner";
 import colors from "../../../config/colors";
 import { updateFeedWork } from './../../../services/AllocationServices';
-
+import styles from "../Styles";
+import globalStyles from '../../../config/Styles'
 
 
 class UpdateFeedingTask extends React.Component {
@@ -121,7 +122,7 @@ class UpdateFeedingTask extends React.Component {
                                 </View>
                                 {this.state.Images.length > 0 ? (
                                     <View style={{ borderWidth: 0.5, borderColor: "#444", width: "100%", height: 110, justifyContent: 'center' }}>
-                                        <ScrollView contentContainerStyle={{ alignItems: 'center' }} horizontal={true} showsHorizontalScrollIndicator={false}>
+                                        <ScrollView contentContainerStyle={globalStyles.alignItemsCenter} horizontal={true} showsHorizontalScrollIndicator={false}>
                                             {this.state.Images.map((item, index) => {
                                                 return (
                                                     <View key={index}>
@@ -140,16 +141,16 @@ class UpdateFeedingTask extends React.Component {
                                 ) : null}
                             </View>
                         </View>
-                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <View style={[globalStyles.alignItemsCenter,globalStyles.justifyContentCenter]}
+                           >
                             <TouchableOpacity
-                                style={{
+                                style={[globalStyles.justifyContentCenter,globalStyles.alignItemsCenter,
+                                    {
                                     paddingVertical: 10,
                                     width: 150,
                                     backgroundColor: colors.primary,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
                                     borderRadius: 3
-                                }}
+                                }]}
                             onPress={() => {
                                 this.handleMarkasComplete()
                             }}
@@ -168,72 +169,72 @@ class UpdateFeedingTask extends React.Component {
 }
 export default UpdateFeedingTask;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    body: {
-        flex: 9,
-    },
-    placeholder: { fontSize: 17 - 1, marginTop: 15, color: '#7f7f7f' },//SUBHASH: Change title color here
-    wrapper: {
-        borderWidth: 1,
-        borderColor: '#e5e5e5',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderRadius: 3,
-        width: '100%',
-        marginTop: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    btns: {
-        fontSize: 18,
-        color: colors.white
-    },
-    fieldBox: {
-        alignItems: 'center',
-        width: "100%",
-        overflow: "hidden",
-        flexDirection: "row",
-        padding: 5,
-        borderRadius: 3,
-        borderColor: "#ddd",
-        borderWidth: 1,
-        backgroundColor: "#fff",
-        height: 'auto',
-        justifyContent: "space-between",
-        marginBottom: 5,
-        marginTop: 5,
-        // shadowColor: "#999",
-        // shadowOffset: {
-        // 	width: 0,
-        // 	height: 1,
-        // },
-        // shadowOpacity: 0.22,
-        // shadowRadius: 2.22,
-        // elevation: 3,
-    },
-    labelName: {
-        color: colors.textColor,
-        lineHeight: 40,
-        fontSize: 14,
-        paddingLeft: 4,
-        height: 'auto',
-    },
-    textfield: {
-        backgroundColor: "#fff",
-        height: 'auto',
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#fff'
+//     },
+//     body: {
+//         flex: 9,
+//     },
+//     placeholder: { fontSize: 17 - 1, marginTop: 15, color: '#7f7f7f' },//SUBHASH: Change title color here
+//     wrapper: {
+//         borderWidth: 1,
+//         borderColor: '#e5e5e5',
+//         paddingHorizontal: 10,
+//         paddingVertical: 10,
+//         borderRadius: 3,
+//         width: '100%',
+//         marginTop: 10,
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//         justifyContent: 'space-between'
+//     },
+//     btns: {
+//         fontSize: 18,
+//         color: colors.white
+//     },
+//     fieldBox: {
+//         alignItems: 'center',
+//         width: "100%",
+//         overflow: "hidden",
+//         flexDirection: "row",
+//         padding: 5,
+//         borderRadius: 3,
+//         borderColor: "#ddd",
+//         borderWidth: 1,
+//         backgroundColor: "#fff",
+//         height: 'auto',
+//         justifyContent: "space-between",
+//         marginBottom: 5,
+//         marginTop: 5,
+//         // shadowColor: "#999",
+//         // shadowOffset: {
+//         // 	width: 0,
+//         // 	height: 1,
+//         // },
+//         // shadowOpacity: 0.22,
+//         // shadowRadius: 2.22,
+//         // elevation: 3,
+//     },
+//     labelName: {
+//         color: colors.textColor,
+//         lineHeight: 40,
+//         fontSize: 14,
+//         paddingLeft: 4,
+//         height: 'auto',
+//     },
+//     textfield: {
+//         backgroundColor: "#fff",
+//         height: 'auto',
         
-        fontSize: 12,
-        color: colors.textColor,
-        textAlign: "right",
-        padding: 5,
-        width: '50%'
-    },
-});
+//         fontSize: 12,
+//         color: colors.textColor,
+//         textAlign: "right",
+//         padding: 5,
+//         width: '50%'
+//     },
+// });
 
 
 

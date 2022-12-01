@@ -33,7 +33,8 @@ import {
 } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
-import globalStyles from "../../config/Styles";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class AddConsumption extends React.Component {
   static contextType = AppContext;
@@ -403,8 +404,10 @@ export default class AddConsumption extends React.Component {
         index === 0 ? { borderTopWidth: 1, borderTopColor: "#eee" } : null,
       ]}
     >
-      <View style={{ width: "90%" }}>
-        <Text style={styles.rowTitleText}>{item.name}</Text>
+      <View style={globalStyle.width90}>
+        <Text style={styles.rowTitleText}>
+        {item.name}
+        </Text>
         <Text style={styles.rowSubText}>
           {"Quantity: " + item.quantity + " " + item.unit}
         </Text>
@@ -439,7 +442,7 @@ export default class AddConsumption extends React.Component {
               items={this.state.departments}
               onChange={this.setDepartment}
               labelStyle={styles.labelName}
-              textFieldStyle={[styles.textfield, { width: "50%" }]}
+              textFieldStyle={[styles.textfield, globalStyle.width50]}
               style={[
                 styles.fieldBox,
                 this.state.departmentValidationFailed
@@ -455,7 +458,7 @@ export default class AddConsumption extends React.Component {
               items={this.state.itemTypes}
               onChange={this.setItemTypeData}
               labelStyle={styles.labelName}
-              textFieldStyle={[styles.textfield, { width: "50%" }]}
+              textFieldStyle={[styles.textfield, globalStyle.width50]}
               style={[
                 styles.fieldBox,
                 this.state.itemNameValidationFailed
@@ -477,9 +480,9 @@ export default class AddConsumption extends React.Component {
               <Text style={styles.labelName}>Date:</Text>
               <TouchableOpacity
                 activeOpacity={1}
-                style={[
-                  { flexDirection: "row", alignItems: "center", width: "50%" },
-                ]}
+                style=
+                {[ globalStyle.flexDirectionRow,globalStyle.alignItemsCenter,
+                  globalStyle.width50]}
                 onPress={() => {
                   this.showDatePicker();
                 }}
@@ -508,11 +511,9 @@ export default class AddConsumption extends React.Component {
                   name="plus"
                   size={10}
                   color={Colors.white}
-                  style={{ marginTop: 2, marginRight: 3 }}
+                  style={[globalStyle.marginRight3,globalStyle.marginTop2]}
                 />
-                <Text
-                  style={{ fontSize: Colors.textSize, color: Colors.white }}
-                >
+                <Text style={{ fontSize: Colors.textSize, color: Colors.white }}>
                   Add Item
                 </Text>
               </TouchableOpacity>
@@ -542,7 +543,7 @@ export default class AddConsumption extends React.Component {
         visible={this.state.isAddItemModalOpen}
         onRequestClose={this.closeAddItemModal}
       >
-        <SafeAreaView style={globalStyles.safeAreaViewStyle}>
+        <SafeAreaView style={[ globalStyle.no_bg_color,globalStyle.flex1]}>
           <View style={styles.modalOverlay}>
             <View style={styles.itemModalContainer}>
               <View style={styles.itemModalHeader}>
@@ -554,9 +555,7 @@ export default class AddConsumption extends React.Component {
                   <Ionicons name="arrow-back" size={25} color={Colors.white} />
                 </TouchableOpacity>
                 <View style={styles.headerTitleContainer}>
-                  <Text
-                    style={{ fontSize: Colors.textSize, color: Colors.white }}
-                  >
+                  <Text style={{ fontSize: Colors.textSize, color: Colors.white }}>
                     Add Item
                   </Text>
                 </View>
@@ -576,7 +575,7 @@ export default class AddConsumption extends React.Component {
                     items={this.state.products}
                     onChange={this.setItemData}
                     labelStyle={styles.labelName}
-                    textFieldStyle={[styles.textfield, { width: "50%" }]}
+                    textFieldStyle={[styles.textfield, globalStyle.width50]}
                     style={[
                       styles.fieldBox,
                       this.state.itemNameValidationFailed
@@ -592,7 +591,7 @@ export default class AddConsumption extends React.Component {
                     items={this.state.storeNames}
                     onChange={this.setAvailableQuantity}
                     labelStyle={styles.labelName}
-                    textFieldStyle={[styles.textfield, { width: "50%" }]}
+                    textFieldStyle={[styles.textfield, globalStyle.width50]}
                     style={[
                       styles.fieldBox,
                       this.state.storeNameValidationFailed
@@ -617,7 +616,7 @@ export default class AddConsumption extends React.Component {
                     <Text style={styles.labelName}>Available Quantity:</Text>
                     <TextInput
                       editable={false}
-                      style={[styles.textfield, { width: "50%" }]}
+                      style={[styles.textfield,globalStyle.width50]}
                       value={
                         this.state.itemAvailableStock +
                         " " +
@@ -637,8 +636,7 @@ export default class AddConsumption extends React.Component {
 
                   <View
                     style={[
-                      styles.fieldBox,
-                      globalStyles.bbw0,
+                      styles.fieldBox,globalStyle.bbw0,
                       this.state.quantityValidationFailed
                         ? styles.errorFieldBox
                         : null,
@@ -648,7 +646,7 @@ export default class AddConsumption extends React.Component {
                     <TextInput
                       value={this.state.quantity}
                       onChangeText={(quantity) => this.setState({ quantity })}
-                      style={[styles.textfield, { width: "50%" }]}
+                      style={[styles.textfield, globalStyle.width50]}
                       autoCompleteType="off"
                       keyboardType="number-pad"
                       // placeholder="Enter Quantity"
@@ -671,149 +669,149 @@ export default class AddConsumption extends React.Component {
   );
 }
 
-const windowWidth = Dimensions.get("screen").width;
-const windowHeight = Dimensions.get("screen").height;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Colors.lableSize,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
+// const windowWidth = Dimensions.get("screen").width;
+// const windowHeight = Dimensions.get("screen").height;
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 8,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderBottomWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Colors.lableSize,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
 
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
-  addItemRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 5,
-    paddingHorizontal: 5,
-  },
-  capsule: {
-    height: 25,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    paddingBottom: 2,
-    borderRadius: 50,
-  },
-  itemsContainer: {
-    marginVertical: 5,
-    paddingHorizontal: 5,
-  },
-  itemRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  itemRemoveContainer: {
-    width: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  rowTitleText: {
-    fontSize: Colors.headerSize,
-    color: Colors.textColor,
-    fontWeight: "bold",
-    lineHeight: 24,
-  },
-  rowSubText: {
-    color: Colors.textColor,
-    opacity: 0.8,
-    fontSize: Colors.textSize,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: Colors.primary,
-    padding: 10,
-    borderRadius: 20,
-    color: "#fff",
-    marginVertical: 10,
-  },
-  textWhite: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  modalOverlay: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: windowWidth,
-    height: windowHeight,
-  },
-  itemModalContainer: {
-    flex: 1,
-    width: windowWidth,
-    height: windowHeight,
-    backgroundColor: Colors.lightGrey,
-  },
-  itemModalHeader: {
-    height: 55,
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: Colors.primary,
-    elevation: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  headerBackBtnContainer: {
-    width: "15%",
-    height: 55,
-    paddingLeft: 8,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerTitleContainer: {
-    width: "70%",
-    paddingLeft: 20,
-    height: 55,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  itemModalBody: {
-    flex: 1,
-    height: windowHeight - 55,
-    padding: 8,
-  },
-  checkBoxRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 5,
-  },
-  checkBoxLabel: {
-    marginLeft: 5,
-    fontSize: Colors.lableSize,
-    color: Colors.textColor,
-  },
-  errorFieldBox: {
-    borderWidth: 1,
-    borderColor: Colors.tomato,
-  },
-});
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
+//   addItemRow: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     marginVertical: 5,
+//     paddingHorizontal: 5,
+//   },
+//   capsule: {
+//     height: 25,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     paddingHorizontal: 10,
+//     paddingBottom: 2,
+//     borderRadius: 50,
+//   },
+//   itemsContainer: {
+//     marginVertical: 5,
+//     paddingHorizontal: 5,
+//   },
+//   itemRow: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     paddingVertical: 5,
+//     borderBottomWidth: 1,
+//     borderBottomColor: "#eee",
+//   },
+//   itemRemoveContainer: {
+//     width: "10%",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   rowTitleText: {
+//     fontSize: Colors.headerSize,
+//     color: Colors.textColor,
+//     fontWeight: "bold",
+//     lineHeight: 24,
+//   },
+//   rowSubText: {
+//     color: Colors.textColor,
+//     opacity: 0.8,
+//     fontSize: Colors.textSize,
+//   },
+//   button: {
+//     alignItems: "center",
+//     backgroundColor: Colors.primary,
+//     padding: 10,
+//     borderRadius: 20,
+//     color: "#fff",
+//     marginVertical: 10,
+//   },
+//   textWhite: {
+//     color: "#fff",
+//     fontWeight: "bold",
+//   },
+//   modalOverlay: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     width: windowWidth,
+//     height: windowHeight,
+//   },
+//   itemModalContainer: {
+//     flex: 1,
+//     width: windowWidth,
+//     height: windowHeight,
+//     backgroundColor: Colors.lightGrey,
+//   },
+//   itemModalHeader: {
+//     height: 55,
+//     flexDirection: "row",
+//     width: "100%",
+//     backgroundColor: Colors.primary,
+//     elevation: 1,
+//     alignItems: "center",
+//     justifyContent: "flex-start",
+//   },
+//   headerBackBtnContainer: {
+//     width: "15%",
+//     height: 55,
+//     paddingLeft: 8,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   headerTitleContainer: {
+//     width: "70%",
+//     paddingLeft: 20,
+//     height: 55,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   itemModalBody: {
+//     flex: 1,
+//     height: windowHeight - 55,
+//     padding: 8,
+//   },
+//   checkBoxRow: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     paddingVertical: 5,
+//   },
+//   checkBoxLabel: {
+//     marginLeft: 5,
+//     fontSize: Colors.lableSize,
+//     color: Colors.textColor,
+//   },
+//   errorFieldBox: {
+//     borderWidth: 1,
+//     borderColor: Colors.tomato,
+//   },
+// });

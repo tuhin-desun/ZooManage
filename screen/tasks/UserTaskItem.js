@@ -26,6 +26,9 @@ const low = require('../../assets/tasks/Low.png')
 const moderate = require('../../assets/tasks/Moderate.png')
 const high = require('../../assets/tasks/High.png')
 const greentick = require('../../assets/tasks/greentick.png')
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
 
 
 class UserTaskItem extends React.Component {
@@ -184,7 +187,10 @@ class UserTaskItem extends React.Component {
                                 keyExtractor={item => item.id.toString()}
                             />
                             :
-                            <Text style={{ paddingBottom: 2, fontSize: 16, fontWeight: 'bold', color: '#7f7f7f' }}>{this.state.status}</Text>
+                            <Text style={[globalStyles.fontWeightBold,globalStyles.fontSize16
+                            ,globalStyles.paddingBottom2]}>
+
+                            {this.state.status}</Text>
                     }
                     <View style={styles.numberBox}>
                         <Text style={styles.number}>{itemNumber}</Text>
@@ -213,36 +219,36 @@ class UserTaskItem extends React.Component {
 }
 export default UserTaskItem;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    body: {
-        flex: 9
-    },
-    selected: { backgroundColor: "#d3d3d3" },
-    list: {},
-    icon: {
-        position: "absolute",
-        bottom: 20,
-        width: "100%",
-        left: 290,
-        zIndex: 1
-    },
-    numberBox: {
-        position: "absolute",
-        bottom: 75,
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        left: 330,
-        zIndex: 3,
-        backgroundColor: "#e3e3e3",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    number: { fontSize: 14, color: "#000" },
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#fff'
+//     },
+//     body: {
+//         flex: 9
+//     },
+//     selected: { backgroundColor: "#d3d3d3" },
+//     list: {},
+//     icon: {
+//         position: "absolute",
+//         bottom: 20,
+//         width: "100%",
+//         left: 290,
+//         zIndex: 1
+//     },
+//     numberBox: {
+//         position: "absolute",
+//         bottom: 75,
+//         width: 30,
+//         height: 30,
+//         borderRadius: 15,
+//         left: 330,
+//         zIndex: 3,
+//         backgroundColor: "#e3e3e3",
+//         justifyContent: "center",
+//         alignItems: "center"
+//     },
+//     number: { fontSize: 14, color: "#000" },
+// });
 
 

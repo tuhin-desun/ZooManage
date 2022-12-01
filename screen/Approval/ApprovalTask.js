@@ -1,27 +1,23 @@
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-  Alert,
+    View,
+    Text,
+    StyleSheet,
+    SafeAreaView,
+    FlatList,
+    TouchableOpacity,
+    Alert
 } from "react-native";
-import Header from "../../component/Header";
+import Header from '../../component/Header'
 // import Footer from '../../component/tasks/Footer'
-import CatItemCard from "../../component/tasks/CatItemCard";
+import CatItemCard from '../../component/tasks/CatItemCard'
 import { showError } from "../../actions/Error";
 import Spinner from "../../component/tasks/Spinner";
 import { formatdate } from "../../utils/helper";
 import { Icon } from "react-native-elements";
 import AppContext from "../../context/AppContext";
 import moment from "moment";
-import {
-  animalChangeEnclosureUpdate,
-  getApprovalTasks,
-  getPendingEnclosure,
-} from "../../services/APIServices";
+import { animalChangeEnclosureUpdate, getApprovalTasks, getPendingEnclosure } from "../../services/APIServices";
 import { updateTaskStatus } from "../../utils/api";
 import { Colors } from "../../config";
 import { TouchableHighlight } from "react-native";
@@ -32,514 +28,450 @@ import { TextInput } from "react-native";
 import { capitalize } from "../../utils/Util";
 import globalStyles from "../../config/Styles";
 
-const individual = require("../../assets/tasks/manager.png");
-const rotate = require("../../assets/tasks/Rotate.png");
-const compete = require("../../assets/tasks/Compete.png");
-const collaborate = require("../../assets/tasks/Collborate.png");
-const critical = require("../../assets/tasks/Critical.png");
-const danger = require("../../assets/tasks/Danger.png");
-const low = require("../../assets/tasks/Low.png");
-const moderate = require("../../assets/tasks/Moderate.png");
-const high = require("../../assets/tasks/High.png");
-const greentick = require("../../assets/tasks/greentick.png");
+const individual = require('../../assets/tasks/manager.png')
+const rotate = require('../../assets/tasks/Rotate.png')
+const compete = require('../../assets/tasks/Compete.png')
+const collaborate = require('../../assets/tasks/Collborate.png')
+const critical = require('../../assets/tasks/Critical.png')
+const danger = require('../../assets/tasks/Danger.png')
+const low = require('../../assets/tasks/Low.png')
+const moderate = require('../../assets/tasks/Moderate.png')
+const high = require('../../assets/tasks/High.png')
+const greentick = require('../../assets/tasks/greentick.png')
 
 class ApprovalTask extends React.Component {
-  static contextType = AppContext;
-  constructor(props) {
-    super(props);
-    this.state = {
-      refreshing: false,
-      isFetching: false,
-      data: [],
-      activeTabKey: "task",
-      enclosureData: [],
-      rejectModal: false,
-      reqNo: "",
-      reject_reason: "",
-    };
-  }
-
-  componentDidMount() {
-    this.unsubscribe = this.props.navigation.addListener("focus", () => {
-      this.approvalTaskList();
-      this.approvalEnclosureList();
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
-  onRefresh = () => {
-    this.setState({ refreshing: true }, () => {
-      this.approvalTaskList();
-      this.approvalEnclosureList();
-    });
-  };
-
-  approvalTaskList = () => {
-    let obj = {
-      user_id: this.context.userDetails.id,
-    };
-    getApprovalTasks(obj)
-      .then((response) => {
-        let data = response.map((value) => {
-          let priority = moderate;
-          if (value.priority === "Critical") {
-            priority = critical;
-          } else if (value.priority === "Danger") {
-            priority = danger;
-          } else if (value.priority === "Low") {
-            priority = low;
-          } else if (value.priority === "Medium") {
-            priority = moderate;
-          } else if (value.priority === "High") {
-            priority = high;
-          }
-          let task_type = compete;
-          if (value.task_type === "Individual") {
-            task_type = individual;
-          } else if (value.task_type === "Rotate") {
-            task_type = rotate;
-          } else if (value.task_type === "Collaborate") {
-            task_type = collaborate;
-          } else if (value.task_type === "Compete") {
-            task_type = compete;
-          }
-          return {
-            id: value.id,
-            title: value.name,
-            category_id: value.category_id,
-            date:
-              moment(value.schedule_start).format("Do MMM YY, ddd") +
-              " (" +
-              moment(value.schedule_time, "HH:mm:ss").format("LT") +
-              ")",
-            closed_date:
-              moment(value.updated_at).format("Do MMM YY, ddd") ==
-              "Invalid date"
-                ? ""
-                : moment(value.updated_at).format("Do MMM YY, ddd"),
-            members: value.assign_level_1.split("-")[0],
-            priority: priority,
-            taskType: task_type,
-            coins: value.point,
-            status: value.status,
-            values: value,
-            isSelect: false,
-            selectedClass: globalStyles.list,
-            created: value.created_by_name,
-            closed: value.updated_by_name,
-          };
-        });
-        this.setState({
-          data: data,
-          isFetching: false,
-          refreshing: false,
-          status: data.length === 0 ? "No Task List Found" : "",
-        });
-      })
-      .catch((error) => {
-        showError(error);
-        this.setState({
-          data: [],
-          isFetching: false,
-          refreshing: false,
-        });
-      });
-  };
-
-  approvalEnclosureList = () => {
-    let user_id = this.context.userDetails.id;
-    getPendingEnclosure(user_id)
-      .then((res) => {
-        console.log("Pending Enclosure>>>>", res);
-        this.setState({
-          enclosureData: res,
-          showLoader: false,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  setActiveTab = (key) =>
-    this.setState(
-      {
-        activeTabKey: key,
-      },
-      () => {
-        this.approvalTaskList();
-        this.approvalEnclosureList();
-      }
-    );
-
-  handleApprove = (id, status) => {
-    this.setState({
-      isFetching: true,
-    });
-    let data = {
-      id: id,
-      status: status,
-    };
-    updateTaskStatus(id, data)
-      .then((response) => {
-        // console.log("Response ", response.data, response.data.type)
-        if (response.data.type == "success") {
-          this.setState({
+    static contextType = AppContext;
+    constructor(props) {
+        super(props);
+        this.state = {
+            refreshing: false,
             isFetching: false,
-          });
-          Alert.alert("Success", "Task updated", [
-            { text: "OK", onPress: () => this.approvalTaskList() },
-          ]);
-        } else {
-          this.setState({
-            isFetching: false,
-          });
-          Alert.alert("Failed", "Failed to update task", [
-            { text: "OK", onPress: () => this.approvalTaskList() },
-          ]);
+            data: [],
+            activeTabKey: 'task',
+            enclosureData: [],
+            rejectModal: false,
+            reqNo: '',
+            reject_reason: '',
+
+
         }
-      })
-      .catch((error) => {
+    }
+
+    componentDidMount() {
+        this.unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.approvalTaskList();
+            this.approvalEnclosureList();
+        })
+    }
+
+    componentWillUnmount() {
+        this.unsubscribe()
+    }
+
+    onRefresh = () => {
+        this.setState({ refreshing: true }, () => {
+            this.approvalTaskList();
+            this.approvalEnclosureList();
+        })
+    }
+
+    approvalTaskList = () => {
+        let obj = {
+            user_id: this.context.userDetails.id
+        }
+        getApprovalTasks(obj)
+            .then((response) => {
+                let data = response.map((value) => {
+                    let priority = moderate;
+                    if (value.priority === "Critical") {
+                        priority = critical;
+                    } else if (value.priority === "Danger") {
+                        priority = danger;
+                    } else if (value.priority === "Low") {
+                        priority = low;
+                    } else if (value.priority === "Medium") {
+                        priority = moderate;
+                    } else if (value.priority === "High") {
+                        priority = high;
+                    }
+                    let task_type = compete;
+                    if (value.task_type === "Individual") {
+                        task_type = individual;
+                    } else if (value.task_type === "Rotate") {
+                        task_type = rotate;
+                    } else if (value.task_type === "Collaborate") {
+                        task_type = collaborate;
+                    } else if (value.task_type === "Compete") {
+                        task_type = compete;
+                    }
+                    return {
+                        id: value.id,
+                        title: value.name,
+                        category_id: value.category_id,
+                        date: moment(value.schedule_start).format("Do MMM YY, ddd") + " (" + moment(value.schedule_time, "HH:mm:ss").format("LT") + ")",
+                        closed_date: moment(value.updated_at).format("Do MMM YY, ddd") == 'Invalid date' ? '' : moment(value.updated_at).format("Do MMM YY, ddd"),
+                        members: value.assign_level_1.split('-')[0],
+                        priority: priority,
+                        taskType: task_type,
+                        coins: value.point,
+                        status: value.status,
+                        values: value,
+                        isSelect: false,
+                        selectedClass: globalStyles.list,
+                        created: value.created_by_name,
+                        closed: value.updated_by_name
+                    }
+                })
+                this.setState({
+                    data: data,
+                    isFetching: false,
+                    refreshing: false,
+                    status: data.length === 0 ? 'No Task List Found' : ""
+                })
+            })
+            .catch(error => {
+                showError(error);
+                this.setState({
+                    data: [],
+                    isFetching: false,
+                    refreshing: false,
+                })
+            })
+    }
+
+    approvalEnclosureList = () => {
+        let user_id = this.context.userDetails.id;
+        getPendingEnclosure(user_id)
+            .then((res) => {
+                console.log("Pending Enclosure>>>>", res);
+                this.setState({
+                    enclosureData: res,
+                    showLoader: false,
+                })
+            })
+            .catch((err) => { console.log(err) })
+    }
+
+    setActiveTab = (key) =>
+        this.setState(
+            {
+                activeTabKey: key,
+            }, () => { this.approvalTaskList(); this.approvalEnclosureList() });
+
+    handleApprove = (id, status) => {
         this.setState({
-          isFetching: false,
-        });
-        console.log(error);
-      });
-  };
+            isFetching: true,
+        })
+        let data = {
+            'id': id,
+            'status': status,
+        }
+        updateTaskStatus(id, data)
+            .then((response) => {
+                // console.log("Response ", response.data, response.data.type)
+                if (response.data.type == "success") {
+                    this.setState({
+                        isFetching: false,
+                    })
+                    Alert.alert(
+                        "Success",
+                        "Task updated",
+                        [
+                            { text: "OK", onPress: () => this.approvalTaskList() }
+                        ]
+                    )
+                } else {
+                    this.setState({
+                        isFetching: false,
+                    })
+                    Alert.alert(
+                        "Failed",
+                        "Failed to update task",
+                        [
+                            { text: "OK", onPress: () => this.approvalTaskList() }
+                        ]
+                    )
+                }
+            })
+            .catch((error) => {
+                this.setState({
+                    isFetching: false,
+                })
+                console.log(error)
+            })
+    }
 
-  changeEnclosure = (item, status) => {
-    this.setState({ showLoader: true });
-    let obj = {};
-    obj = {
-      notes: null,
-      request_number: item,
-      status: status,
-      approved_by: this.context.userDetails.id,
-      user_id: this.context.userDetails.id,
+
+    changeEnclosure = (item, status) => {
+        this.setState({ showLoader: true });
+        let obj = {};
+        obj = {
+            notes: null,
+            request_number: item,
+            status: status,
+            approved_by: this.context.userDetails.id,
+            user_id: this.context.userDetails.id,
+        };
+        if (status == "rejected") {
+            obj.rejection_reason = this.state.reject_reason;
+        }
+        animalChangeEnclosureUpdate(obj)
+            .then((response) => {
+                console.log(response);
+                this.approvalEnclosureList()
+            })
+            .catch((error) => {
+                this.setState({ showLoader: false });
+                this.approvalEnclosureList()
+                console.log(error);
+            });
+
     };
-    if (status == "rejected") {
-      obj.rejection_reason = this.state.reject_reason;
+
+    rejectEnclosure = (req) => {
+        this.toggleRejectModal();
+        this.setState({
+            reqNo: req
+        })
     }
-    animalChangeEnclosureUpdate(obj)
-      .then((response) => {
-        console.log(response);
-        this.approvalEnclosureList();
-      })
-      .catch((error) => {
-        this.setState({ showLoader: false });
-        this.approvalEnclosureList();
-        console.log(error);
-      });
-  };
 
-  rejectEnclosure = (req) => {
-    this.toggleRejectModal();
-    this.setState({
-      reqNo: req,
-    });
-  };
+    rejectRequest = () => {
+        this.setState(
+            {
+                rejectModal: !this.state.rejectModal,
+            },
+            () => {
+                this.changeEnclosure(this.state.reqNo, "rejected");
+            }
+        );
+    };
 
-  rejectRequest = () => {
-    this.setState(
-      {
-        rejectModal: !this.state.rejectModal,
-      },
-      () => {
-        this.changeEnclosure(this.state.reqNo, "rejected");
-      }
-    );
-  };
+    toggleRejectModal = () => {
+        this.setState({
+            rejectModal: !this.state.rejectModal,
+        });
+    };
 
-  toggleRejectModal = () => {
-    this.setState({
-      rejectModal: !this.state.rejectModal,
-    });
-  };
 
-  renderListItem = ({ item }) => (
-    <TouchableHighlight underlayColor={"#eee"} style={{ paddingHorizontal: 5 }}>
-      <View style={globalStyles.row}>
-        <View style={globalStyles.leftPart}>
-          <Text
-            style={[
-              globalStyles.labelName,
-              globalStyles.pd0,
-              globalStyles.no_bg_color,
-              globalStyles.text_bold,
-            ]}
-          >{`#${item.request_number}`}</Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Animals : " + item.animal_id}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Requested By: " + item.changed_by_name}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Reason: " + item.change_reason}
-          </Text>
-          <Text
-            style={[
-              globalStyles.textfield,
-              globalStyles.no_bg_color,
-              globalStyles.pd0,
-            ]}
-          >
-            {"Status: " + capitalize(item.status)}
-          </Text>
-          {item.status == "approved" || item.status == "rejected" ? null : (
-            <View style={{ flexDirection: "row", marginVertical: 5 }}>
-              <TouchableOpacity
-                onPress={() => {
-                  this.rejectEnclosure(item.request_number);
-                }}
-                style={{
-                  width: "30%",
-                  alignItems: "center",
-                  marginHorizontal: 10,
-                  justifyContent: "center",
-                  paddingHorizontal: 5,
-                  paddingVertical: 5,
-                  borderRadius: 3,
-                  backgroundColor: Colors.danger,
-                }}
-              >
-                <Text style={{ fontSize: 10, color: Colors.white }}>
-                  Reject
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  this.changeEnclosure(item.request_number, "approved");
-                }}
-                style={{
-                  width: "30%",
-                  alignItems: "center",
-                  marginHorizontal: 10,
-                  justifyContent: "center",
-                  paddingHorizontal: 5,
-                  paddingVertical: 5,
-                  borderRadius: 3,
-                  backgroundColor: Colors.green,
-                }}
-              >
-                <Text style={{ fontSize: 10, color: Colors.white }}>
-                  Approve
-                </Text>
-              </TouchableOpacity>
+
+    renderListItem = ({ item }) => (
+        <TouchableHighlight underlayColor={"#eee"} style={{ paddingHorizontal: 5 }}>
+            <View style={globalStyles.row}>
+                <View style={globalStyles.leftPart}>
+                    <Text style={[globalStyles.labelName, globalStyles.pd0, globalStyles.no_bg_color, globalStyles.text_bold]}>{`#${item.request_number}`}</Text>
+                    <Text style={[globalStyles.textfield, globalStyles.no_bg_color, globalStyles.pd0]}>{"Animals : " + item.animal_id}</Text>
+                    <Text style={[globalStyles.textfield, globalStyles.no_bg_color, globalStyles.pd0]}>
+                        {"Requested By: " + item.changed_by_name}
+                    </Text>
+                    <Text style={[globalStyles.textfield, globalStyles.no_bg_color, globalStyles.pd0]}>
+                        {"Reason: " + item.change_reason}
+                    </Text>
+                    <Text style={[globalStyles.textfield, globalStyles.no_bg_color, globalStyles.pd0]}>
+                        {"Status: " + capitalize(item.status)}
+                    </Text>
+                    {item.status == 'approved' || item.status == 'rejected' ? null :
+                        <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+                            <TouchableOpacity
+                                onPress={() => { this.rejectEnclosure(item.request_number) }}
+                                style={{ width: '30%', alignItems: 'center', marginHorizontal: 10, justifyContent: 'center', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 3, backgroundColor: Colors.danger }}
+                            >
+                                <Text style={{ fontSize: 10, color: Colors.white }}>Reject</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => { this.changeEnclosure(item.request_number, 'approved') }}
+                                style={{ width: '30%', alignItems: 'center', marginHorizontal: 10, justifyContent: 'center', paddingHorizontal: 5, paddingVertical: 5, borderRadius: 3, backgroundColor: Colors.green }}
+                            >
+                                <Text style={{ fontSize: 10, color: Colors.white }}>Approve</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
+                </View>
             </View>
-          )}
-        </View>
-      </View>
-    </TouchableHighlight>
-  );
+        </TouchableHighlight>
+    );
 
-  render() {
-    if (this.state.isFetching) {
-      return (
-        <SafeAreaView style={globalStyles.container}>
-          <Header navigation={this.props.navigation} leftNavTo={"Home"} />
-          <View style={globalStyles.body}>
-            <Spinner />
-          </View>
-          {/* <Footer /> */}
-        </SafeAreaView>
-      );
-    }
-    return (
-      <SafeAreaView style={[globalStyles.container, globalStyles.p0]}>
-        <Header
-          navigation={this.props.navigation}
-          leftNavTo={"Home"}
-          title={
-            this.state.activeTabKey == "task"
-              ? "Task Approval"
-              : "Enclosure Approval"
-          }
-        />
-        <View style={globalStyles.tabContainer}>
-          <TouchableOpacity
-            onPress={this.setActiveTab.bind(this, "task")}
-            style={[
-              globalStyles.tab,
-              this.state.activeTabKey == "task" ? globalStyles.activeTab : null,
-            ]}
-          >
-            <Text
-              style={
-                this.state.activeTabKey == "task"
-                  ? globalStyles.activeTexttab
-                  : globalStyles.inActiveText
-              }
-            >
-              Tasks
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.setActiveTab.bind(this, "enclosure")}
-            style={[
-              globalStyles.tab,
-              this.state.activeTabKey == "enclosure"
-                ? globalStyles.activeTab
-                : null,
-            ]}
-          >
-            <Text
-              style={
-                this.state.activeTabKey == "enclosure"
-                  ? globalStyles.activeTexttab
-                  : globalStyles.inActiveText
-              }
-            >
-              Enclosure
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          {this.state.activeTabKey == "task" ? (
-            <View style={globalStyles.body}>
-              {this.state.data.length > 0 ? (
-                <FlatList
-                  data={this.state.data}
-                  renderItem={({ item }) => (
-                    <CatItemCard
-                      navigation={this.props.navigation}
-                      id={item.id}
-                      coins={item.coins}
-                      taskType={item.taskType}
-                      members={item.members}
-                      priority={item.priority}
-                      date={item.date}
-                      closed_date={""}
-                      title={item.title}
-                      status={item.status}
-                      closed={item.closed}
-                      created={item.created}
-                      item={item}
-                      selectItem={this.selectItem}
-                      extraData={this.state.data}
-                      approval={true}
-                      action={this.handleApprove}
+    render() {
+        if (this.state.isFetching) {
+            return (
+                <SafeAreaView style={globalStyles.container}>
+                    <Header
+                        navigation={this.props.navigation}
+                        leftNavTo={'Home'}
                     />
-                  )}
-                  keyExtractor={(item) => item.id.toString()}
-                  onRefresh={() => this.onRefresh()}
-                  refreshing={this.state.isFetching}
+                    <View style={globalStyles.body}>
+                        <Spinner />
+                    </View>
+                    {/* <Footer /> */}
+                </SafeAreaView>
+            )
+        }
+        return (
+            <SafeAreaView style={[globalStyles.container, { padding: 0 }]}>
+                <Header
+                    navigation={this.props.navigation}
+                    leftNavTo={'Home'}
+                    title={this.state.activeTabKey == 'task' ? "Task Approval" : "Enclosure Approval"}
                 />
-              ) : (
-                <View style={{ alignItems: "center", marginTop: 20 }}>
-                  <Text style={{ color: Colors.danger }}>
-                    {"No Approval task available !!"}
-                  </Text>
-                </View>
-              )}
-            </View>
-          ) : (
-            <View style={globalStyles.body}>
-              {this.state.enclosureData.length > 0 ? (
-                <FlatList
-                  data={this.state.enclosureData}
-                  keyExtractor={(item, index) => item.id.toString()}
-                  renderItem={this.renderListItem}
-                  initialNumToRender={this.state.enclosureData.length}
-                  onRefresh={() => this.onRefresh()}
-                  refreshing={this.state.isFetching}
-                />
-              ) : (
-                <View style={{ alignItems: "center", marginTop: 20 }}>
-                  <Text style={{ color: Colors.danger }}>
-                    {"No enclosure available !!"}
-                  </Text>
-                </View>
-              )}
-            </View>
-          )}
-          {/* <Footer /> */}
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.rejectModal}
-            onRequestClose={() => {
-              this.toggleRejectModal(!this.state.rejectModal);
-            }}
-          >
-            <ImageBackground
-              style={globalStyles.container}
-              blurRadius={this.state.rejectModal ? 2 : 0}
-              source={require("../../assets/bg.jpg")}
-            >
-              <View style={globalStyles.centeredView}>
-                <View style={globalStyles.modalView}>
-                  <View>
-                    <Text>Reject Reason</Text>
-                  </View>
-                  <TextInput
-                    style={globalStyles.input}
-                    onChangeText={(text) => {
-                      this.setState({ reject_reason: text });
-                    }}
-                    value={this.state.reject_reason}
-                    placeholder="Enter Reject Reason"
-                    autoCompleteType="off"
-                    multiline={true}
-                    textAlignVertical="top"
-                    underlineColorAndroid="transparent"
-                  />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-evenly",
-                      width: "100%",
-                      alignItems: "center",
-                    }}
-                  >
+                <View style={globalStyles.tabContainer}>
+
                     <TouchableOpacity
-                      onPress={() => {
-                        this.toggleRejectModal(!this.state.rejectModal);
-                      }}
-                      style={[globalStyles.btn, globalStyles.btnDanger]}
+                        onPress={this.setActiveTab.bind(this, "task")}
+                        style={[
+                            globalStyles.tab,
+                            this.state.activeTabKey == "task" ? globalStyles.activeTab : null,
+                        ]}
                     >
-                      <Text style={globalStyles.btnText}>Cancel</Text>
+                        <Text
+                            style={
+                                this.state.activeTabKey == "task"
+                                    ? globalStyles.activeTexttab
+                                    : globalStyles.inActiveText
+                            }
+                        >
+                            Tasks
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={this.rejectRequest}
-                      style={[globalStyles.btn, globalStyles.btnSuccess]}
+                        onPress={this.setActiveTab.bind(this, "enclosure")}
+                        style={[
+                            globalStyles.tab,
+                            this.state.activeTabKey == "enclosure" ? globalStyles.activeTab : null,
+                        ]}
                     >
-                      <Text style={globalStyles.btnText}>Reject</Text>
+                        <Text
+                            style={
+                                this.state.activeTabKey == "enclosure"
+                                    ? globalStyles.activeTexttab
+                                    : globalStyles.inActiveText
+                            }
+                        >
+                            Enclosure
+                        </Text>
                     </TouchableOpacity>
-                  </View>
                 </View>
-              </View>
-            </ImageBackground>
-          </Modal>
-        </View>
-      </SafeAreaView>
-    );
-  }
+                <View >
+
+                    {this.state.activeTabKey == 'task' ?
+                        <View style={globalStyles.body}>
+                            {
+                                this.state.data.length > 0 ?
+                                    <FlatList
+                                        data={this.state.data}
+                                        renderItem={({ item }) => <CatItemCard
+                                            navigation={this.props.navigation}
+                                            id={item.id}
+                                            coins={item.coins}
+                                            taskType={item.taskType}
+                                            members={item.members}
+                                            priority={item.priority}
+                                            date={item.date}
+                                            closed_date={''}
+                                            title={item.title}
+                                            status={item.status}
+                                            closed={item.closed}
+                                            created={item.created}
+                                            item={item}
+                                            selectItem={this.selectItem}
+                                            extraData={this.state.data}
+                                            approval={true}
+                                            action={this.handleApprove}
+                                        />}
+                                        keyExtractor={item => item.id.toString()}
+                                        onRefresh={() => this.onRefresh()}
+                                        refreshing={this.state.isFetching}
+                                    />
+                                    :
+                                    <View style={{ alignItems: 'center', marginTop: 20 }}>
+                                        <Text style={{ color: Colors.danger }}>{"No Approval task available !!"}</Text>
+                                    </View>
+                            }
+                        </View>
+                        :
+
+                        <View style={globalStyles.body}>
+                            {
+                                this.state.enclosureData.length > 0 ?
+                                    <FlatList
+                                        data={this.state.enclosureData}
+                                        keyExtractor={(item, index) => item.id.toString()}
+                                        renderItem={this.renderListItem}
+                                        initialNumToRender={this.state.enclosureData.length}
+                                        onRefresh={() => this.onRefresh()}
+                                        refreshing={this.state.isFetching}
+                                    />
+                                    :
+                                    <View style={{ alignItems: 'center', marginTop: 20 }}>
+                                        <Text style={{ color: Colors.danger }}>{"No enclosure available !!"}</Text>
+                                    </View>
+                            }
+                        </View>
+                    }
+                    {/* <Footer /> */}
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={this.state.rejectModal}
+                        onRequestClose={() => {
+                            this.toggleRejectModal(!this.state.rejectModal);
+                        }}
+                    >
+                        <ImageBackground
+                            style={globalStyles.container}
+                            blurRadius={this.state.rejectModal ? 2 : 0}
+                            source={require("../../assets/bg.jpg")}
+                        >
+                            <View style={globalStyles.centeredView}>
+                                <View style={globalStyles.modalView}>
+                                    <View>
+                                        <Text>Reject Reason</Text>
+                                    </View>
+                                    <TextInput
+                                        style={globalStyles.input}
+                                        onChangeText={(text) => {
+                                            this.setState({ reject_reason: text });
+                                        }}
+                                        value={this.state.reject_reason}
+                                        placeholder="Enter Reject Reason"
+                                        autoCompleteType="off"
+                                        multiline={true}
+                                        textAlignVertical="top"
+                                        underlineColorAndroid="transparent"
+                                    />
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                            justifyContent: "space-evenly",
+                                            width: "100%",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.toggleRejectModal(!this.state.rejectModal);
+                                            }}
+                                            style={[globalStyles.btn, globalStyles.btnDanger]}
+                                        >
+                                            <Text style={globalStyles.btnText}>Cancel</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={this.rejectRequest}
+                                            style={[globalStyles.btn, globalStyles.btnSuccess]}
+                                        >
+                                            <Text style={globalStyles.btnText}>Reject</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        </ImageBackground>
+                    </Modal>
+                </View>
+            </SafeAreaView>
+        );
+    }
 }
 export default ApprovalTask;
 const tabHeight = 50;
-// const styles = StyleSheet.create({
+// const globalStyles = StyleSheet.create({
 //     container: {
 //         flex: 1,
 //         backgroundColor: '#fff'
@@ -709,3 +641,5 @@ const tabHeight = 50;
 //       },
 //       btnText: { color: Colors.white },
 // });
+
+

@@ -28,6 +28,8 @@ import {
 } from "../../utils/Util";
 import { Colors, Configs } from "../../config";
 import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
 
 const sampleimg = "https://www.pngarts.com/files/6/Vector-Carrot-PNG-Photo.png";
 
@@ -204,12 +206,7 @@ class AddCategory extends React.Component {
             <View>
               {/* TODO:Please add the functionality to pick the icon and store it in an array */}
               <View
-                style={{
-                  borderWidth: 1,
-                  borderColor: "#ddd",
-                  borderRadius: 3,
-                  marginTop: 20,
-                }}
+                style={globalStyles.formBorder}
               >
                 <View style={styles.fieldBox}>
                   <Text style={styles.labelName}>Choose Icon</Text>
@@ -274,12 +271,10 @@ class AddCategory extends React.Component {
                 </View>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-evenly",
-                  width: "100%",
+                style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100,
+                  {
                   marginTop: 20,
-                }}
+                }]}
               >
                 {this.state.loading === true ? (
                   <TouchableOpacity>
@@ -308,77 +303,77 @@ class AddCategory extends React.Component {
 }
 export default AddCategory;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-    paddingHorizontal: 10,
-  },
-  itemWrapper: {
-    height: 55,
-    width: 55,
-    borderWidth: 1,
-    borderColor: "#7c7c7c50", //SUBHASH : choose icon border color , 50 value change it based on what you want
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    width: "100%",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: "#7c7c7c40", //SUBHASH :reduce opacity for box outline here
-    backgroundColor: "#e5e5e550",
-    marginTop: 10,
-    fontSize: 16,
-  },
-  btns: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: Theme.primary,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-    // marginBottom: 5,
-    // marginTop: 5,
-    // shadowColor: "#999",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 1,
-    // },
-    // shadowOpacity: 0.22,
-    // shadowRadius: 2.22,
-    // elevation: 3,
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: 19,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
-    flexWrap: "wrap",
-    fontSize: 19,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//     paddingHorizontal: 10,
+//   },
+//   itemWrapper: {
+//     height: 55,
+//     width: 55,
+//     borderWidth: 1,
+//     borderColor: "#7c7c7c50", //SUBHASH : choose icon border color , 50 value change it based on what you want
+//     borderRadius: 10,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   input: {
+//     width: "100%",
+//     paddingVertical: 10,
+//     paddingHorizontal: 15,
+//     borderWidth: 1,
+//     borderColor: "#7c7c7c40", //SUBHASH :reduce opacity for box outline here
+//     backgroundColor: "#e5e5e550",
+//     marginTop: 10,
+//     fontSize: 16,
+//   },
+//   btns: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//     color: Theme.primary,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderBottomWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//     // marginBottom: 5,
+//     // marginTop: 5,
+//     // shadowColor: "#999",
+//     // shadowOffset: {
+//     // 	width: 0,
+//     // 	height: 1,
+//     // },
+//     // shadowOpacity: 0.22,
+//     // shadowRadius: 2.22,
+//     // elevation: 3,
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: 19,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     flexWrap: "wrap",
+//     fontSize: 19,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
+// });

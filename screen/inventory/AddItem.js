@@ -35,6 +35,8 @@ import {
 import AppContext from "../../context/AppContext";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class AddInventoryItem extends React.Component {
   static contextType = AppContext;
@@ -336,7 +338,7 @@ export default class AddInventoryItem extends React.Component {
           showsVerticalScrollIndicator={false}
         >
           <View
-            style={{ borderWidth: 1, borderColor: "#ddd", borderRadius: 3 }}
+            style={[globalStyle.formBorder]}
           >
             <View style={styles.fieldBox}>
               <Text style={styles.labelName}>Choose Image</Text>
@@ -347,7 +349,7 @@ export default class AddInventoryItem extends React.Component {
               >
                 {typeof this.state.imageURI !== "undefined" ? (
                   <Image
-                    style={{ height: 30, width: 30 }}
+                    style={[styles.imageHeight]}
                     source={{ uri: this.state.imageURI }}
                   />
                 ) : (
@@ -371,7 +373,7 @@ export default class AddInventoryItem extends React.Component {
               <TextInput
                 value={this.state.itemName}
                 onChangeText={(itemName) => this.setState({ itemName })}
-                style={[styles.textfield, globalStyles.width60]}
+                style={[styles.textfield, globalStyle.width60]}
                 autoCompleteType="off"
                 autoCapitalize="words"
                 placeholder="Enter Item Name"
@@ -385,7 +387,7 @@ export default class AddInventoryItem extends React.Component {
               items={this.state.categories}
               onChange={this.setItemType}
               labelStyle={styles.labelName}
-              textFieldStyle={[styles.textfield, globalStyles.width60]}
+              textFieldStyle={[styles.textfield, globalStyle.width60]}
               style={[
                 styles.fieldBox,
                 this.state.itemTypeValidationFailed
@@ -401,7 +403,7 @@ export default class AddInventoryItem extends React.Component {
               items={Configs.UNITS}
               onChange={this.setUnit}
               labelStyle={styles.labelName}
-              textFieldStyle={[styles.textfield, globalStyles.width60]}
+              textFieldStyle={[styles.textfield, globalStyle.width60]}
               style={[
                 styles.fieldBox,
                 this.state.unitValidationFailed ? styles.errorFieldBox : null,
@@ -413,7 +415,7 @@ export default class AddInventoryItem extends React.Component {
               <TextInput
                 value={this.state.hsnCode}
                 onChangeText={(hsnCode) => this.setState({ hsnCode })}
-                style={[styles.textfield, globalStyles.width60]}
+                style={[styles.textfield, globalStyle.width60]}
                 autoCompleteType="off"
                 placeholder="Enter HSN Code"
               />
@@ -429,7 +431,7 @@ export default class AddInventoryItem extends React.Component {
               <TextInput
                 value={this.state.gst}
                 onChangeText={(gst) => this.setState({ gst })}
-                style={[styles.textfield, globalStyles.width60]}
+                style={[styles.textfield, globalStyle.width60]}
                 autoCompleteType="off"
                 keyboardType="numeric"
                 placeholder="0"
@@ -450,7 +452,7 @@ export default class AddInventoryItem extends React.Component {
                 onChangeText={(purchasePrice) =>
                   this.setState({ purchasePrice })
                 }
-                style={[styles.textfield, globalStyles.width60]}
+                style={[styles.textfield, globalStyle.width60]}
                 autoCompleteType="off"
                 keyboardType="numeric"
                 placeholder="0"
@@ -469,7 +471,7 @@ export default class AddInventoryItem extends React.Component {
               <TextInput
                 value={this.state.salesPrice}
                 onChangeText={(salesPrice) => this.setState({ salesPrice })}
-                style={[styles.textfield, globalStyles.width60]}
+                style={[styles.textfield, globalStyle.width60]}
                 autoCompleteType="off"
                 keyboardType="numeric"
                 placeholder="0"
@@ -483,7 +485,7 @@ export default class AddInventoryItem extends React.Component {
               items={Configs.ITEM_PRIORITIES}
               onChange={this.setPriority}
               labelStyle={styles.labelName}
-              textFieldStyle={[styles.textfield, globalStyles.width60]}
+              textFieldStyle={[styles.textfield, globalStyle.width60]}
               style={[
                 styles.fieldBox,
                 this.state.priorityValidationFailed
@@ -506,7 +508,7 @@ export default class AddInventoryItem extends React.Component {
                 onChangeText={(reorederLevel) =>
                   this.setState({ reorederLevel })
                 }
-                style={[styles.textfield, globalStyles.width60]}
+                style={[styles.textfield, globalStyle.width60]}
                 autoCompleteType="off"
                 keyboardType="numeric"
                 placeholder="0"
@@ -515,8 +517,7 @@ export default class AddInventoryItem extends React.Component {
 
             <View
               style={[
-                styles.fieldBox,
-                { justifyContent: "flex-start", borderBottomWidth: 0 },
+                styles.fieldBox,globalStyle.justifyContentFlexStart,globalStyle.bbw0
               ]}
             >
               <Text
@@ -544,9 +545,8 @@ export default class AddInventoryItem extends React.Component {
 
             <View
               style={[
-                styles.fieldBox,
-                { justifyContent: "flex-start" },
-                !this.state.hasOpeningStock ? globalStyles.bbw0 : null,
+                styles.fieldBox,globalStyle.justifyContentFlexStart,
+                !this.state.hasOpeningStock ? { borderBottomWidth: 0 } : null,
               ]}
             >
               <Text
@@ -588,7 +588,7 @@ export default class AddInventoryItem extends React.Component {
                     onChangeText={(openingStock) =>
                       this.setState({ openingStock })
                     }
-                    style={[styles.textfield, globalStyles.width60]}
+                    style={[styles.textfield, globalStyle.width60]}
                     autoCompleteType="off"
                     keyboardType="numeric"
                     placeholder="Enter Opening Stock"
@@ -600,7 +600,7 @@ export default class AddInventoryItem extends React.Component {
                   <TextInput
                     value={this.state.batchNo}
                     onChangeText={(batchNo) => this.setState({ batchNo })}
-                    style={[styles.textfield, globalStyles.width60]}
+                    style={[styles.textfield, globalStyle.width60]}
                     autoCompleteType="off"
                     autoCapitalize="none"
                     placeholder="Enter Batch No."
@@ -614,7 +614,7 @@ export default class AddInventoryItem extends React.Component {
                   items={this.state.storeNames}
                   onChange={this.setStoreName}
                   labelStyle={styles.labelName}
-                  textFieldStyle={[styles.textfield, globalStyles.width60]}
+                  textFieldStyle={[styles.textfield, globalStyle.width60]}
                   style={[
                     styles.fieldBox,
                     this.state.storeNameValidationFailed
@@ -634,13 +634,7 @@ export default class AddInventoryItem extends React.Component {
                   <Text style={styles.labelName}>Expiry Date:</Text>
                   <TouchableOpacity
                     activeOpacity={1}
-                    style={[
-                      {
-                        flexDirection: "row",
-                        alignItems: "center",
-                        width: "60%",
-                      },
-                    ]}
+                    style={[globalStyle.flexDirectionRow,globalStyle.alignItemsCenter,globalStyle.width60]}
                     onPress={() => {
                       this.showDatePicker();
                     }}
@@ -678,81 +672,81 @@ export default class AddInventoryItem extends React.Component {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Colors.lableSize,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  imagePicker: {
-    borderColor: "#ccc",
-    borderWidth: 1,
-    padding: 3,
-    backgroundColor: "#fff",
-    borderRadius: 3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
-  radioField: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 5,
-  },
-  radioText: {
-    marginLeft: 8,
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: Colors.primary,
-    padding: 10,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 2,
-    // },
-    // shadowOpacity: 0.23,
-    // shadowRadius: 2.62,
-    // elevation: 4,
-    borderRadius: 20,
-    color: "#fff",
-    marginVertical: 10,
-  },
-  textWhite: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  errorFieldBox: {
-    borderWidth: 1,
-    borderColor: Colors.tomato,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 8,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderBottomWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Colors.lableSize,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   imagePicker: {
+//     borderColor: "#ccc",
+//     borderWidth: 1,
+//     padding: 3,
+//     backgroundColor: "#fff",
+//     borderRadius: 3,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
+//   radioField: {
+//     flexDirection: "row",
+//     alignItems: "center",
+//     marginHorizontal: 5,
+//   },
+//   radioText: {
+//     marginLeft: 8,
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//   },
+//   button: {
+//     alignItems: "center",
+//     backgroundColor: Colors.primary,
+//     padding: 10,
+//     // shadowColor: "#000",
+//     // shadowOffset: {
+//     // 	width: 0,
+//     // 	height: 2,
+//     // },
+//     // shadowOpacity: 0.23,
+//     // shadowRadius: 2.62,
+//     // elevation: 4,
+//     borderRadius: 20,
+//     color: "#fff",
+//     marginVertical: 10,
+//   },
+//   textWhite: {
+//     color: "#fff",
+//     fontWeight: "bold",
+//   },
+//   errorFieldBox: {
+//     borderWidth: 1,
+//     borderColor: Colors.tomato,
+//   },
+// });

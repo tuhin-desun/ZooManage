@@ -32,7 +32,10 @@ import Config from "../../config/Configs";
 import AppContext from "../../context/AppContext";
 import { InputDropdown } from "../../component";
 import Colors from "../../config/colors";
+//import globalStyles from "../../config/Styles";
 import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
 
 const level1 = require("../../assets/tasks/level1.png");
 const level2 = require("../../assets/tasks/level2.png");
@@ -452,7 +455,8 @@ class EditPhotoCatItem extends React.Component {
                 value={this.state.allocatedTo}
                 editable={false}
                 onChangeText={(text) => this.setState({ name: text })}
-                style={{ fontSize: 17, paddingHorizontal: 5, flex: 1 }}
+                style={[globalStyles.flex1,
+                      { fontSize: 17, paddingHorizontal: 5}]}
               />
             </View>
 
@@ -506,11 +510,8 @@ class EditPhotoCatItem extends React.Component {
             />
             <View style={globalStyles.h50} />
             <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: "100%",
-              }}
+              style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100]}
+                
             >
               {this.state.loading === true ? (
                 <TouchableOpacity>
@@ -541,68 +542,68 @@ class EditPhotoCatItem extends React.Component {
 }
 export default EditPhotoCatItem;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-  },
-  placeholder: { fontSize: 17 - 1, marginTop: 15, color: "#7f7f7f" },
-  wrapper: {
-    borderWidth: 1,
-    borderColor: "#e5e5e5",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 3,
-    width: "100%",
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  btns: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: Theme.primary,
-  },
-  fieldBox: {
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    backgroundColor: "#fff",
-    height: 50,
-    justifyContent: "space-between",
-    marginBottom: 5,
-    marginTop: 5,
-    shadowColor: "#999",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
-  labelName: {
-    color: Colors.textColor,
-    lineHeight: 40,
-    fontSize: 14,
-    paddingLeft: 4,
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: 40,
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//   },
+//   placeholder: { fontSize: 17 - 1, marginTop: 15, color: "#7f7f7f" },
+//   wrapper: {
+//     borderWidth: 1,
+//     borderColor: "#e5e5e5",
+//     paddingHorizontal: 10,
+//     paddingVertical: 10,
+//     borderRadius: 3,
+//     width: "100%",
+//     marginTop: 10,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     justifyContent: "space-between",
+//   },
+//   btns: {
+//     fontSize: 20,
+//     fontWeight: "bold",
+//     color: Theme.primary,
+//   },
+//   fieldBox: {
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderWidth: 1,
+//     backgroundColor: "#fff",
+//     height: 50,
+//     justifyContent: "space-between",
+//     marginBottom: 5,
+//     marginTop: 5,
+//     shadowColor: "#999",
+//     shadowOffset: {
+//       width: 0,
+//       height: 1,
+//     },
+//     shadowOpacity: 0.22,
+//     shadowRadius: 2.22,
+//     elevation: 3,
+//   },
+//   labelName: {
+//     color: Colors.textColor,
+//     lineHeight: 40,
+//     fontSize: 14,
+//     paddingLeft: 4,
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: 40,
 
-    fontSize: 12,
-    color: Colors.textColor,
-    textAlign: "right",
-    width: "60%",
-    padding: 5,
-  },
-});
+//     fontSize: 12,
+//     color: Colors.textColor,
+//     textAlign: "right",
+//     width: "60%",
+//     padding: 5,
+//   },
+// });

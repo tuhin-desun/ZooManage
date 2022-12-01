@@ -21,7 +21,9 @@ import { fetchProfile } from "../../services/UserManagementServices";
 import AppContext from "../../context/AppContext";
 import { capitalize } from "../../utils/Util";
 import Users from "./../staff/Users";
-import globalStyles from "../../config/Styles";
+import styles from './Styles'
+import globalStyles from '../../config/Styles'
+
 
 export default class WorkAllocation extends React.Component {
   static contextType = AppContext;
@@ -159,24 +161,17 @@ export default class WorkAllocation extends React.Component {
         // onLongPress={this.checkEditActionPermissions.bind(this, item)}
       >
         <View style={styles.view}>
-          <View
-            style={[globalStyles.width20, globalStyles.justifyContentCenter]}
-          >
+          <View style={[globalStyles.justifyContentCenter,{ width: "20%" }]}>
             <Image
               style={styles.image}
               source={{ uri: item.image }}
               resizeMode="contain"
             />
           </View>
-          <View
-            style={[
-              globalStyles.flex1,
-              globalStyles.justifyContentCenter,
-              globalStyles.pl5,
-            ]}
-          >
+          <View style={[globalStyles.flex1,globalStyles.justifyContentCenter,globalStyles.paddingRight5]}
+           >
             <Text style={styles.name}>{capitalize(item.name)}</Text>
-            <Text style={[styles.name, { fontSize: 12 }]}>{users}</Text>
+            <Text style={[styles.name, globalStyles.fontSize]}>{users}</Text>
           </View>
 
           {/* {this.context.userDetails.action_types.includes(Configs.USER_ACTION_TYPES_CHECKING.stats) ? (
@@ -237,7 +232,8 @@ export default class WorkAllocation extends React.Component {
         visible={this.state.isSearchModalOpen}
         onRequestClose={this.closeSearchModal}
       >
-        <SafeAreaView style={globalStyles.safeAreaViewStyle}>
+        <SafeAreaView style={[globalStyles.flex1,globalStyles.no_bg_color]}
+         >
           <View style={styles.searchModalOverlay}>
             <View style={styles.seacrhModalContainer}>
               <View style={styles.searchModalHeader}>
@@ -303,107 +299,107 @@ export default class WorkAllocation extends React.Component {
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 5,
-  },
-  view: {
-    flexDirection: "row",
-    borderBottomColor: "#eee",
-    borderBottomWidth: 1,
-    paddingHorizontal: 5,
-    paddingVertical: 3,
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-  name: {
-    fontSize: 18,
-    color: Colors.textColor,
-  },
-  qtyContainer: {
-    height: 35,
-    width: 35,
-    borderRadius: 100,
-    backgroundColor: Colors.primary,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  qty: {
-    fontSize: 14,
-    color: "#FFF",
-  },
-  angelIconContainer: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  },
-  iconStyle: {
-    fontSize: 18,
-    color: "#cecece",
-  },
-  searchModalOverlay: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: windowWidth,
-    height: windowHeight,
-  },
-  seacrhModalContainer: {
-    flex: 1,
-    width: windowWidth,
-    height: windowHeight,
-    backgroundColor: Colors.white,
-  },
-  searchModalHeader: {
-    height: 55,
-    width: "100%",
-    elevation: 5,
-    paddingHorizontal: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: Colors.primary,
-  },
-  backBtnContainer: {
-    width: "10%",
-    height: 55,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  searchContainer: {
-    width: "90%",
-    height: 55,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  searchFieldBox: {
-    width: "100%",
-    height: 40,
-    paddingHorizontal: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "rgba(0,0,0, 0.1)",
-    borderRadius: 50,
-  },
-  searchField: {
-    padding: 5,
-    width: "90%",
-    color: Colors.white,
-    fontSize: 15,
-  },
-  searchModalBody: {
-    flex: 1,
-    height: windowHeight - 55,
-  },
-  searchingText: {
-    fontSize: 12,
-    color: Colors.textColor,
-    opacity: 0.8,
-    alignSelf: "center",
-    marginTop: 20,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     paddingHorizontal: 5,
+//   },
+//   view: {
+//     flexDirection: "row",
+//     borderBottomColor: "#eee",
+//     borderBottomWidth: 1,
+//     paddingHorizontal: 5,
+//     paddingVertical: 3,
+//   },
+//   image: {
+//     width: 50,
+//     height: 50,
+//   },
+//   name: {
+//     fontSize: 18,
+//     color: Colors.textColor,
+//   },
+//   qtyContainer: {
+//     height: 35,
+//     width: 35,
+//     borderRadius: 100,
+//     backgroundColor: Colors.primary,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   qty: {
+//     fontSize: 14,
+//     color: "#FFF",
+//   },
+//   angelIconContainer: {
+//     flexDirection: "row",
+//     justifyContent: "flex-end",
+//     alignItems: "center",
+//   },
+//   iconStyle: {
+//     fontSize: 18,
+//     color: "#cecece",
+//   },
+//   searchModalOverlay: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     width: windowWidth,
+//     height: windowHeight,
+//   },
+//   seacrhModalContainer: {
+//     flex: 1,
+//     width: windowWidth,
+//     height: windowHeight,
+//     backgroundColor: Colors.white,
+//   },
+//   searchModalHeader: {
+//     height: 55,
+//     width: "100%",
+//     elevation: 5,
+//     paddingHorizontal: 10,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     justifyContent: "flex-start",
+//     backgroundColor: Colors.primary,
+//   },
+//   backBtnContainer: {
+//     width: "10%",
+//     height: 55,
+//     alignItems: "flex-start",
+//     justifyContent: "center",
+//   },
+//   searchContainer: {
+//     width: "90%",
+//     height: 55,
+//     alignItems: "flex-start",
+//     justifyContent: "center",
+//   },
+//   searchFieldBox: {
+//     width: "100%",
+//     height: 40,
+//     paddingHorizontal: 10,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     justifyContent: "space-between",
+//     backgroundColor: "rgba(0,0,0, 0.1)",
+//     borderRadius: 50,
+//   },
+//   searchField: {
+//     padding: 5,
+//     width: "90%",
+//     color: Colors.white,
+//     fontSize: 15,
+//   },
+//   searchModalBody: {
+//     flex: 1,
+//     height: windowHeight - 55,
+//   },
+//   searchingText: {
+//     fontSize: 12,
+//     color: Colors.textColor,
+//     opacity: 0.8,
+//     alignSelf: "center",
+//     marginTop: 20,
+//   },
+// });

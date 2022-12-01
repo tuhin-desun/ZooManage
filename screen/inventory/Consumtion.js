@@ -13,7 +13,8 @@ import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import { getConsumptions } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
-
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const tabHeight = 50;
@@ -119,11 +120,7 @@ export default class Consumption extends React.Component {
 				}
 		>
 			<View
-				style={{
-					flexDirection: "row",
-					justifyContent: "space-between",
-					paddingRight: 5,
-				}}
+				style={[globalStyle.flexDirectionRow,globalStyle.justifyContentSpaceBetween,globalStyle.pr5]}
 			>
 				<Text style={styles.labelName}>
 					{"ID: "}
@@ -245,100 +242,100 @@ export default class Consumption extends React.Component {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: 8,
-	},
-	tabContainer: {
-		width: "100%",
-		height: tabHeight,
-		flexDirection: "row",
-		borderBottomWidth: 1,
-		borderBottomColor: "#d1d1d1",
-		borderTopWidth: 1,
-		borderTopColor: Colors.primary,
-		elevation: 1,
-	},
-	tab: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		height: tabHeight,
-	},
-	underlineStyle: {
-		backgroundColor: Colors.primary,
-		height: 3,
-	},
-	activeTab: {
-		height: tabHeight - 1,
-		borderBottomWidth: 2,
-		borderBottomColor: Colors.primary,
-	},
-	activeText: {
-		fontSize: 14,
-		fontWeight: "bold",
-		color: Colors.primary,
-	},
-	inActiveText: {
-		fontSize: 14,
-		color: Colors.textColor,
-		opacity: 0.8,
-	},
-	listContainer: {
-		flex: 1,
-		padding: 8,
-		height: windowHeight - tabHeight,
-	},
-	CardBox: {
-		padding: 5,
-		borderRadius: 3,
-		borderColor: "#ddd",
-		borderWidth: 1,
-		backgroundColor: "#fff",
-		justifyContent: "space-between",
-		marginBottom: 5,
-		marginTop: 5,
-		// shadowColor: "#999",
-		// shadowOffset: {
-		// 	width: 0,
-		// 	height: 1,
-		// },
-		// shadowOpacity: 0.22,
-		// shadowRadius: 2.22,
-		// elevation: 3,
-	},
-	labelName: {
-		fontSize: 12,
-		paddingLeft: 4,
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		padding: 8,
+// 	},
+// 	tabContainer: {
+// 		width: "100%",
+// 		height: tabHeight,
+// 		flexDirection: "row",
+// 		borderBottomWidth: 1,
+// 		borderBottomColor: "#d1d1d1",
+// 		borderTopWidth: 1,
+// 		borderTopColor: Colors.primary,
+// 		elevation: 1,
+// 	},
+// 	tab: {
+// 		flex: 1,
+// 		alignItems: "center",
+// 		justifyContent: "center",
+// 		height: tabHeight,
+// 	},
+// 	underlineStyle: {
+// 		backgroundColor: Colors.primary,
+// 		height: 3,
+// 	},
+// 	activeTab: {
+// 		height: tabHeight - 1,
+// 		borderBottomWidth: 2,
+// 		borderBottomColor: Colors.primary,
+// 	},
+// 	activeText: {
+// 		fontSize: 14,
+// 		fontWeight: "bold",
+// 		color: Colors.primary,
+// 	},
+// 	inActiveText: {
+// 		fontSize: 14,
+// 		color: Colors.textColor,
+// 		opacity: 0.8,
+// 	},
+// 	listContainer: {
+// 		flex: 1,
+// 		padding: 8,
+// 		height: windowHeight - tabHeight,
+// 	},
+// 	CardBox: {
+// 		padding: 5,
+// 		borderRadius: 3,
+// 		borderColor: "#ddd",
+// 		borderWidth: 1,
+// 		backgroundColor: "#fff",
+// 		justifyContent: "space-between",
+// 		marginBottom: 5,
+// 		marginTop: 5,
+// 		// shadowColor: "#999",
+// 		// shadowOffset: {
+// 		// 	width: 0,
+// 		// 	height: 1,
+// 		// },
+// 		// shadowOpacity: 0.22,
+// 		// shadowRadius: 2.22,
+// 		// elevation: 3,
+// 	},
+// 	labelName: {
+// 		fontSize: 12,
+// 		paddingLeft: 4,
 		
-		color: Colors.textColor,
-		opacity: 0.9,
-		textAlign: "left",
-		fontWeight: "bold",
-		flex: 1,
-		width: "100%",
-	},
-	mc: {
-		color: Colors.textColor,
-		opacity: 0.8,
-		marginLeft: 5,
-		fontSize: 12,
-		fontWeight: "500",
-	},
-	pendingStatus: {
-		textAlign: "right",
-		color: Colors.warning,
-		fontStyle: "italic",
-	},
-	approveStatus: {
-		textAlign: "right",
-		color: Colors.success,
-		fontStyle: "italic",
-	},
-	rejectStatus: {
-		textAlign: "right",
-		color: Colors.danger,
-		fontStyle: "italic",
-	},
-});
+// 		color: Colors.textColor,
+// 		opacity: 0.9,
+// 		textAlign: "left",
+// 		fontWeight: "bold",
+// 		flex: 1,
+// 		width: "100%",
+// 	},
+// 	mc: {
+// 		color: Colors.textColor,
+// 		opacity: 0.8,
+// 		marginLeft: 5,
+// 		fontSize: 12,
+// 		fontWeight: "500",
+// 	},
+// 	pendingStatus: {
+// 		textAlign: "right",
+// 		color: Colors.warning,
+// 		fontStyle: "italic",
+// 	},
+// 	approveStatus: {
+// 		textAlign: "right",
+// 		color: Colors.success,
+// 		fontStyle: "italic",
+// 	},
+// 	rejectStatus: {
+// 		textAlign: "right",
+// 		color: Colors.danger,
+// 		fontStyle: "italic",
+// 	},
+// });

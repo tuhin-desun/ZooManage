@@ -20,6 +20,8 @@ import {
 	transferStock,
 } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class StockTransfer extends React.Component {
 	static contextType = AppContext;
@@ -209,7 +211,7 @@ export default class StockTransfer extends React.Component {
 					ref={this.formScrollViewRef}
 					showsVerticalScrollIndicator={false}
 				>
-					<View style={{ borderWidth: 1, borderColor: "#ddd", borderRadius: 3 }}>
+					<View style={globalStyle.formBorder}>
 					<Dropdown
 						label={"Item:"}
 						placeholder="Select an Item Name"
@@ -217,7 +219,7 @@ export default class StockTransfer extends React.Component {
 						items={this.state.products}
 						onChange={this.setItemData}
 						labelStyle={styles.labelName}
-						textFieldStyle={[styles.textfield, { width: '60%' }]}
+						textFieldStyle={[styles.textfield, globalStyle.width60]}
 						style={[
 							styles.fieldBox,
 							this.state.itemNameValidationFailed ? styles.errorFieldBox : null,
@@ -228,7 +230,7 @@ export default class StockTransfer extends React.Component {
 						<Text style={styles.labelName}>Available Quantity:</Text>
 						<TextInput
 							editable={false}
-							style={[styles.textfield, { width: '60%' }]}
+							style={[styles.textfield, globalStyle.width60]}
 							value={this.state.itemAvailableStock + " " + this.state.itemUnit}
 						/>
 					</View>
@@ -239,7 +241,7 @@ export default class StockTransfer extends React.Component {
 						items={this.state.sourceStoreNames}
 						onChange={this.setAvailableQuantity}
 						labelStyle={styles.labelName}
-						textFieldStyle={[styles.textfield, { width: '60%' }]}
+						textFieldStyle={[styles.textfield, globalStyle.width60]}
 						style={[
 							styles.fieldBox,
 							this.state.sourceStoreValidationFailed
@@ -254,7 +256,7 @@ export default class StockTransfer extends React.Component {
 						items={this.state.destinationStoreNames}
 						onChange={this.setDestionationStore}
 						labelStyle={styles.labelName}
-						textFieldStyle={[styles.textfield, { width: '60%' }]}
+						textFieldStyle={[styles.textfield, globalStyle.width60]}
 						style={[
 							styles.fieldBox,
 							this.state.destionationStoreValidationFailed
@@ -273,7 +275,7 @@ export default class StockTransfer extends React.Component {
 						<TextInput
 							value={this.state.quantity}
 							onChangeText={(quantity) => this.setState({ quantity })}
-							style={[styles.textfield, { width: '60%' }]}
+							style={[styles.textfield, globalStyle.width60]}
 							autoCompleteType="off"
 							keyboardType="number-pad"
 							placeholder="Enter Quantity"
@@ -295,62 +297,62 @@ export default class StockTransfer extends React.Component {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		padding: 8,
-	},
-	fieldBox: {
-		alignItems: "center",
-		width: "100%",
-		overflow: "hidden",
-		flexDirection: "row",
-		padding: 5,
-		borderRadius: 3,
-		borderColor: "#ddd",
-		borderBottomWidth: 1,
-		backgroundColor: "#fff",
-		height: "auto",
-		justifyContent: "space-between",
-	},
-	labelName: {
-		color: Colors.labelColor,
-		// lineHeight: 40,
-		fontSize: Colors.lableSize,
-		paddingLeft: 4,
-		height: "auto",
-		paddingVertical: 10,
-	},
-	textfield: {
-		backgroundColor: "#fff",
-		height: "auto",
-		fontSize: Colors.textSize,
-		color: Colors.textColor,
-		textAlign: "left",
-		padding: 5,
-	},
-	button: {
-		alignItems: "center",
-		backgroundColor: Colors.primary,
-		padding: 10,
-		// shadowColor: "#000",
-		// shadowOffset: {
-		// 	width: 0,
-		// 	height: 2,
-		// },
-		// shadowOpacity: 0.23,
-		// shadowRadius: 2.62,
-		// elevation: 4,
-		borderRadius: 20,
-		color: "#fff",
-		marginVertical: 10,
-	},
-	textWhite: {
-		color: "#fff",
-		fontWeight: "bold",
-	},
-	errorFieldBox: {
-		borderWidth: 1,
-		borderColor: Colors.tomato,
-	},
-});
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		padding: 8,
+// 	},
+// 	fieldBox: {
+// 		alignItems: "center",
+// 		width: "100%",
+// 		overflow: "hidden",
+// 		flexDirection: "row",
+// 		padding: 5,
+// 		borderRadius: 3,
+// 		borderColor: "#ddd",
+// 		borderBottomWidth: 1,
+// 		backgroundColor: "#fff",
+// 		height: "auto",
+// 		justifyContent: "space-between",
+// 	},
+// 	labelName: {
+// 		color: Colors.labelColor,
+// 		// lineHeight: 40,
+// 		fontSize: Colors.lableSize,
+// 		paddingLeft: 4,
+// 		height: "auto",
+// 		paddingVertical: 10,
+// 	},
+// 	textfield: {
+// 		backgroundColor: "#fff",
+// 		height: "auto",
+// 		fontSize: Colors.textSize,
+// 		color: Colors.textColor,
+// 		textAlign: "left",
+// 		padding: 5,
+// 	},
+// 	button: {
+// 		alignItems: "center",
+// 		backgroundColor: Colors.primary,
+// 		padding: 10,
+// 		// shadowColor: "#000",
+// 		// shadowOffset: {
+// 		// 	width: 0,
+// 		// 	height: 2,
+// 		// },
+// 		// shadowOpacity: 0.23,
+// 		// shadowRadius: 2.62,
+// 		// elevation: 4,
+// 		borderRadius: 20,
+// 		color: "#fff",
+// 		marginVertical: 10,
+// 	},
+// 	textWhite: {
+// 		color: "#fff",
+// 		fontWeight: "bold",
+// 	},
+// 	errorFieldBox: {
+// 		borderWidth: 1,
+// 		borderColor: Colors.tomato,
+// 	},
+// });

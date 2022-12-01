@@ -40,7 +40,6 @@ import Spinner from "../../component/tasks/Spinner";
 import AssignLevel1 from "../../component/tasks/AddTodo/AssignLevel1";
 import moment from "moment";
 import Config from "../../config/Configs";
-import globalStyles from "../../config/Styles";
 import AppContext from "../../context/AppContext";
 import { InputDropdown } from "../../component";
 import Colors from "../../config/colors";
@@ -63,6 +62,8 @@ import { todoList } from "./../../utils/api";
 import MultiSelectDropdown from "./../../component/MultiSelectDropdown";
 import { Camera } from "expo-camera";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
 
 const level1 = require("../../assets/tasks/level1.png");
 const level2 = require("../../assets/tasks/level2.png");
@@ -972,7 +973,8 @@ class AddCategoryItem extends React.Component {
             }}
           >
             <View
-              style={{ borderWidth: 1, borderColor: "#ddd", borderRadius: 3 }}
+              style={globalStyles.formBorder}
+                
             >
               {/* {this.props.route.params?.prefilled ? (
                
@@ -1857,11 +1859,8 @@ class AddCategoryItem extends React.Component {
             </View>
             <View style={globalStyles.h50} />
             <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                width: "100%",
-              }}
+              style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100]}
+                
             >
               {this.state.loading === true ? (
                 <TouchableOpacity>
@@ -1934,180 +1933,180 @@ export default AddCategoryItem;
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-  },
-  placeholder: {
-    fontSize: Platform.OS === "ios" ? 20 - 1 : 17 - 1,
-    marginTop: 5,
-    color: "#7f7f7f",
-  },
-  uncheckedCheckBoxColor: { color: "#7f7f7f" },
-  wrapper: {
-    paddingHorizontal: 10,
-    paddingVertical: 2,
-    borderRadius: 3,
-    width: "100%",
-    // marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  wrapperForAssign: {
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
-    // paddingHorizontal: 10,
-    // paddingVertical: 10,
-    borderRadius: 3,
-    width: "100%",
-    // marginTop: 10,
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between'
-  },
-  btns: {
-    fontSize: Platform.OS === "ios" ? 21 : 18,
-    color: colors.white,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 2,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Platform.OS === "ios" ? 18 : 15,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  selectedItemsContainer: {
-    width: "100%",
-    height: "auto",
-    backgroundColor: "#fff",
-    paddingVertical: 8,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
-    flexWrap: "wrap",
-    fontSize: Platform.OS === "ios" ? 18 : 15,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//   },
+//   placeholder: {
+//     fontSize: Platform.OS === "ios" ? 20 - 1 : 17 - 1,
+//     marginTop: 5,
+//     color: "#7f7f7f",
+//   },
+//   uncheckedCheckBoxColor: { color: "#7f7f7f" },
+//   wrapper: {
+//     paddingHorizontal: 10,
+//     paddingVertical: 2,
+//     borderRadius: 3,
+//     width: "100%",
+//     // marginTop: 10,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     justifyContent: "space-between",
+//   },
+//   wrapperForAssign: {
+//     borderBottomWidth: 1,
+//     borderColor: "#ddd",
+//     // paddingHorizontal: 10,
+//     // paddingVertical: 10,
+//     borderRadius: 3,
+//     width: "100%",
+//     // marginTop: 10,
+//     // flexDirection: 'row',
+//     // alignItems: 'center',
+//     // justifyContent: 'space-between'
+//   },
+//   btns: {
+//     fontSize: Platform.OS === "ios" ? 21 : 18,
+//     color: colors.white,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 2,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderBottomWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Platform.OS === "ios" ? 18 : 15,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   selectedItemsContainer: {
+//     width: "100%",
+//     height: "auto",
+//     backgroundColor: "#fff",
+//     paddingVertical: 8,
+//     flexDirection: "row",
+//     flexWrap: "wrap",
+//     alignItems: "flex-start",
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     flexWrap: "wrap",
+//     fontSize: Platform.OS === "ios" ? 18 : 15,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
 
-  arrow: {
-    zIndex: 100,
-  },
+//   arrow: {
+//     zIndex: 100,
+//   },
 
-  arrowDown: {
-    bottom: 28,
-    fontSize: Platform.OS === "ios" ? 33 : 30,
-    left: windowWidth - 70,
-    height: 28,
-    color: Colors.primary,
-  },
+//   arrowDown: {
+//     bottom: 28,
+//     fontSize: Platform.OS === "ios" ? 33 : 30,
+//     left: windowWidth - 70,
+//     height: 28,
+//     color: Colors.primary,
+//   },
 
-  modalDone: {
-    backgroundColor: Colors.primary,
-    alignItems: "center",
-    height: 40,
-    width: "49%",
-    marginTop: 15,
-  },
+//   modalDone: {
+//     backgroundColor: Colors.primary,
+//     alignItems: "center",
+//     height: 40,
+//     width: "49%",
+//     marginTop: 15,
+//   },
 
-  modalCancel: {
-    backgroundColor: Colors.primary,
-    alignItems: "center",
-    height: 40,
-    width: 60,
-    marginTop: 15,
-    width: "49%",
-  },
+//   modalCancel: {
+//     backgroundColor: Colors.primary,
+//     alignItems: "center",
+//     height: 40,
+//     width: 60,
+//     marginTop: 15,
+//     width: "49%",
+//   },
 
-  modal: {
-    height: 300,
-    backgroundColor: "#FFF",
-    margin: 0,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+//   modal: {
+//     height: 300,
+//     backgroundColor: "#FFF",
+//     margin: 0,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
 
-  modalButton: {
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-between",
-    alignSelf: "center",
-  },
-  name: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Platform.OS === "ios" ? 18 : 15,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  inputText: {
-    height: 50,
-    borderColor: "#dfdfdf",
-    borderWidth: 1,
-    fontSize: Platform.OS === "ios" ? 19 : 16,
-    backgroundColor: "#fff",
-    color: Colors.textColor,
-    borderRadius: 3,
-  },
-  btnCover: {
-    width: 100,
-    paddingVertical: 5,
-    backgroundColor: colors.primary,
-    borderRadius: 3,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  scanModalOverlay: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
-    width: windowWidth,
-    height: windowHeight,
-  },
-  qrCodeSacnBox: {
-    width: Math.floor((windowWidth * 70) / 100),
-    height: Math.floor((windowWidth * 70) / 100),
-  },
-  cancelButton: {
-    position: "absolute",
-    zIndex: 11,
-    top: 30,
-    left: 10,
-    backgroundColor: Colors.lightGrey,
-    width: 30,
-    height: 30,
-    borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
-    elevation: 3,
-  },
-  cancelButtonText: {
-    color: "#000",
-    fontSize: Platform.OS === "ios" ? 27 : 24,
-  },
-});
+//   modalButton: {
+//     flexDirection: "row",
+//     width: "100%",
+//     justifyContent: "space-between",
+//     alignSelf: "center",
+//   },
+//   name: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Platform.OS === "ios" ? 18 : 15,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   inputText: {
+//     height: 50,
+//     borderColor: "#dfdfdf",
+//     borderWidth: 1,
+//     fontSize: Platform.OS === "ios" ? 19 : 16,
+//     backgroundColor: "#fff",
+//     color: Colors.textColor,
+//     borderRadius: 3,
+//   },
+//   btnCover: {
+//     width: 100,
+//     paddingVertical: 5,
+//     backgroundColor: colors.primary,
+//     borderRadius: 3,
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   scanModalOverlay: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: "rgba(0, 0, 0, 0.8)",
+//     width: windowWidth,
+//     height: windowHeight,
+//   },
+//   qrCodeSacnBox: {
+//     width: Math.floor((windowWidth * 70) / 100),
+//     height: Math.floor((windowWidth * 70) / 100),
+//   },
+//   cancelButton: {
+//     position: "absolute",
+//     zIndex: 11,
+//     top: 30,
+//     left: 10,
+//     backgroundColor: Colors.lightGrey,
+//     width: 30,
+//     height: 30,
+//     borderRadius: 100,
+//     alignItems: "center",
+//     justifyContent: "center",
+//     elevation: 3,
+//   },
+//   cancelButtonText: {
+//     color: "#000",
+//     fontSize: Platform.OS === "ios" ? 27 : 24,
+//   },
+// });

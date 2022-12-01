@@ -31,9 +31,11 @@ import Config from "../../config/Configs";
 import AppContext from "../../context/AppContext";
 import Spinner from "../../component/tasks/Spinner";
 import colors from "../../config/colors";
-import globalStyles from "../../config/Styles";
 import { Colors, Configs } from "../../config";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
 
 const individual = require("../../assets/tasks/manager.png");
 const rotate = require("../../assets/tasks/Rotate.png");
@@ -360,7 +362,7 @@ class ViewItem extends React.Component {
           created_by={created_by}
         />
         <View style={styles.body}>
-          <KeyboardAwareScrollView style={globalStyles.mb0}>
+          <KeyboardAwareScrollView style={{ marginBottom: 0 }}>
             <View style={{ marginBottom: 20 }}>
               {/* title here */}
               <View style={[styles.fieldBox]}>
@@ -400,7 +402,7 @@ class ViewItem extends React.Component {
                     ).format("LT") +
                     ")"
                   }
-                  style={[styles.textfield, globalStyles.width60]}
+                  style={[styles.textfield,globalStyles.width60]}
                   editable={false}
                   selectTextOnFocus={false}
                 />
@@ -523,7 +525,7 @@ class ViewItem extends React.Component {
                   data={this.state.assign_level_1}
                   renderItem={({ item }) => {
                     return (
-                      <View style={{ alignItems: "center", marginLeft: 25 }}>
+                      <View style={[globalStyles.alignItemsCenter,{marginLeft: 25 }]}>
                         <Image
                           source={level1}
                           style={{
@@ -547,11 +549,7 @@ class ViewItem extends React.Component {
               assign_lvl_1_user_id.indexOf(this.context.userDetails.id) > -1 ||
               this.context.filterDetails?.id == "extra" ? (
                 <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-evenly",
-                    width: "100%",
-                  }}
+                  style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100]}
                 >
                   {this.state.task_data.status == "pending" ||
                   this.state.task_data.status == "rejected" ? (
@@ -561,14 +559,11 @@ class ViewItem extends React.Component {
                       {is_photo_proof == 1 && !this.state.showFields ? (
                         <>
                           <TouchableOpacity
-                            style={{
-                              paddingVertical: 10,
-                              width: 150,
-                              backgroundColor: colors.primary,
-                              justifyContent: "center",
-                              alignItems: "center",
-                              borderRadius: 3,
-                            }}
+                            style={[styles.paddingVertical10,styles.width150,
+                          globalStyles.justifyContentCenter,globalStyles.alignItemsCenter,styles.borderRadius3,
+                          {
+                            backgroundColor: colors.primary,
+                          }]}
                             onPress={() => {
                               this.handleMarkasComplete();
                             }}
@@ -579,14 +574,11 @@ class ViewItem extends React.Component {
                           {this.state.showFields ? (
                             this.state.task_data.approval == 1 ? (
                               <TouchableOpacity
-                                style={{
-                                  paddingVertical: 10,
-                                  width: 150,
-                                  backgroundColor: colors.primary,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  borderRadius: 3,
-                                }}
+                                style={[styles.paddingVertical10,styles.width150,
+                          globalStyles.justifyContentCenter,globalStyles.alignItemsCenter,styles.borderRadius3,
+                          {
+                            backgroundColor: colors.primary,
+                          }]}
                                 onPress={this.handleSubmit2}
                               >
                                 <Text style={styles.btns}>
@@ -595,14 +587,11 @@ class ViewItem extends React.Component {
                               </TouchableOpacity>
                             ) : (
                               <TouchableOpacity
-                                style={{
-                                  paddingVertical: 10,
-                                  width: 150,
-                                  backgroundColor: colors.primary,
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                  borderRadius: 3,
-                                }}
+                                style={[styles.paddingVertical10,styles.width150,
+                          globalStyles.justifyContentCenter,globalStyles.alignItemsCenter,styles.borderRadius3,
+                          {
+                            backgroundColor: colors.primary,
+                          }]}
                                 onPress={this.handleSubmit}
                               >
                                 <Text style={styles.btns}>Mark as Closed </Text>
@@ -612,28 +601,22 @@ class ViewItem extends React.Component {
                         </>
                       ) : this.state.task_data.approval == 1 ? (
                         <TouchableOpacity
-                          style={{
-                            paddingVertical: 10,
-                            width: 150,
+                          style={[styles.paddingVertical10,styles.width150,
+                          globalStyles.justifyContentCenter,globalStyles.alignItemsCenter,styles.borderRadius3,
+                          {
                             backgroundColor: colors.primary,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: 3,
-                          }}
+                          }]}
                           onPress={this.handleSubmit2}
                         >
                           <Text style={styles.btns}>Request for Approval </Text>
                         </TouchableOpacity>
                       ) : (
                         <TouchableOpacity
-                          style={{
-                            paddingVertical: 10,
-                            width: 150,
+                          style={[styles.paddingVertical10,styles.width150,
+                          globalStyles.justifyContentCenter,globalStyles.alignItemsCenter,styles.borderRadius3,
+                          {
                             backgroundColor: colors.primary,
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderRadius: 3,
-                          }}
+                          }]}
                           onPress={this.handleSubmit}
                         >
                           <Text style={styles.btns}>Mark as Closed </Text>
@@ -751,72 +734,7 @@ class ViewItem extends React.Component {
 }
 export default ViewItem;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-    marginHorizontal: 5,
-  },
-  placeholder: { fontSize: 17 - 1, marginTop: 15, color: "#7f7f7f" }, //SUBHASH: Change title color here
-  wrapper: {
-    borderWidth: 1,
-    borderColor: "#e5e5e5",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 3,
-    width: "100%",
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  btns: {
-    fontSize: 18,
-    color: colors.white,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-    marginBottom: 5,
-    marginTop: 5,
-    // shadowColor: "#999",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 1,
-    // },
-    // shadowOpacity: 0.22,
-    // shadowRadius: 2.22,
-    // elevation: 3,
-  },
-  labelName: {
-    color: Colors.textColor,
-    lineHeight: 40,
-    fontSize: 14,
-    paddingLeft: 4,
-    height: "auto",
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
-
-    fontSize: 12,
-    color: Colors.textColor,
-    textAlign: "right",
-    padding: 5,
-  },
-});
+//  
 
 // : assign_lvl_1_user_id.indexOf(this.context.userDetails.id) > - 1 ? (
 //     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>

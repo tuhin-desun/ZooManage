@@ -14,6 +14,8 @@ import TodoItem from '../../component/tasks/TodoItem'
 import { showError } from "../../actions/Error";
 import Spinner from "../../component/tasks/Spinner";
 import AppContext from "../../context/AppContext";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
 
 
 //import images for task icon here
@@ -140,7 +142,8 @@ class SubCategory extends React.Component {
 
                                     return (
                                         <React.Fragment key={parseInt(item.id)}>
-                                            <TodoItem navigation={this.props.navigation} route={'CategoryItems'} catId={this.state.catId} id={item.id} all_task_count={item.all_task_count} completed_task_count={item.completed_task_count} img={Config.IMAGE_URL + item.image} title={item.title} selectUserId={this.state.selectUserId} filter={this.props.route.params.filter} extra={this.props.route.params.extra} />
+                                            <TodoItem navigation={this.props.navigation} 
+                                            route={'CategoryItems'} catId={this.state.catId} id={item.id} all_task_count={item.all_task_count} completed_task_count={item.completed_task_count} img={Config.IMAGE_URL + item.image} title={item.title} selectUserId={this.state.selectUserId} filter={this.props.route.params.filter} extra={this.props.route.params.extra} />
                                         </React.Fragment>
                                     )
                                 }}
@@ -149,7 +152,11 @@ class SubCategory extends React.Component {
                                 refreshing={this.state.isFetching}
                             />
                             :
-                            <Text style={{ paddingBottom: 2, fontSize: 16, fontWeight: 'bold', color: '#7f7f7f' }}>{this.state.status}</Text>
+                            <Text
+                              style={[globalStyles.paddingBottom2,globalStyles.fontSize16,
+                            globalStyles.fontWeightBold,
+                                {color: '#7f7f7f' }]}>
+                            {this.state.status}</Text>
                     }
                 </View>
 
@@ -163,12 +170,12 @@ class SubCategory extends React.Component {
 }
 export default SubCategory;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    body: {
-        flex: 9
-    }
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#fff'
+//     },
+//     body: {
+//         flex: 9
+//     }
+// });

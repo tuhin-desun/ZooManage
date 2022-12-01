@@ -19,6 +19,9 @@ import Theme from "../../../Theme";
 import DateTimePicker from "./ScheduleOnce";
 import colors from "../../../config/colors";
 import { Colors } from "../../../config";
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
 
 class Schedule extends React.Component {
     constructor(props) {
@@ -255,21 +258,21 @@ const Daily =(props)=>{
 
     return (
         <View style={styles.wrapper}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                <View style={{ alignItems: 'center' }}>
+            <View style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100]}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text style={{color:Colors.textColor}}>STARTS ON</Text>
                     <TouchableOpacity onPress={()=>{showDatePicker('date','startDate')}} style={styles.dateContainer}>
                         <Text style={{ color: 'green' }}>{date}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center' }}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text style={{color:Colors.textColor}}>ENDS ON</Text>
                     <TouchableOpacity onPress={()=>{showDatePicker('date','endDate')}} style={styles.dateContainer}>
                         <Text style={{ color: 'red' }}>{enddate}</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ alignItems: 'center' }}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text style={{color:Colors.textColor}}>DUE BY</Text>
                     <TouchableOpacity onPress={()=>{showDatePicker('time','time')}} style={styles.dateContainer}>
                         <Text style={{color:Colors.textColor}}>{time}</Text>
@@ -376,7 +379,8 @@ const Weekly =(props)=>{
     return (
         <View style={[styles.wrapper, { flexDirection: 'column' }]}>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginVertical: 15, width: '100%' }}>
+            <View style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100,
+                { marginVertical: 15}]}>
                 {
                     weekDay.map((value, index)=>{
                         let color=Theme.primary;
@@ -396,21 +400,21 @@ const Weekly =(props)=>{
                 }
             </View>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                <View style={{ alignItems: 'center' }}>
+            <View style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100]}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text style={{color:Colors.textColor}}>STARTS ON</Text>
                     <TouchableOpacity onPress={()=>{ showDatePicker('date','startDate') }} style={styles.dateContainer}>
                         <Text style={{ color: 'green' }}>{date}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center' }}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text style={{color:Colors.textColor}}>ENDS ON</Text>
                     <TouchableOpacity onPress={()=>{ showDatePicker('date','endDate') }} style={styles.dateContainer}>
                         <Text style={{ color: 'red' }}>{enddate}</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ alignItems: 'center' }}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text style={{color:Colors.textColor}}>DUE BY</Text>
                     <TouchableOpacity onPress={()=>{showDatePicker('time','time')}} style={styles.dateContainer}>
                         <Text style={{color:Colors.textColor}}>{time}</Text>
@@ -510,7 +514,8 @@ const Monthly =(props)=>{
 
     return (
         <View style={[styles.wrapper, { flexDirection: 'column' }]}>
-            <View style={{ width: '90%', marginBottom: 15 }}>
+            <View style={[globalStyles.width90,
+                {marginBottom: 15 }]}>
                 <Dropdown
                     value={selectedMonth}
                     label='PICK MONTH'
@@ -521,21 +526,23 @@ const Monthly =(props)=>{
                     }}
                 />
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', width: '100%' }}>
-                <View style={{ alignItems: 'center' }}>
+            <View style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100]}
+              >
+                <View style={globalStyles.alignItemsCenter}>
                     <Text  style={{color:Colors.textColor}}>STARTS ON</Text>
                     <TouchableOpacity onPress={()=>{ showDatePicker('date','startDate') }} style={styles.dateContainer}>
                         <Text style={{ color: 'green' }}>{date}</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ alignItems: 'center' }}>
+                <View style={globalStyles.alignItemsCenter}>
                     <Text  style={{color:Colors.textColor}}>ENDS ON</Text>
                     <TouchableOpacity onPress={()=>{ showDatePicker('date','endDate') }} style={styles.dateContainer}>
                         <Text style={{ color: 'red' }}>{enddate}</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ alignItems: 'center' }}>
+                <View style={globalStyles.alignItemsCenter}>
+                  
                     <Text  style={{color:Colors.textColor}}>DUE BY</Text>
                     <TouchableOpacity onPress={()=>{showDatePicker('time','time')}} style={styles.dateContainer}>
                         <Text style={{color:Colors.textColor}}>{time}</Text>
@@ -553,44 +560,44 @@ const Monthly =(props)=>{
     );
 }
 
-const styles = StyleSheet.create({
-    wrapper: {
-        borderWidth: 1,
-        borderColor: '#e5e5e5',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderRadius: 3,
-        width: '100%',
-        marginTop: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
-    selectWrapper: {
-        borderRadius: 10,
-        borderWidth: 1,
-        height: 90,
-        width: 75,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 5,
-        marginLeft: 5
-    },
-    img: { resizeMode: 'contain', height: 35, width: 35, marginBottom: 5 },
-    dateContainer: {
-        borderWidth: 1,
-        borderRadius: 3,
-        paddingVertical: 5,
-        marginTop: 5,
-        borderColor: '#e5e5e5',
-        paddingHorizontal: 15
-    },
-    daybtn: {
-        padding: 5,
-        borderRadius: 3,
-        height: 45,
-        width: 45,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-});
+// const styles = StyleSheet.create({
+//     wrapper: {
+//         borderWidth: 1,
+//         borderColor: '#e5e5e5',
+//         paddingHorizontal: 10,
+//         paddingVertical: 10,
+//         borderRadius: 3,
+//         width: '100%',
+//         marginTop: 10,
+//         flexDirection: 'row',
+//         alignItems: 'center',
+//         justifyContent: 'space-between'
+//     },
+//     selectWrapper: {
+//         borderRadius: 10,
+//         borderWidth: 1,
+//         height: 90,
+//         width: 75,
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         paddingTop: 5,
+//         marginLeft: 5
+//     },
+//     img: { resizeMode: 'contain', height: 35, width: 35, marginBottom: 5 },
+//     dateContainer: {
+//         borderWidth: 1,
+//         borderRadius: 3,
+//         paddingVertical: 5,
+//         marginTop: 5,
+//         borderColor: '#e5e5e5',
+//         paddingHorizontal: 15
+//     },
+//     daybtn: {
+//         padding: 5,
+//         borderRadius: 3,
+//         height: 45,
+//         width: 45,
+//         alignItems: 'center',
+//         justifyContent: 'center'
+//     }
+// });

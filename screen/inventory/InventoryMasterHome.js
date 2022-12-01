@@ -16,6 +16,8 @@ import {
 } from "@expo/vector-icons";
 import Colors from "../../config/colors";
 import { Header } from "../../component";
+//import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class InventoryMasterHome extends React.Component {
 	constructor(props) {
@@ -69,9 +71,8 @@ export default class InventoryMasterHome extends React.Component {
 		return (
 			<TouchableOpacity
 				onPress={item.onclick}
-				style={[styles.btn, styles.pl12, {
+				style={[styles.btn, styles.pl12,globalStyle.bbw0, {
 					borderBottomColor: "#eee",
-					borderBottomWidth: 1,
 				}]}
 			>
 				<View style={styles.imgContainer}>

@@ -10,6 +10,9 @@ import { DateTimePickerModal } from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import { createFeedConfig } from '../../services/AllocationServices';
 import CustomCheckbox from '../../component/tasks/AddTodo/CustomCheckBox';
+import styles from './Styles'
+import globalStyles from '../../config/Styles'
+
 
 export default class FeedDetails extends Component {
     static contextType = AppContext;
@@ -124,7 +127,7 @@ export default class FeedDetails extends Component {
                 <View style={styles.body}>
                     <ScrollView
                         showsVerticalScrollIndicator={false}
-                        style={{ height: '80%' }}
+                        style={globalStyles.width80}
                     >
                         <View style={[styles.fieldBox]}>
                             <Text style={styles.labelName}>Select Time : </Text>
@@ -165,68 +168,68 @@ export default class FeedDetails extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff'
-    },
-    body: {
-        flex: 9,
-        padding: 10
-    },
-    fieldBox: {
-        alignItems: 'center',
-        width: "100%",
-        overflow: "hidden",
-        flexDirection: "row",
-        padding: 5,
-        borderRadius: 3,
-        borderColor: "#ddd",
-        borderWidth: 1,
-        backgroundColor: "#fff",
-        height: 'auto',
-        justifyContent: "space-between",
-        marginBottom: 5,
-        marginTop: 5,
-        // shadowColor: "#999",
-        // shadowOffset: {
-        // 	width: 0,
-        // 	height: 1,
-        // },
-        // shadowOpacity: 0.22,
-        // shadowRadius: 2.22,
-        // elevation: 3,
-    },
-    labelName: {
-        color: Colors.textColor,
-        lineHeight: 40,
-        fontSize: 14,
-        paddingLeft: 4,
-        height: 'auto',
-      },
-    dateField:{
-        backgroundColor: "#fff",
-        height: 'auto',
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#fff'
+//     },
+//     body: {
+//         flex: 9,
+//         padding: 10
+//     },
+//     fieldBox: {
+//         alignItems: 'center',
+//         width: "100%",
+//         overflow: "hidden",
+//         flexDirection: "row",
+//         padding: 5,
+//         borderRadius: 3,
+//         borderColor: "#ddd",
+//         borderWidth: 1,
+//         backgroundColor: "#fff",
+//         height: 'auto',
+//         justifyContent: "space-between",
+//         marginBottom: 5,
+//         marginTop: 5,
+//         // shadowColor: "#999",
+//         // shadowOffset: {
+//         // 	width: 0,
+//         // 	height: 1,
+//         // },
+//         // shadowOpacity: 0.22,
+//         // shadowRadius: 2.22,
+//         // elevation: 3,
+//     },
+//     labelName: {
+//         color: Colors.textColor,
+//         lineHeight: 40,
+//         fontSize: 14,
+//         paddingLeft: 4,
+//         height: 'auto',
+//       },
+//     dateField:{
+//         backgroundColor: "#fff",
+//         height: 'auto',
         
-        fontSize: 12,
-        color: Colors.textColor,
-        textAlign: "right",
-        padding: 5,
-      },
-      buttonsContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        marginVertical: 30,
-      },
-      buttonText: {
-        fontSize: 18,
-        fontWeight: "bold",
-      },
-      saveBtnText: {
-        color: Colors.primary,
-      },
-      exitBtnText: {
-        color: Colors.activeTab,
-      },
-});
+//         fontSize: 12,
+//         color: Colors.textColor,
+//         textAlign: "right",
+//         padding: 5,
+//       },
+//       buttonsContainer: {
+//         flexDirection: "row",
+//         alignItems: "center",
+//         justifyContent: "space-evenly",
+//         marginVertical: 30,
+//       },
+//       buttonText: {
+//         fontSize: 18,
+//         fontWeight: "bold",
+//       },
+//       saveBtnText: {
+//         color: Colors.primary,
+//       },
+//       exitBtnText: {
+//         color: Colors.activeTab,
+//       },
+// });

@@ -22,6 +22,8 @@ import {
 } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class AddParty extends React.Component {
   static contextType = AppContext;
@@ -204,7 +206,7 @@ export default class AddParty extends React.Component {
           showsVerticalScrollIndicator={false}
         >
           <View
-            style={{ borderWidth: 1, borderColor: "#ddd", borderRadius: 3 }}
+            style={[globalStyle.formBorder]}
           >
             <View
               style={[
@@ -312,12 +314,7 @@ export default class AddParty extends React.Component {
             <View style={styles.fieldBox}>
               <Text style={styles.labelName}>Party Type:</Text>
               <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  width: "60%",
-                }}
-              >
+                style={[globalStyle.flexDirectionRow,globalStyle.alignItemsCenter,globalStyle.width60]}>
                 <TouchableOpacity
                   activeOpacity={1}
                   style={styles.radioButton}
@@ -431,7 +428,7 @@ export default class AddParty extends React.Component {
               />
             </View>
 
-            <View style={[styles.fieldBox, globalStyles.bbw0]}>
+            <View style={[styles.fieldBox, { borderBottomWidth: 0 }]}>
               <Text style={styles.labelName}>Balance:</Text>
               <TextInput
                 value={this.state.balance}
@@ -453,91 +450,91 @@ export default class AddParty extends React.Component {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Colors.lableSize,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  imagePicker: {
-    borderColor: "#ccc",
-    borderWidth: 1,
-    padding: 3,
-    backgroundColor: "#fff",
-    borderRadius: 3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
-    width: "60%",
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
-  textareaBox: {
-    flexDirection: "column",
-    height: 130,
-  },
-  textarea: {
-    height: 130,
-    paddingHorizontal: 5,
-    textAlignVertical: "top",
-    color: Colors.textColor,
-  },
-  radioButton: {
-    flexDirection: "row",
-    padding: 3,
-  },
-  radioButtonLabel: {
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    marginLeft: 5,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: Colors.primary,
-    padding: 10,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 2,
-    // },
-    // shadowOpacity: 0.23,
-    // shadowRadius: 2.62,
-    // elevation: 4,
-    borderRadius: 20,
-    color: "#fff",
-    marginVertical: 10,
-  },
-  textWhite: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  errorFieldBox: {
-    borderWidth: 1,
-    borderColor: Colors.tomato,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 8,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderBottomWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Colors.lableSize,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   imagePicker: {
+//     borderColor: "#ccc",
+//     borderWidth: 1,
+//     padding: 3,
+//     backgroundColor: "#fff",
+//     borderRadius: 3,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     width: "60%",
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
+//   textareaBox: {
+//     flexDirection: "column",
+//     height: 130,
+//   },
+//   textarea: {
+//     height: 130,
+//     paddingHorizontal: 5,
+//     textAlignVertical: "top",
+//     color: Colors.textColor,
+//   },
+//   radioButton: {
+//     flexDirection: "row",
+//     padding: 3,
+//   },
+//   radioButtonLabel: {
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     marginLeft: 5,
+//   },
+//   button: {
+//     alignItems: "center",
+//     backgroundColor: Colors.primary,
+//     padding: 10,
+//     // shadowColor: "#000",
+//     // shadowOffset: {
+//     // 	width: 0,
+//     // 	height: 2,
+//     // },
+//     // shadowOpacity: 0.23,
+//     // shadowRadius: 2.62,
+//     // elevation: 4,
+//     borderRadius: 20,
+//     color: "#fff",
+//     marginVertical: 10,
+//   },
+//   textWhite: {
+//     color: "#fff",
+//     fontWeight: "bold",
+//   },
+//   errorFieldBox: {
+//     borderWidth: 1,
+//     borderColor: Colors.tomato,
+//   },
+// });

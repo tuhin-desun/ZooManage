@@ -23,6 +23,8 @@ import moment from 'moment';
 import { DateTimePickerModal } from 'react-native-modal-datetime-picker';
 import CustomCheckbox from '../../component/tasks/AddTodo/CustomCheckBox';
 import Modal2 from "react-native-modal";
+import styles from './Styles'
+import globalStyles from '../../config/Styles'
 
 export default class FeedMenu extends React.Component {
 	static contextType = AppContext;
@@ -362,7 +364,8 @@ export default class FeedMenu extends React.Component {
 					addAction={this.checkAddActionPermissions()}
 				/>
 				{this.state.inChargeData.users.length <= 0 ?
-					<View style={{ alignItems: 'center', marginTop: 20 }}>
+					<View style={[globalStyles.alignItemsCenter,
+						{marginTop: 20 }]}>
 						<Text style={{ color: Colors.danger }}>{"No Section In Charge, Please add first !!"}</Text>
 					</View>
 					:
@@ -426,11 +429,12 @@ export default class FeedMenu extends React.Component {
 								<View style={styles.body}>
 									<ScrollView
 										showsVerticalScrollIndicator={false}
-										style={{ height: '80%' }}
+										style={globalStyles.width80}
 									>
 										<View style={[styles.fieldBox]}>
 											<Text style={styles.labelName}>Select Time : </Text>
-											<TouchableOpacity onPress={() => { this.showDatePicker("time") }} style={[styles.textfield]}>
+											<TouchableOpacity onPress={() => { this.showDatePicker("time") }} 
+											style={[styles.textfield]}>
 												<Text style={[styles.dateField]}>{moment(this.state.time).format("LT")}</Text>
 											</TouchableOpacity>
 										</View>
@@ -475,138 +479,138 @@ export default class FeedMenu extends React.Component {
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 const tabHeight = 50;
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-	},
-	body: {
-		flex: 9,
-		padding: 5
-	},
-	row: {
-		flexDirection: "row",
-		paddingHorizontal: 5,
-		paddingVertical: 10,
-	},
-	leftPart: {
-		width: '22%',
-		justifyContent: "center",
-	},
-	rightPart: {
-		width: "25%",
-		flexDirection: "row",
-		justifyContent: "flex-end",
-		alignItems: "center",
-	},
-	name: {
-		color: Colors.labelColor,
-		// lineHeight: 40,
-		fontSize: 19,
-		paddingLeft: 4,
-		height: 'auto',
-		paddingVertical: 5
-	},
-	tabContainer: {
-		width: "100%",
-		height: tabHeight,
-		flexDirection: "row",
-		borderBottomWidth: 1,
-		borderBottomColor: "#d1d1d1",
-		borderTopWidth: 1,
-		borderTopColor: Colors.primary,
-		elevation: 1,
-	},
-	downloadBtn: {
-		flexDirection: "row",
-		paddingHorizontal: 5,
-		paddingVertical: 3,
-		borderWidth: StyleSheet.hairlineWidth,
-		borderRadius: 3,
-		marginLeft: 20,
-	},
-	tab: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		height: tabHeight,
-	},
-	underlineStyle: {
-		backgroundColor: Colors.primary,
-		height: 3,
-	},
-	activeTab: {
-		height: tabHeight - 1,
-		borderBottomWidth: 2,
-		borderBottomColor: Colors.primary,
-	},
-	activeText: {
-		fontSize: 14,
-		fontWeight: "bold",
-		color: Colors.primary,
-	},
-	inActiveText: {
-		fontSize: 14,
-		color: Colors.textColor,
-		opacity: 0.8,
-	},
-	fieldBox: {
-		alignItems: 'center',
-		width: "100%",
-		overflow: "hidden",
-		flexDirection: "row",
-		padding: 5,
-		paddingHorizontal: 10,
-		borderRadius: 3,
-		borderColor: "#ddd",
-		borderWidth: 1,
-		backgroundColor: "#fff",
-		height: 'auto',
-		justifyContent: "space-between",
-		marginBottom: 5,
-		marginTop: 5,
-		// shadowColor: "#999",
-		// shadowOffset: {
-		// 	width: 0,
-		// 	height: 1,
-		// },
-		// shadowOpacity: 0.22,
-		// shadowRadius: 2.22,
-		// elevation: 3,
-	},
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		backgroundColor: "#fff",
+// 	},
+// 	body: {
+// 		flex: 9,
+// 		padding: 5
+// 	},
+// 	row: {
+// 		flexDirection: "row",
+// 		paddingHorizontal: 5,
+// 		paddingVertical: 10,
+// 	},
+// 	leftPart: {
+// 		width: '22%',
+// 		justifyContent: "center",
+// 	},
+// 	rightPart: {
+// 		width: "25%",
+// 		flexDirection: "row",
+// 		justifyContent: "flex-end",
+// 		alignItems: "center",
+// 	},
+// 	name: {
+// 		color: Colors.labelColor,
+// 		// lineHeight: 40,
+// 		fontSize: 19,
+// 		paddingLeft: 4,
+// 		height: 'auto',
+// 		paddingVertical: 5
+// 	},
+// 	tabContainer: {
+// 		width: "100%",
+// 		height: tabHeight,
+// 		flexDirection: "row",
+// 		borderBottomWidth: 1,
+// 		borderBottomColor: "#d1d1d1",
+// 		borderTopWidth: 1,
+// 		borderTopColor: Colors.primary,
+// 		elevation: 1,
+// 	},
+// 	downloadBtn: {
+// 		flexDirection: "row",
+// 		paddingHorizontal: 5,
+// 		paddingVertical: 3,
+// 		borderWidth: StyleSheet.hairlineWidth,
+// 		borderRadius: 3,
+// 		marginLeft: 20,
+// 	},
+// 	tab: {
+// 		flex: 1,
+// 		alignItems: "center",
+// 		justifyContent: "center",
+// 		height: tabHeight,
+// 	},
+// 	underlineStyle: {
+// 		backgroundColor: Colors.primary,
+// 		height: 3,
+// 	},
+// 	activeTab: {
+// 		height: tabHeight - 1,
+// 		borderBottomWidth: 2,
+// 		borderBottomColor: Colors.primary,
+// 	},
+// 	activeText: {
+// 		fontSize: 14,
+// 		fontWeight: "bold",
+// 		color: Colors.primary,
+// 	},
+// 	inActiveText: {
+// 		fontSize: 14,
+// 		color: Colors.textColor,
+// 		opacity: 0.8,
+// 	},
+// 	fieldBox: {
+// 		alignItems: 'center',
+// 		width: "100%",
+// 		overflow: "hidden",
+// 		flexDirection: "row",
+// 		padding: 5,
+// 		paddingHorizontal: 10,
+// 		borderRadius: 3,
+// 		borderColor: "#ddd",
+// 		borderWidth: 1,
+// 		backgroundColor: "#fff",
+// 		height: 'auto',
+// 		justifyContent: "space-between",
+// 		marginBottom: 5,
+// 		marginTop: 5,
+// 		// shadowColor: "#999",
+// 		// shadowOffset: {
+// 		// 	width: 0,
+// 		// 	height: 1,
+// 		// },
+// 		// shadowOpacity: 0.22,
+// 		// shadowRadius: 2.22,
+// 		// elevation: 3,
+// 	},
 
-	labelName: {
-		color: Colors.labelColor,
-		// lineHeight: 40,
-		fontSize: 19,
-		paddingLeft: 4,
-		height: 'auto',
-		paddingVertical: 10
-	},
-	dateField: {
-		backgroundColor: "#fff",
-		height: 'auto',
-		flexWrap: 'wrap',
-		fontSize: 19,
-		color: Colors.textColor,
-		textAlign: "left",
-		width: '22%',
-		padding: 5,
-	},
-	buttonsContainer: {
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-evenly",
-		marginVertical: 30,
-	},
-	buttonText: {
-		fontSize: 18,
-		fontWeight: "bold",
-	},
-	saveBtnText: {
-		color: Colors.primary,
-	},
-	exitBtnText: {
-		color: Colors.activeTab,
-	},
-});
+// 	labelName: {
+// 		color: Colors.labelColor,
+// 		// lineHeight: 40,
+// 		fontSize: 19,
+// 		paddingLeft: 4,
+// 		height: 'auto',
+// 		paddingVertical: 10
+// 	},
+// 	dateField: {
+// 		backgroundColor: "#fff",
+// 		height: 'auto',
+// 		flexWrap: 'wrap',
+// 		fontSize: 19,
+// 		color: Colors.textColor,
+// 		textAlign: "left",
+// 		width: '22%',
+// 		padding: 5,
+// 	},
+// 	buttonsContainer: {
+// 		flexDirection: "row",
+// 		alignItems: "center",
+// 		justifyContent: "space-evenly",
+// 		marginVertical: 30,
+// 	},
+// 	buttonText: {
+// 		fontSize: 18,
+// 		fontWeight: "bold",
+// 	},
+// 	saveBtnText: {
+// 		color: Colors.primary,
+// 	},
+// 	exitBtnText: {
+// 		color: Colors.activeTab,
+// 	},
+// });

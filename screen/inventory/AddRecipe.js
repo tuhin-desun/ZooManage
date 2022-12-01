@@ -25,7 +25,8 @@ import {
   manageRecipe,
 } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
-import globalStyles from "../../config/Styles";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class AddRecipe extends React.Component {
   static contextType = AppContext;
@@ -280,16 +281,16 @@ export default class AddRecipe extends React.Component {
 
   renderItem = (item) => (
     <View key={item.id.toString()} style={styles.itemRow}>
-      <View style={{ flex: 1, justifyContent: "center" }}>
+      <View style={[globalStyle.flex1,globalStyle.justifyContentCenter]}>
         <Text style={styles.rowTitleText}>{item.product_name}</Text>
       </View>
-      <View style={{ flex: 0.5, justifyContent: "center" }}>
+      <View style={[globalStyle.flex05,globalStyle.justifyContentCenter]}>
         <Text style={styles.rowSubText}>{item.quantity + " " + item.unit}</Text>
       </View>
-      <View style={{ flex: 0.5, alignItems: "flex-end" }}>
+      <View style={[globalStyle.flex05,globalStyle.alignItemsFlexEnd]}>
         <TouchableOpacity
           activeOpacity={1}
-          style={globalStyles.p3}
+          style={globalStyle.p3}
           onPress={this.removeItem.bind(this, item.id)}
         >
           <Ionicons name="close-circle" size={18} color={Colors.tomato} />
@@ -338,7 +339,7 @@ export default class AddRecipe extends React.Component {
               name="plus"
               size={10}
               color={Colors.white}
-              style={{ marginTop: 2, marginRight: 3 }}
+              style={[globalStyle.marginRight3,globalStyle.marginTop2]}
             />
             <Text style={{ fontSize: Colors.textSize, color: Colors.white }}>
               Add Item
@@ -363,7 +364,7 @@ export default class AddRecipe extends React.Component {
         visible={this.state.isAddItemModalOpen}
         onRequestClose={this.closeAddItemModal}
       >
-        <SafeAreaView style={globalStyles.safeAreaViewStyle}>
+        <SafeAreaView style={[globalStyle.safeAreaViewStyle]}>
           <View style={styles.modalOverlay}>
             <View style={styles.itemModalContainer}>
               <View style={styles.itemModalHeader}>
@@ -457,149 +458,149 @@ export default class AddRecipe extends React.Component {
 
 const windowWidth = Dimensions.get("screen").width;
 const windowHeight = Dimensions.get("screen").height;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 8,
-  },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderBottomWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-  },
-  labelName: {
-    color: Colors.labelColor,
-    // lineHeight: 40,
-    fontSize: Colors.lableSize,
-    paddingLeft: 4,
-    height: "auto",
-    paddingVertical: 10,
-  },
-  imagePicker: {
-    borderColor: "#ccc",
-    borderWidth: 1,
-    padding: 3,
-    backgroundColor: "#fff",
-    borderRadius: 3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
-    width: "60%",
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    textAlign: "left",
-    padding: 5,
-  },
-  addItemRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginVertical: 5,
-    paddingHorizontal: 5,
-  },
-  capsule: {
-    height: 25,
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 10,
-    paddingBottom: 2,
-    borderRadius: 50,
-  },
-  itemsContainer: {
-    marginTop: 5,
-    marginBottom: 10,
-    paddingHorizontal: 5,
-    borderRadius: 3,
-  },
-  itemRow: {
-    flexDirection: "row",
-    paddingVertical: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  rowTitleText: {
-    fontSize: Colors.textSize,
-    color: Colors.textColor,
-    fontWeight: "bold",
-  },
-  rowSubText: {
-    color: Colors.textColor,
-    opacity: 0.8,
-    fontSize: Colors.textSize,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: Colors.primary,
-    padding: 10,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 2,
-    // },
-    // shadowOpacity: 0.23,
-    // shadowRadius: 2.62,
-    // elevation: 4,
-    borderRadius: 20,
-    color: "#fff",
-    marginVertical: 10,
-  },
-  textWhite: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  modalOverlay: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: windowWidth,
-    height: windowHeight,
-  },
-  itemModalContainer: {
-    flex: 1,
-    width: windowWidth,
-    height: windowHeight,
-    backgroundColor: Colors.lightGrey,
-  },
-  itemModalHeader: {
-    height: 55,
-    flexDirection: "row",
-    width: "100%",
-    backgroundColor: Colors.primary,
-    elevation: 1,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  headerBackBtnContainer: {
-    width: "15%",
-    height: 55,
-    paddingLeft: 8,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerTitleContainer: {
-    width: "70%",
-    paddingLeft: 20,
-    height: 55,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  itemModalBody: {
-    flex: 1,
-    height: windowHeight - 55,
-    padding: 8,
-  },
-  errorFieldBox: {
-    borderWidth: 1,
-    borderColor: Colors.tomato,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 8,
+//   },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderBottomWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//   },
+//   labelName: {
+//     color: Colors.labelColor,
+//     // lineHeight: 40,
+//     fontSize: Colors.lableSize,
+//     paddingLeft: 4,
+//     height: "auto",
+//     paddingVertical: 10,
+//   },
+//   imagePicker: {
+//     borderColor: "#ccc",
+//     borderWidth: 1,
+//     padding: 3,
+//     backgroundColor: "#fff",
+//     borderRadius: 3,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     width: "60%",
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     textAlign: "left",
+//     padding: 5,
+//   },
+//   addItemRow: {
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//     marginVertical: 5,
+//     paddingHorizontal: 5,
+//   },
+//   capsule: {
+//     height: 25,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     paddingHorizontal: 10,
+//     paddingBottom: 2,
+//     borderRadius: 50,
+//   },
+//   itemsContainer: {
+//     marginTop: 5,
+//     marginBottom: 10,
+//     paddingHorizontal: 5,
+//     borderRadius: 3,
+//   },
+//   itemRow: {
+//     flexDirection: "row",
+//     paddingVertical: 5,
+//     borderBottomWidth: 1,
+//     borderBottomColor: "#eee",
+//   },
+//   rowTitleText: {
+//     fontSize: Colors.textSize,
+//     color: Colors.textColor,
+//     fontWeight: "bold",
+//   },
+//   rowSubText: {
+//     color: Colors.textColor,
+//     opacity: 0.8,
+//     fontSize: Colors.textSize,
+//   },
+//   button: {
+//     alignItems: "center",
+//     backgroundColor: Colors.primary,
+//     padding: 10,
+//     // shadowColor: "#000",
+//     // shadowOffset: {
+//     // 	width: 0,
+//     // 	height: 2,
+//     // },
+//     // shadowOpacity: 0.23,
+//     // shadowRadius: 2.62,
+//     // elevation: 4,
+//     borderRadius: 20,
+//     color: "#fff",
+//     marginVertical: 10,
+//   },
+//   textWhite: {
+//     color: "#fff",
+//     fontWeight: "bold",
+//   },
+//   modalOverlay: {
+//     justifyContent: "center",
+//     alignItems: "center",
+//     width: windowWidth,
+//     height: windowHeight,
+//   },
+//   itemModalContainer: {
+//     flex: 1,
+//     width: windowWidth,
+//     height: windowHeight,
+//     backgroundColor: Colors.lightGrey,
+//   },
+//   itemModalHeader: {
+//     height: 55,
+//     flexDirection: "row",
+//     width: "100%",
+//     backgroundColor: Colors.primary,
+//     elevation: 1,
+//     alignItems: "center",
+//     justifyContent: "flex-start",
+//   },
+//   headerBackBtnContainer: {
+//     width: "15%",
+//     height: 55,
+//     paddingLeft: 8,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   headerTitleContainer: {
+//     width: "70%",
+//     paddingLeft: 20,
+//     height: 55,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+//   itemModalBody: {
+//     flex: 1,
+//     height: windowHeight - 55,
+//     padding: 8,
+//   },
+//   errorFieldBox: {
+//     borderWidth: 1,
+//     borderColor: Colors.tomato,
+//   },
+// });

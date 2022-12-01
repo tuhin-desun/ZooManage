@@ -1035,7 +1035,7 @@ export default class FeedingSectionMenu extends React.Component {
           onBackdropPress={() => this.setState({ isModalOpen: false })}
         >
           <View style={[styles.popupContainer]}>
-            <View style={globalStyles.p10}>
+            <View style={{ padding: 10 }}>
               <View style={styles.fieldBox}>
                 <Text style={styles.labelName}>Select Time : </Text>
                 <TouchableOpacity

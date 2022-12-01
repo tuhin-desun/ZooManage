@@ -15,7 +15,8 @@ import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import { getPurchaseOrders } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
-
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -174,108 +175,108 @@ export default class PurchaseOrders extends React.Component {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		paddingHorizontal: 5,
-	},
-	row: {
-		flexDirection: "row",
-		borderBottomColor: "#eee",
-		borderBottomWidth: 1,
-		paddingHorizontal: 5,
-		paddingVertical: 5,
-	},
-	leftPart: {
-		width: "75%",
-		justifyContent: "center",
-	},
-	rightPart: {
-		width: "25%",
-		flexDirection: "row",
-		justifyContent: "flex-end",
-		alignItems: "center",
-	},
-	name: {
-		fontSize: 16,
-		color: Colors.textColor,
-		fontWeight: "bold",
-		lineHeight: 24,
-	},
-	subText: {
-		color: Colors.textColor,
-		opacity: 0.8,
-		fontSize: 14,
-		lineHeight: 22,
-	},
-	qtyBox: {
-		backgroundColor: Colors.primary,
-		paddingHorizontal: 5,
-		paddingVertical: 3,
-		borderRadius: 3,
-	},
-	qtyText: {
-		fontSize: 14,
-		color: "#FFF",
-	},
-	iconStyle: {
-		fontSize: 18,
-		color: "#cecece",
-	},
-	tabContainer: {
-		width: "100%",
-		height: tabHeight,
-		flexDirection: "row",
-		borderBottomWidth: 1,
-		borderBottomColor: "#d1d1d1",
-		borderTopWidth: 1,
-		borderTopColor: Colors.primary,
-		elevation: 1,
-	},
-	tab: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-		height: tabHeight,
-	},
-	underlineStyle: {
-		backgroundColor: Colors.primary,
-		height: 3,
-	},
-	activeTab: {
-		height: tabHeight - 1,
-		borderBottomWidth: 2,
-		borderBottomColor: Colors.primary,
-	},
-	activeText: {
-		fontSize: 14,
-		fontWeight: "bold",
-		color: Colors.primary,
-	},
-	inActiveText: {
-		fontSize: 14,
-		color: Colors.textColor,
-		opacity: 0.8,
-	},
-	listContainer: {
-		flex: 1,
-		padding: 8,
-		height: windowHeight - tabHeight,
-	},
-	pendingStatus: {
-		textAlign: "right",
-		color: Colors.warning,
-		fontStyle: "italic",
-	},
-	approveStatus: {
-		textAlign: "right",
-		color: Colors.success,
-		fontStyle: "italic",
-	},
-	rejectStatus: {
-		textAlign: "right",
-		color: Colors.danger,
-		fontStyle: "italic",
-	},
-});
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		backgroundColor: "#fff",
+// 		paddingHorizontal: 5,
+// 	},
+// 	row: {
+// 		flexDirection: "row",
+// 		borderBottomColor: "#eee",
+// 		borderBottomWidth: 1,
+// 		paddingHorizontal: 5,
+// 		paddingVertical: 5,
+// 	},
+// 	leftPart: {
+// 		width: "75%",
+// 		justifyContent: "center",
+// 	},
+// 	rightPart: {
+// 		width: "25%",
+// 		flexDirection: "row",
+// 		justifyContent: "flex-end",
+// 		alignItems: "center",
+// 	},
+// 	name: {
+// 		fontSize: 16,
+// 		color: Colors.textColor,
+// 		fontWeight: "bold",
+// 		lineHeight: 24,
+// 	},
+// 	subText: {
+// 		color: Colors.textColor,
+// 		opacity: 0.8,
+// 		fontSize: 14,
+// 		lineHeight: 22,
+// 	},
+// 	qtyBox: {
+// 		backgroundColor: Colors.primary,
+// 		paddingHorizontal: 5,
+// 		paddingVertical: 3,
+// 		borderRadius: 3,
+// 	},
+// 	qtyText: {
+// 		fontSize: 14,
+// 		color: "#FFF",
+// 	},
+// 	iconStyle: {
+// 		fontSize: 18,
+// 		color: "#cecece",
+// 	},
+// 	tabContainer: {
+// 		width: "100%",
+// 		height: tabHeight,
+// 		flexDirection: "row",
+// 		borderBottomWidth: 1,
+// 		borderBottomColor: "#d1d1d1",
+// 		borderTopWidth: 1,
+// 		borderTopColor: Colors.primary,
+// 		elevation: 1,
+// 	},
+// 	tab: {
+// 		flex: 1,
+// 		alignItems: "center",
+// 		justifyContent: "center",
+// 		height: tabHeight,
+// 	},
+// 	underlineStyle: {
+// 		backgroundColor: Colors.primary,
+// 		height: 3,
+// 	},
+// 	activeTab: {
+// 		height: tabHeight - 1,
+// 		borderBottomWidth: 2,
+// 		borderBottomColor: Colors.primary,
+// 	},
+// 	activeText: {
+// 		fontSize: 14,
+// 		fontWeight: "bold",
+// 		color: Colors.primary,
+// 	},
+// 	inActiveText: {
+// 		fontSize: 14,
+// 		color: Colors.textColor,
+// 		opacity: 0.8,
+// 	},
+// 	listContainer: {
+// 		flex: 1,
+// 		padding: 8,
+// 		height: windowHeight - tabHeight,
+// 	},
+// 	pendingStatus: {
+// 		textAlign: "right",
+// 		color: Colors.warning,
+// 		fontStyle: "italic",
+// 	},
+// 	approveStatus: {
+// 		textAlign: "right",
+// 		color: Colors.success,
+// 		fontStyle: "italic",
+// 	},
+// 	rejectStatus: {
+// 		textAlign: "right",
+// 		color: Colors.danger,
+// 		fontStyle: "italic",
+// 	},
+// });

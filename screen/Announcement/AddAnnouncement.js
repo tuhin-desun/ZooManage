@@ -210,10 +210,7 @@ export default class AddAnnouncement extends React.Component {
         leftButtonFunc={this.gotoBack}
       />
       <View
-        style={[
-          globalStyles.container,
-          { padding: Colors.formPaddingHorizontal },
-        ]}
+        style={[globalStyles.container, { padding: Colors.formPaddingHorizontal }]}
       >
         <ScrollView ref={this.formScrollViewRef}>
           <View style={globalStyles.boxBorder}>
@@ -268,8 +265,8 @@ export default class AddAnnouncement extends React.Component {
                   labelColor={Colors.textColor}
                   formHorizontal={true}
                   labelHorizontal={true}
-                  labelStyle={globalStyles.mh8}
-                  style={[globalStyles.inputRadio, globalStyles.width100]}
+                  labelStyle={{ marginHorizontal: 8 }}
+                  style={[globalStyles.inputRadio, { width: "100%" }]}
                   buttonSize={15}
                 />
                 <View
@@ -312,15 +309,11 @@ export default class AddAnnouncement extends React.Component {
 
           <View style={globalStyles.buttonsContainer}>
             <TouchableOpacity activeOpacity={1} onPress={this.addAnnouncement}>
-              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>
-                SAVE
-              </Text>
+              <Text style={[globalStyles.buttonText, globalStyles.saveBtnText]}>SAVE</Text>
             </TouchableOpacity>
 
             <TouchableOpacity activeOpacity={1} onPress={this.gotoBack}>
-              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>
-                EXIT
-              </Text>
+              <Text style={[globalStyles.buttonText, globalStyles.exitBtnText]}>EXIT</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>

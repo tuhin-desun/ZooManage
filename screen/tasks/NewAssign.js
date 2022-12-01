@@ -59,6 +59,7 @@ import * as Animatable from "react-native-animatable";
 import Collapsible from "react-native-collapsible";
 import Accordion from "react-native-collapsible/Accordion";
 import globalStyles from "../../config/Styles";
+import styles from "./Styles";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -74,7 +75,8 @@ const CatItemCard = (props) => {
       style={styles.containerCart}
       // onLongPress={() => { props.selectItem(props.item) }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={
+        { flexDirection: "row", alignItems: "center" }}>
         {/* change icon size for major icon here */}
         <Image
           source={props.priority}
@@ -641,8 +643,9 @@ class NewAssignScreen extends React.Component {
               </View>
               <Text
                 style={[
-                  item.item.isSelect ? styles.taskTextPress : styles.taskText,
+                    item.item.isSelect ? styles.taskTextPress : styles.taskText,
                   { fontSize: 12, opacity: 0.6, textAlign: "right" },
+
                 ]}
               >
                 {item.item.date}
@@ -656,7 +659,7 @@ class NewAssignScreen extends React.Component {
 
   renderItem = ({ item }) => (
     <View style={styles.containerCart}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={[globalStyles.flexDirectionRow,globalStyles.alignItemsCenter]}>
         {/* change icon size for major icon here */}
         <Image
           source={item.priority}
@@ -673,16 +676,19 @@ class NewAssignScreen extends React.Component {
           >
             {item.name}
           </Text>
-          <Text style={{ paddingBottom: 2, fontSize: 13, opacity: 0.6 }}>
+          <Text style={[globalStyles.paddingBottom2,styles.opacity06,
+            {fontSize: 13}]}>
             {item.date}
           </Text>
-          <Text style={{ fontStyle: "italic", fontSize: 12, opacity: 0.5 }}>
+          <Text style={[globalStyles.fontSize,styles.opacity05,
+            { fontStyle: "italic"}]}>
             {item.members}
           </Text>
         </View>
       </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <View style={{ alignItems: "center", paddingRight: 10 }}>
+      <View style={[globalStyles.flexDirectionRow,globalStyles.alignItemsCenter]}>
+        <View style={[globalStyles.alignItemsCenter,
+          {paddingRight: 10 }]}>
           {/* change icon size in image style */}
           <Image
             source={item.taskType}
@@ -804,11 +810,8 @@ class NewAssignScreen extends React.Component {
             {this.state.assignTypeID == "delicate" ? (
               <View style={styles.wrapper}>
                 <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-evenly",
-                    width: "100%",
-                  }}
+                  style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceEvenly,globalStyles.width100
+                  ]}
                 >
                   <View style={globalStyles.alignItemsCenter}>
                     <Text style={{ opacity: 0.5 }}>STARTS ON</Text>
@@ -931,8 +934,8 @@ class NewAssignScreen extends React.Component {
                   {/* <Text style={styles.title}>Sub Categories</Text> */}
                   <View
                     style={[
-                      styles.selectors,
-                      { flexDirection: "row", flexWrap: "wrap" },
+                      styles.selectors,globalStyles.flexDirectionRow,
+                      {flexWrap: "wrap" },
                     ]}
                   >
                     {this.state.subCat.map((selector, index) => (
@@ -971,18 +974,15 @@ class NewAssignScreen extends React.Component {
                           keyExtractor={(item) => item.id.toString()}
                         />
                       ) : (
-                        <View style={{ justifyContent: "center" }}>
+                        <View style={globalStyles.justifyContentCenter}>
                           <View
-                            style={{
-                              justifyContent: "center",
-                              textAlign: "center",
-                            }}
+                            style={[globalStyles.justifyContentCenter,globalStyles.textAlignCenter]}
                           >
                             <Text
-                              style={{
+                              style={[globalStyles.textAlignCenter,
+                                {
                                 color: Colors.primary,
-                                textAlign: "center",
-                              }}
+                              }]}
                             >
                               No Tasks Found
                               {/* <Ionicons
@@ -1011,7 +1011,7 @@ class NewAssignScreen extends React.Component {
             <View style={globalStyles.h10} />
             {this.state.data.length > 0 ? (
               <View>
-                <Text style={{ alignSelf: "center" }}>Selected Tasks</Text>
+                <Text style={globalStyles.alignSelfCenter}>Selected Tasks</Text>
                 <View style={globalStyles.h10} />
                 <FlatList
                   data={this.state.data}
@@ -1020,7 +1020,8 @@ class NewAssignScreen extends React.Component {
                 />
               </View>
             ) : (
-              <Text style={{ alignSelf: "center", color: "tomato" }}>
+              <Text style={[globalStyles.alignSelfCenter,
+                {color: "tomato" }]}>
                 No Tasks found
               </Text>
             )}
@@ -1034,275 +1035,275 @@ class NewAssignScreen extends React.Component {
 }
 export default NewAssignScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-    // paddingHorizontal: 5,
-    // marginVertical:10
-  },
-  containerCart: {
-    width: "100%",
-    paddingVertical: 12,
-    borderBottomColor: "#e5e5e5",
-    borderBottomWidth: 1,
-    paddingHorizontal: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  btn: {
-    width: 150,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 3,
-    marginBottom: 5,
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  btnSuccess: {
-    backgroundColor: colors.primary,
-  },
-  btnText: { color: colors.white, fontSize: 16 },
-  fieldBox: {
-    alignItems: "center",
-    width: "100%",
-    overflow: "hidden",
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 3,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    backgroundColor: "#fff",
-    height: "auto",
-    justifyContent: "space-between",
-    marginBottom: 5,
-    marginTop: 5,
-    // shadowColor: "#999",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 1,
-    // },
-    // shadowOpacity: 0.22,
-    // shadowRadius: 2.22,
-    // elevation: 3,
-  },
-  labelName: {
-    color: Colors.textColor,
-    lineHeight: 40,
-    fontSize: 14,
-    paddingLeft: 4,
-    height: "auto",
-  },
-  textfield: {
-    backgroundColor: "#fff",
-    height: "auto",
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//     // paddingHorizontal: 5,
+//     // marginVertical:10
+//   },
+//   containerCart: {
+//     width: "100%",
+//     paddingVertical: 12,
+//     borderBottomColor: "#e5e5e5",
+//     borderBottomWidth: 1,
+//     paddingHorizontal: 10,
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+//   btn: {
+//     width: 150,
+//     height: 50,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     borderRadius: 3,
+//     marginBottom: 5,
+//     alignSelf: "center",
+//     marginTop: 20,
+//   },
+//   btnSuccess: {
+//     backgroundColor: colors.primary,
+//   },
+//   btnText: { color: colors.white, fontSize: 16 },
+//   fieldBox: {
+//     alignItems: "center",
+//     width: "100%",
+//     overflow: "hidden",
+//     flexDirection: "row",
+//     padding: 5,
+//     borderRadius: 3,
+//     borderColor: "#ddd",
+//     borderWidth: 1,
+//     backgroundColor: "#fff",
+//     height: "auto",
+//     justifyContent: "space-between",
+//     marginBottom: 5,
+//     marginTop: 5,
+//     // shadowColor: "#999",
+//     // shadowOffset: {
+//     // 	width: 0,
+//     // 	height: 1,
+//     // },
+//     // shadowOpacity: 0.22,
+//     // shadowRadius: 2.22,
+//     // elevation: 3,
+//   },
+//   labelName: {
+//     color: Colors.textColor,
+//     lineHeight: 40,
+//     fontSize: 14,
+//     paddingLeft: 4,
+//     height: "auto",
+//   },
+//   textfield: {
+//     backgroundColor: "#fff",
+//     height: "auto",
 
-    fontSize: 12,
-    color: Colors.textColor,
-    textAlign: "right",
-    padding: 5,
-  },
-  inputContainer: {
-    padding: 10,
-  },
-  name: {
-    fontSize: 18,
-    color: Colors.textColor,
-    marginBottom: 5,
-  },
-  RadioinputContainer: {
-    padding: 10,
-    flexDirection: "row",
-  },
-  Radioname: {
-    fontSize: 18,
-    color: Colors.textColor,
-    top: 8,
-  },
-  inputRadio: {
-    marginLeft: 20,
-    marginTop: 5,
-  },
-  inputText: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 3,
-    fontSize: 18,
-    backgroundColor: "#f9f6f6",
-    paddingHorizontal: 10,
-    color: Colors.textColor,
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 22,
-    fontWeight: "300",
-    marginBottom: 20,
-  },
-  content: {
-    padding: 10,
-    height: 200,
-    backgroundColor: "#fff",
-  },
-  active: {
-    backgroundColor: "rgba(255,255,255,1)",
-  },
-  inactive: {
-    backgroundColor: "rgba(245,252,255,1)",
-  },
-  selectors: {
-    marginTop: 8,
-    marginBottom: 10,
-    flexDirection: "row",
-    paddingHorizontal: 10,
-    // justifyContent: 'center',
-  },
-  selector: {
-    // backgroundColor: '#F5FCFF',
-    padding: 10,
-  },
-  activeSelector: {
-    fontWeight: "bold",
-  },
-  selectTitle: {
-    fontSize: 14,
-    fontWeight: "500",
-    padding: 10,
-  },
-  multipleToggle: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: 30,
-    alignItems: "center",
-  },
-  multipleToggle__title: {
-    fontSize: 16,
-    marginRight: 8,
-  },
-  capsule: {
-    // height: 30,
-    // justifyContent: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    borderRadius: 3,
-    borderWidth: 0.6,
-    borderColor: Colors.primary,
-    backgroundColor: Colors.white,
-  },
-  capsulePress: {
-    // height: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    // justifyContent: "center",
-    paddingHorizontal: 8,
-    paddingVertical: 5,
-    marginHorizontal: 5,
-    marginVertical: 5,
-    borderRadius: 3,
-    borderWidth: 0.6,
-    borderColor: Colors.primary,
-    backgroundColor: Colors.primary,
-  },
-  taskText: {
-    fontSize: 14,
-    flexDirection: "row",
-    color: Colors.primary,
-    marginHorizontal: 8,
-    marginTop: 5,
-  },
-  taskTextPress: {
-    fontSize: 14,
-    flexDirection: "row",
-    color: Colors.white,
-    marginHorizontal: 8,
-    marginTop: 5,
-  },
-  capsuleText: {
-    fontSize: 14,
-    flexDirection: "row",
-    color: Colors.primary,
-    marginHorizontal: 3,
-    marginBottom: 2,
-  },
-  capsuleTextPress: {
-    fontSize: 14,
-    flexDirection: "row",
-    color: Colors.white,
-    marginHorizontal: 3,
-    marginBottom: 2,
-  },
-  icon: {
-    color: Colors.primary,
-    fontSize: 20,
-    marginLeft: 10,
-  },
-  iconPress: {
-    color: Colors.white,
-    fontSize: 20,
-  },
-  placeHolderContainer: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 3,
-    fontSize: 18,
-    backgroundColor: "#f9f6f6",
-    paddingHorizontal: 10,
-    color: Colors.textColor,
-  },
-  placeholder: {
-    fontSize: 16,
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "#F5FCFF",
-    paddingTop: 3,
-  },
-  wrapper: {
-    borderWidth: 1,
-    borderColor: "#e5e5e5",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderRadius: 3,
-    width: "100%",
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  selectWrapper: {
-    borderRadius: 10,
-    borderWidth: 1,
-    height: 90,
-    width: 75,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingTop: 5,
-    marginLeft: 5,
-  },
-  img: { resizeMode: "contain", height: 35, width: 35, marginBottom: 5 },
-  dateContainer: {
-    borderWidth: 1,
-    borderRadius: 3,
-    paddingVertical: 5,
-    marginTop: 5,
-    paddingHorizontal: 15,
-  },
-  daybtn: {
-    padding: 5,
-    borderRadius: 3,
-    height: 45,
-    width: 45,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+//     fontSize: 12,
+//     color: Colors.textColor,
+//     textAlign: "right",
+//     padding: 5,
+//   },
+//   inputContainer: {
+//     padding: 10,
+//   },
+//   name: {
+//     fontSize: 18,
+//     color: Colors.textColor,
+//     marginBottom: 5,
+//   },
+//   RadioinputContainer: {
+//     padding: 10,
+//     flexDirection: "row",
+//   },
+//   Radioname: {
+//     fontSize: 18,
+//     color: Colors.textColor,
+//     top: 8,
+//   },
+//   inputRadio: {
+//     marginLeft: 20,
+//     marginTop: 5,
+//   },
+//   inputText: {
+//     height: 50,
+//     borderColor: "#ccc",
+//     borderWidth: 1,
+//     borderRadius: 3,
+//     fontSize: 18,
+//     backgroundColor: "#f9f6f6",
+//     paddingHorizontal: 10,
+//     color: Colors.textColor,
+//   },
+//   title: {
+//     textAlign: "center",
+//     fontSize: 22,
+//     fontWeight: "300",
+//     marginBottom: 20,
+//   },
+//   content: {
+//     padding: 10,
+//     height: 200,
+//     backgroundColor: "#fff",
+//   },
+//   active: {
+//     backgroundColor: "rgba(255,255,255,1)",
+//   },
+//   inactive: {
+//     backgroundColor: "rgba(245,252,255,1)",
+//   },
+//   selectors: {
+//     marginTop: 8,
+//     marginBottom: 10,
+//     flexDirection: "row",
+//     paddingHorizontal: 10,
+//     // justifyContent: 'center',
+//   },
+//   selector: {
+//     // backgroundColor: '#F5FCFF',
+//     padding: 10,
+//   },
+//   activeSelector: {
+//     fontWeight: "bold",
+//   },
+//   selectTitle: {
+//     fontSize: 14,
+//     fontWeight: "500",
+//     padding: 10,
+//   },
+//   multipleToggle: {
+//     flexDirection: "row",
+//     justifyContent: "center",
+//     marginVertical: 30,
+//     alignItems: "center",
+//   },
+//   multipleToggle__title: {
+//     fontSize: 16,
+//     marginRight: 8,
+//   },
+//   capsule: {
+//     // height: 30,
+//     // justifyContent: "center",
+//     justifyContent: "space-between",
+//     flexDirection: "row",
+//     paddingHorizontal: 8,
+//     paddingVertical: 5,
+//     marginHorizontal: 5,
+//     marginVertical: 5,
+//     borderRadius: 3,
+//     borderWidth: 0.6,
+//     borderColor: Colors.primary,
+//     backgroundColor: Colors.white,
+//   },
+//   capsulePress: {
+//     // height: 30,
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     // justifyContent: "center",
+//     paddingHorizontal: 8,
+//     paddingVertical: 5,
+//     marginHorizontal: 5,
+//     marginVertical: 5,
+//     borderRadius: 3,
+//     borderWidth: 0.6,
+//     borderColor: Colors.primary,
+//     backgroundColor: Colors.primary,
+//   },
+//   taskText: {
+//     fontSize: 14,
+//     flexDirection: "row",
+//     color: Colors.primary,
+//     marginHorizontal: 8,
+//     marginTop: 5,
+//   },
+//   taskTextPress: {
+//     fontSize: 14,
+//     flexDirection: "row",
+//     color: Colors.white,
+//     marginHorizontal: 8,
+//     marginTop: 5,
+//   },
+//   capsuleText: {
+//     fontSize: 14,
+//     flexDirection: "row",
+//     color: Colors.primary,
+//     marginHorizontal: 3,
+//     marginBottom: 2,
+//   },
+//   capsuleTextPress: {
+//     fontSize: 14,
+//     flexDirection: "row",
+//     color: Colors.white,
+//     marginHorizontal: 3,
+//     marginBottom: 2,
+//   },
+//   icon: {
+//     color: Colors.primary,
+//     fontSize: 20,
+//     marginLeft: 10,
+//   },
+//   iconPress: {
+//     color: Colors.white,
+//     fontSize: 20,
+//   },
+//   placeHolderContainer: {
+//     height: 50,
+//     borderColor: "#ccc",
+//     borderWidth: 1,
+//     borderRadius: 3,
+//     fontSize: 18,
+//     backgroundColor: "#f9f6f6",
+//     paddingHorizontal: 10,
+//     color: Colors.textColor,
+//   },
+//   placeholder: {
+//     fontSize: 16,
+//   },
+//   modalContainer: {
+//     flex: 1,
+//     backgroundColor: "#F5FCFF",
+//     paddingTop: 3,
+//   },
+//   wrapper: {
+//     borderWidth: 1,
+//     borderColor: "#e5e5e5",
+//     paddingHorizontal: 10,
+//     paddingVertical: 10,
+//     borderRadius: 3,
+//     width: "100%",
+//     marginTop: 10,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     justifyContent: "space-between",
+//   },
+//   selectWrapper: {
+//     borderRadius: 10,
+//     borderWidth: 1,
+//     height: 90,
+//     width: 75,
+//     alignItems: "center",
+//     justifyContent: "center",
+//     paddingTop: 5,
+//     marginLeft: 5,
+//   },
+//   img: { resizeMode: "contain", height: 35, width: 35, marginBottom: 5 },
+//   dateContainer: {
+//     borderWidth: 1,
+//     borderRadius: 3,
+//     paddingVertical: 5,
+//     marginTop: 5,
+//     paddingHorizontal: 15,
+//   },
+//   daybtn: {
+//     padding: 5,
+//     borderRadius: 3,
+//     height: 45,
+//     width: 45,
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });

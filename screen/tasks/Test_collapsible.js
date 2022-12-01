@@ -17,6 +17,11 @@ import AppContext from '../../context/AppContext';
 import { Colors } from '../../config';
 import { formatdate } from "../../utils/helper";
 import { Ionicons } from '@expo/vector-icons';
+import globalStyles from "../../config/Styles";
+import styles from "./Styles";
+
+
+
 const individual = require('../../assets/tasks/manager.png')
 const rotate = require('../../assets/tasks/Rotate.png')
 const compete = require('../../assets/tasks/Compete.png')
@@ -289,9 +294,10 @@ export default class Tsst_Collapsible extends Component {
                                 // contentContainerStyle={{flex:1, backgroundColor:"tomato"}}
                                 />
                                 : <View
-                                    style={{ justifyContent: "center" }}
+                                    style={globalStyles.justifyContentCente}
                                 >
-                                    <View style={{ justifyContent: "center", textAlign: "center" }}>
+                                    <View style={[globalStyles.justifyContentCenter,globalStyles.textAlignCenter]}>
+                                       
                                         <Text style={{ color: Colors.primary, textAlign: "center" }}>No Tasks Found 
                                         {/* <Ionicons
                                             name="sad-outline"
@@ -310,139 +316,139 @@ export default class Tsst_Collapsible extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F5FCFF',
-        paddingTop: Constants.statusBarHeight,
-    },
-    title: {
-        textAlign: 'center',
-        fontSize: 22,
-        fontWeight: '300',
-        marginBottom: 20,
-    },
-    header: {
-        backgroundColor: '#F5FCFF',
-        padding: 10,
-        // flexDirection:"row"
-    },
-    headerText: {
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    content: {
-        padding: 20,
-        height: 100,
-        backgroundColor: '#fff',
-    },
-    active: {
-        backgroundColor: 'rgba(255,255,255,1)',
-    },
-    inactive: {
-        backgroundColor: 'rgba(245,252,255,1)',
-    },
-    selectors: {
-        marginBottom: 10,
-        flexDirection: 'row',
-        // justifyContent: 'center',
-    },
-    selector: {
-        backgroundColor: '#F5FCFF',
-        padding: 10,
-    },
-    activeSelector: {
-        fontWeight: 'bold',
-    },
-    selectTitle: {
-        fontSize: 14,
-        fontWeight: '500',
-        padding: 10,
-    },
-    multipleToggle: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginVertical: 30,
-        alignItems: 'center',
-    },
-    multipleToggle__title: {
-        fontSize: 16,
-        marginRight: 8,
-    },
-    // selectedItemsContainer: {
-    // 	width: "100%",
-    // 	height: "auto",
-    // 	borderColor: "#ccc",
-    // 	borderWidth: 1,
-    // 	backgroundColor: "#f9f6f6",
-    // 	paddingVertical: 8,
-    // 	flexDirection: "row",
-    // 	flexWrap: "wrap",
-    // 	alignItems: "flex-start",
-    // },
-    // selectedItemsContainer: {
-    // 	width: "100%",
-    // 	flexDirection: "row",
-    // 	flexWrap: "wrap",
-    // 	padding:5,
-    // },
-    capsule: {
-        height: 30,
-        justifyContent: "center",
-        paddingHorizontal: 3,
-        paddingVertical: 5,
-        marginHorizontal: 5,
-        marginVertical: 5,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: Colors.primary,
-        backgroundColor: Colors.white,
-    },
-    capsulePress: {
-        height: 30,
-        justifyContent: "center",
-        paddingHorizontal: 3,
-        paddingVertical: 5,
-        marginHorizontal: 5,
-        marginVertical: 5,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: Colors.primary,
-        backgroundColor: Colors.primary,
-    },
-    capsuleText: {
-        fontSize: 14,
-        color: Colors.primary,
-        marginHorizontal: 3,
-        marginBottom: 2,
-    },
-    capsuleTextPress: {
-        fontSize: 14,
-        color: Colors.white,
-        marginHorizontal: 3,
-        marginBottom: 2,
-    },
-    icon:{
-        color: Colors.primary ,
-        fontSize: 20,
-        marginLeft: 10
-    },
-    iconPress:{
-        color: Colors.white ,
-        fontSize: 20,
-    },
-    placeHolderContainer: {
-        height: 50,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 3,
-        fontSize: 18,
-        backgroundColor: "#f9f6f6",
-        paddingHorizontal: 10,
-        color: Colors.textColor,
-    },
-    placeholder: {
-        fontSize: 16,
-    },
-});
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#F5FCFF',
+//         paddingTop: Constants.statusBarHeight,
+//     },
+//     title: {
+//         textAlign: 'center',
+//         fontSize: 22,
+//         fontWeight: '300',
+//         marginBottom: 20,
+//     },
+//     header: {
+//         backgroundColor: '#F5FCFF',
+//         padding: 10,
+//         // flexDirection:"row"
+//     },
+//     headerText: {
+//         textAlign: 'center',
+//         fontSize: 16,
+//         fontWeight: '500',
+//     },
+//     content: {
+//         padding: 20,
+//         height: 100,
+//         backgroundColor: '#fff',
+//     },
+//     active: {
+//         backgroundColor: 'rgba(255,255,255,1)',
+//     },
+//     inactive: {
+//         backgroundColor: 'rgba(245,252,255,1)',
+//     },
+//     selectors: {
+//         marginBottom: 10,
+//         flexDirection: 'row',
+//         // justifyContent: 'center',
+//     },
+//     selector: {
+//         backgroundColor: '#F5FCFF',
+//         padding: 10,
+//     },
+//     activeSelector: {
+//         fontWeight: 'bold',
+//     },
+//     selectTitle: {
+//         fontSize: 14,
+//         fontWeight: '500',
+//         padding: 10,
+//     },
+//     multipleToggle: {
+//         flexDirection: 'row',
+//         justifyContent: 'center',
+//         marginVertical: 30,
+//         alignItems: 'center',
+//     },
+//     multipleToggle__title: {
+//         fontSize: 16,
+//         marginRight: 8,
+//     },
+//     // selectedItemsContainer: {
+//     // 	width: "100%",
+//     // 	height: "auto",
+//     // 	borderColor: "#ccc",
+//     // 	borderWidth: 1,
+//     // 	backgroundColor: "#f9f6f6",
+//     // 	paddingVertical: 8,
+//     // 	flexDirection: "row",
+//     // 	flexWrap: "wrap",
+//     // 	alignItems: "flex-start",
+//     // },
+//     // selectedItemsContainer: {
+//     // 	width: "100%",
+//     // 	flexDirection: "row",
+//     // 	flexWrap: "wrap",
+//     // 	padding:5,
+//     // },
+//     capsule: {
+//         height: 30,
+//         justifyContent: "center",
+//         paddingHorizontal: 3,
+//         paddingVertical: 5,
+//         marginHorizontal: 5,
+//         marginVertical: 5,
+//         borderRadius: 20,
+//         borderWidth: 1,
+//         borderColor: Colors.primary,
+//         backgroundColor: Colors.white,
+//     },
+//     capsulePress: {
+//         height: 30,
+//         justifyContent: "center",
+//         paddingHorizontal: 3,
+//         paddingVertical: 5,
+//         marginHorizontal: 5,
+//         marginVertical: 5,
+//         borderRadius: 20,
+//         borderWidth: 1,
+//         borderColor: Colors.primary,
+//         backgroundColor: Colors.primary,
+//     },
+//     capsuleText: {
+//         fontSize: 14,
+//         color: Colors.primary,
+//         marginHorizontal: 3,
+//         marginBottom: 2,
+//     },
+//     capsuleTextPress: {
+//         fontSize: 14,
+//         color: Colors.white,
+//         marginHorizontal: 3,
+//         marginBottom: 2,
+//     },
+//     icon:{
+//         color: Colors.primary ,
+//         fontSize: 20,
+//         marginLeft: 10
+//     },
+//     iconPress:{
+//         color: Colors.white ,
+//         fontSize: 20,
+//     },
+//     placeHolderContainer: {
+//         height: 50,
+//         borderColor: "#ccc",
+//         borderWidth: 1,
+//         borderRadius: 3,
+//         fontSize: 18,
+//         backgroundColor: "#f9f6f6",
+//         paddingHorizontal: 10,
+//         color: Colors.textColor,
+//     },
+//     placeholder: {
+//         fontSize: 16,
+//     },
+// });

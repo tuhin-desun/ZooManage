@@ -13,6 +13,8 @@ import Colors from "../../config/colors";
 import { Header, Loader, ListEmpty } from "../../component";
 import { getPurchaseOrders } from "../../services/InventoryManagmentServices";
 import AppContext from "../../context/AppContext";
+import styles from './Style'
+import globalStyle from  '../../config/Styles'
 
 export default class PurchaseOrders extends React.Component {
 	static contextType = AppContext;
@@ -64,8 +66,7 @@ export default class PurchaseOrders extends React.Component {
 	renderListItem = ({ item }) => (
 		<TouchableHighlight
 			underlayColor={"#eee"}
-			onPress={this.gotoPurchaseOrderDetails.bind(this, item)}
-		>
+			onPress={this.gotoPurchaseOrderDetails.bind(this, item)}>
 			<View style={styles.row}>
 				<View style={styles.leftPart}>
 					<Text style={styles.name}>{"Request Number: #" + item.po_no}</Text>
@@ -108,53 +109,53 @@ export default class PurchaseOrders extends React.Component {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		paddingHorizontal: 5,
-	},
-	row: {
-		flexDirection: "row",
-		borderBottomColor: "#eee",
-		borderBottomWidth: 1,
-		paddingHorizontal: 5,
-		paddingVertical: 5,
-	},
-	leftPart: {
-		width: "75%",
-		justifyContent: "center",
-	},
-	rightPart: {
-		width: "25%",
-		flexDirection: "row",
-		justifyContent: "flex-end",
-		alignItems: "center",
-	},
-	name: {
-		fontSize: 16,
-		color: Colors.textColor,
-		fontWeight: "bold",
-		lineHeight: 24,
-	},
-	subText: {
-		color: Colors.textColor,
-		opacity: 0.8,
-		fontSize: 14,
-		lineHeight: 22,
-	},
-	qtyBox: {
-		backgroundColor: Colors.primary,
-		paddingHorizontal: 5,
-		paddingVertical: 3,
-		borderRadius: 3,
-	},
-	qtyText: {
-		fontSize: 14,
-		color: "#FFF",
-	},
-	iconStyle: {
-		fontSize: 18,
-		color: "#cecece",
-	},
-});
+// const styles = StyleSheet.create({
+// 	container: {
+// 		flex: 1,
+// 		backgroundColor: "#fff",
+// 		paddingHorizontal: 5,
+// 	},
+// 	row: {
+// 		flexDirection: "row",
+// 		borderBottomColor: "#eee",
+// 		borderBottomWidth: 1,
+// 		paddingHorizontal: 5,
+// 		paddingVertical: 5,
+// 	},
+// 	leftPart: {
+// 		width: "75%",
+// 		justifyContent: "center",
+// 	},
+// 	rightPart: {
+// 		width: "25%",
+// 		flexDirection: "row",
+// 		justifyContent: "flex-end",
+// 		alignItems: "center",
+// 	},
+// 	name: {
+// 		fontSize: 16,
+// 		color: Colors.textColor,
+// 		fontWeight: "bold",
+// 		lineHeight: 24,
+// 	},
+// 	subText: {
+// 		color: Colors.textColor,
+// 		opacity: 0.8,
+// 		fontSize: 14,
+// 		lineHeight: 22,
+// 	},
+// 	qtyBox: {
+// 		backgroundColor: Colors.primary,
+// 		paddingHorizontal: 5,
+// 		paddingVertical: 3,
+// 		borderRadius: 3,
+// 	},
+// 	qtyText: {
+// 		fontSize: 14,
+// 		color: "#FFF",
+// 	},
+// 	iconStyle: {
+// 		fontSize: 18,
+// 		color: "#cecece",
+// 	},
+// });

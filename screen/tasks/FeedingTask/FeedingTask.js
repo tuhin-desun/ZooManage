@@ -20,6 +20,10 @@ import Header2 from "../../../component/Header2";
 import { getFeedWorks } from "../../../services/AllocationServices";
 import { Colors } from "../../../config";
 import { DateTimePickerModal } from "react-native-modal-datetime-picker";
+//import styles from "../Styles";
+import globalStyles from '../../../config/Styles'
+import styles from './../../../config/Styles';
+
 
 class FeedingTask extends React.Component {
   static contextType = AppContext;
@@ -139,7 +143,8 @@ class FeedingTask extends React.Component {
             : this.gotoUpdateTask(item.item);
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View style={ [globalStyles.flexDirectionRow,globalStyles.alignItemsCenter]}
+          >
           {/* change icon size for major icon here */}
           <View>
             <Text
@@ -152,25 +157,26 @@ class FeedingTask extends React.Component {
             >
               Assign To: {users}
             </Text>
-            <Text style={{ paddingBottom: 2, fontSize: 13, opacity: 0.6 }}>
+            <Text style={[globalStyles.paddingBottom2,styles.opacity06,{fontSize: 13}]}>
               Name: {item.item.name}
             </Text>
-            <Text style={{ paddingBottom: 2, fontSize: 13, opacity: 0.6 }}>
+            <Text style={[globalStyles.paddingBottom2,styles.opacity06,{fontSize: 13}]}>
               Time: {date} - {time}
             </Text>
             {item.item.updated_by == null ? null : (
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
+                style={[globalStyles.flexDirectionRow,globalStyles.justifyContentSpaceBetween,
+                  {
                   width: windowWidth - 20,
-                }}
+                }]}
               >
-                <Text style={{ paddingBottom: 2, fontSize: 13, opacity: 0.6 }}>
+                <Text style={[globalStyles.paddingBottom2,styles.opacity06,
+                  {fontSize: 13}]}>
                   Close By: {item.item.full_name_updated_by}
                 </Text>
                 <Text
-                  style={{ fontSize: 12, opacity: 0.5, alignItems: "flex-end" }}
+                  style={[globalStyles.fontSize,styles.opacity05,globalStyles.alignItemsFlexEnd]}
+                  
                 >
                   Closed At:{" "}
                   {moment(item.item.updated_at).format("Do MMM YY (ddd)")} -{" "}
@@ -178,7 +184,8 @@ class FeedingTask extends React.Component {
                 </Text>
               </View>
             )}
-            <Text style={{ paddingBottom: 2, fontSize: 13, opacity: 0.6 }}>
+            <Text style={[styles.opacity06,globalStyles.paddingBottom2,
+              {fontSize: 13}]}>
               Status:{" "}
               {item.item.status == "completed" ? "Completed" : "Pending"}
             </Text>
@@ -213,7 +220,8 @@ class FeedingTask extends React.Component {
                   refreshing={this.state.isFetching}
                 />
               ) : (
-                <View style={{ alignItems: "center", marginTop: 20 }}>
+                <View style={[globalStyles.alignItemsCenter,
+                  {marginTop: 20 }]}>
                   <Text style={{ color: Colors.danger }}>
                     {"No Records Found"}
                   </Text>
@@ -238,44 +246,44 @@ class FeedingTask extends React.Component {
 export default FeedingTask;
 
 const windowWidth = Dimensions.get("window").width;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
-  body: {
-    flex: 9,
-  },
-  selected: { backgroundColor: "#d3d3d3" },
-  list: {},
-  icon: {
-    position: "absolute",
-    bottom: 20,
-    width: "100%",
-    left: 290,
-    zIndex: 1,
-  },
-  numberBox: {
-    position: "absolute",
-    bottom: 75,
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    left: 330,
-    zIndex: 3,
-    backgroundColor: "#e3e3e3",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  number: { fontSize: 14, color: "#000" },
-  cardItems: {
-    width: windowWidth,
-    paddingVertical: 12,
-    borderBottomColor: "#e5e5e5",
-    borderBottomWidth: 1,
-    paddingHorizontal: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//   },
+//   body: {
+//     flex: 9,
+//   },
+//   selected: { backgroundColor: "#d3d3d3" },
+//   list: {},
+//   icon: {
+//     position: "absolute",
+//     bottom: 20,
+//     width: "100%",
+//     left: 290,
+//     zIndex: 1,
+//   },
+//   numberBox: {
+//     position: "absolute",
+//     bottom: 75,
+//     width: 30,
+//     height: 30,
+//     borderRadius: 15,
+//     left: 330,
+//     zIndex: 3,
+//     backgroundColor: "#e3e3e3",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   number: { fontSize: 14, color: "#000" },
+//   cardItems: {
+//     width: windowWidth,
+//     paddingVertical: 12,
+//     borderBottomColor: "#e5e5e5",
+//     borderBottomWidth: 1,
+//     paddingHorizontal: 10,
+//     flexDirection: "row",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   },
+// });
